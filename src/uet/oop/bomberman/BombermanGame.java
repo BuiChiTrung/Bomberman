@@ -2,10 +2,12 @@ package uet.oop.bomberman;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.graphics.Sprite;
@@ -24,8 +26,12 @@ public class BombermanGame extends Application {
     private GraphicsContext gc;
     private Canvas canvas;
     private List<Entity> moveObjects =  new ArrayList<>();
-    private List<Entity> stillObjects = new ArrayList<>();
+    private static List<Entity> stillObjects = new ArrayList<>();
+    private Bomber bomber;
 
+    public static List<Entity> getStillObjects() {
+        return stillObjects;
+    }
 
     public static void main(String[] args) {
         Application.launch(BombermanGame.class);
@@ -48,6 +54,8 @@ public class BombermanGame extends Application {
         stage.setScene(scene);
         stage.show();
 
+        addEventHandler(scene);
+
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
@@ -58,6 +66,15 @@ public class BombermanGame extends Application {
         timer.start();
 
         createMap();
+    }
+
+    public void addEventHandler(Scene scene) {
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                bomber.move(event.getCode());
+            }
+        });
     }
 
     public void createMap() {
@@ -78,7 +95,8 @@ public class BombermanGame extends Application {
                             stillObjects.add(new Brick(j, i, Sprite.brick.getFxImage()));
                             break;
                         case 'p':
-                            moveObjects.add(new Bomber(j, i, Sprite.player_right.getFxImage()));
+                            bomber = new Bomber(j, i, Sprite.player_right.getFxImage());
+                            moveObjects.add(bomber);
                             stillObjects.add(new Grass(j, i, Sprite.grass.getFxImage()));
                             break;
                         case '1':
