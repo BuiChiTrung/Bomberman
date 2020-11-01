@@ -24,7 +24,8 @@ public class BombermanGame extends Application {
     private GraphicsContext gc;
     private Canvas canvas;
     private List<Entity> moveObjects =  new ArrayList<>();
-    private List<Entity> stillObjects = new ArrayList<>();
+    // 2D array contains arraylist
+    private ArrayList<Entity>[][] stillObjects = new ArrayList[WIDTH][HEIGHT];
 
 
     public static void main(String[] args) {
@@ -64,35 +65,47 @@ public class BombermanGame extends Application {
         try {
             File map = new File("./res/levels/Level1.txt");
             Scanner sc = new Scanner(map);
-            for (int i = 0; i < HEIGHT; ++i) {
+            for (int y = 0; y < HEIGHT; ++y) {
                 String line = sc.nextLine();
-                for (int j = 0; j < WIDTH; ++j) {
-                    switch (line.charAt(j)) {
+                for (int x = 0; x < WIDTH; ++x) {
+                    // Add grass to all cell
+                    stillObjects[x][y] = new ArrayList<>();
+                    stillObjects[x][y].add(new Grass(x, y, Sprite.grass.getFxImage()));
+
+                    switch (line.charAt(x)) {
                         case '#':
-                            stillObjects.add(new Wall(j, i, Sprite.wall.getFxImage()));
-                            break;
-                        case ' ':
-                            stillObjects.add(new Grass(j, i, Sprite.grass.getFxImage()));
+                            stillObjects[x][y].add(new Portal(x, y, Sprite.wall.getFxImage()));
                             break;
                         case '*':
-                            stillObjects.add(new Brick(j, i, Sprite.brick.getFxImage()));
+                            stillObjects[x][y].add(new Brick(x, y, Sprite.brick.getFxImage()));
+                            break;
+                        // Add item roi lay brick de len
+                        case 'x':
+                            stillObjects[x][y].add(new Portal(x, y, Sprite.portal.getFxImage()));
+                            stillObjects[x][y].add(new Brick(x, y, Sprite.brick.getFxImage()));
+                            break;
+                        case 'b':
+                            stillObjects[x][y].add(new BombItem(x, y, Sprite.powerup_bombs.getFxImage()));
+                            stillObjects[x][y].add(new Brick(x, y, Sprite.brick.getFxImage()));
+                            break;
+                        case 'f':
+                            stillObjects[x][y].add(new FlameItem(x, y, Sprite.powerup_flames.getFxImage()));
+                            stillObjects[x][y].add(new Brick(x, y, Sprite.brick.getFxImage()));
+                            break;
+                        case 's':
+                            stillObjects[x][y].add(new SpeedItem(x, y, Sprite.powerup_speed.getFxImage()));
+                            stillObjects[x][y].add(new Brick(x, y, Sprite.brick.getFxImage()));
                             break;
                         case 'p':
-                            moveObjects.add(new Bomber(j, i, Sprite.player_right.getFxImage()));
-                            stillObjects.add(new Grass(j, i, Sprite.grass.getFxImage()));
+                            moveObjects.add(new Bomber(x, y, Sprite.player_right_1.getFxImage()));
                             break;
                         case '1':
-                            moveObjects.add(new Enemy(j, i, Sprite.balloom_left1.getFxImage()));
-                            stillObjects.add(new Grass(j, i, Sprite.grass.getFxImage()));
+                            moveObjects.add(new Enemy(x, y, Sprite.balloom_left1.getFxImage()));
                             break;
                         case '2':
-                            moveObjects.add(new Enemy(j, i, Sprite.oneal_left1.getFxImage()));
-                            stillObjects.add(new Grass(j, i, Sprite.grass.getFxImage()));
+                            moveObjects.add(new Enemy(x, y, Sprite.oneal_left1.getFxImage()));
                             break;
-                        default:
-                            stillObjects.add(new Brick(j, i, Sprite.brick.getFxImage()));
                     }
-
                 }
             }
         } catch (FileNotFoundException e) {
@@ -107,7 +120,9 @@ public class BombermanGame extends Application {
 
     public void render() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        stillObjects.forEach(g -> g.render(gc));
+        for (int x = 0; x < WIDTH; ++x)
+            for (int y = 0; y < HEIGHT; ++y)
+                stillObjects[x][y].forEach(g -> g.render(gc));
         moveObjects.forEach(g -> g.render(gc));
 
     }
