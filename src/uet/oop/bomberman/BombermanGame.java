@@ -92,7 +92,7 @@ public class BombermanGame extends Application {
 
                     switch (line.charAt(x)) {
                         case '#':
-                            stillObjects[x][y].add(new Portal(x, y, Sprite.wall.getFxImage()));
+                            stillObjects[x][y].add(new Wall(x, y, Sprite.wall.getFxImage()));
                             break;
                         case '*':
                             stillObjects[x][y].add(new Brick(x, y, Sprite.brick.getFxImage()));
@@ -115,14 +115,14 @@ public class BombermanGame extends Application {
                             stillObjects[x][y].add(new Brick(x, y, Sprite.brick.getFxImage()));
                             break;
                         case 'p':
-                            bomber = new Bomber(x, y, Sprite.player_right.getFxImage());
+                            bomber = new Bomber(x, y, Sprite.player_right_0.getFxImage());
                             moveObjects.add(bomber);
                             break;
                         case '1':
-                            moveObjects.add(new Enemy(x, y, Sprite.balloom_left1.getFxImage()));
+                            moveObjects.add(new Enemy(x, y, Sprite.balloom_right1.getFxImage()));
                             break;
                         case '2':
-                            moveObjects.add(new Enemy(x, y, Sprite.oneal_left1.getFxImage()));
+                            moveObjects.add(new Enemy(x, y, Sprite.oneal_right1.getFxImage()));
                             break;
                     }
                 }

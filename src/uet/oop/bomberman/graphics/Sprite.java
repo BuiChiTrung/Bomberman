@@ -35,10 +35,10 @@ public class Sprite {
 	| Bomber Sprites
 	|--------------------------------------------------------------------------
 	 */
-	public static Sprite player_up = new Sprite(DEFAULT_SIZE, 0, 0, SpriteSheet.tiles, 12, 16);
-	public static Sprite player_down = new Sprite(DEFAULT_SIZE, 2, 0, SpriteSheet.tiles, 12, 15);
-	public static Sprite player_left = new Sprite(DEFAULT_SIZE, 3, 0, SpriteSheet.tiles, 10, 15);
-	public static Sprite player_right = new Sprite(DEFAULT_SIZE, 1, 0, SpriteSheet.tiles, 10, 16);
+	public static Sprite player_up_0 = new Sprite(DEFAULT_SIZE, 0, 0, SpriteSheet.tiles, 12, 16);
+	public static Sprite player_down_0 = new Sprite(DEFAULT_SIZE, 2, 0, SpriteSheet.tiles, 12, 15);
+	public static Sprite player_left_0 = new Sprite(DEFAULT_SIZE, 3, 0, SpriteSheet.tiles, 10, 15);
+	public static Sprite player_right_0 = new Sprite(DEFAULT_SIZE, 1, 0, SpriteSheet.tiles, 10, 16);
 	
 	public static Sprite player_up_1 = new Sprite(DEFAULT_SIZE, 0, 1, SpriteSheet.tiles, 12, 16);
 	public static Sprite player_up_2 = new Sprite(DEFAULT_SIZE, 0, 2, SpriteSheet.tiles, 12, 15);
@@ -52,9 +52,9 @@ public class Sprite {
 	public static Sprite player_right_1 = new Sprite(DEFAULT_SIZE, 1, 1, SpriteSheet.tiles, 11, 16);
 	public static Sprite player_right_2 = new Sprite(DEFAULT_SIZE, 1, 2, SpriteSheet.tiles, 12, 16);
 	
-	public static Sprite player_dead1 = new Sprite(DEFAULT_SIZE, 4, 2, SpriteSheet.tiles, 14, 16);
-	public static Sprite player_dead2 = new Sprite(DEFAULT_SIZE, 5, 2, SpriteSheet.tiles, 13, 15);
-	public static Sprite player_dead3 = new Sprite(DEFAULT_SIZE, 6, 2, SpriteSheet.tiles, 16, 16);
+	public static Sprite player_dead_0 = new Sprite(DEFAULT_SIZE, 4, 2, SpriteSheet.tiles, 14, 16);
+	public static Sprite player_dead_1 = new Sprite(DEFAULT_SIZE, 5, 2, SpriteSheet.tiles, 13, 15);
+	public static Sprite player_dead_2 = new Sprite(DEFAULT_SIZE, 6, 2, SpriteSheet.tiles, 16, 16);
 	
 	/*
 	|--------------------------------------------------------------------------
