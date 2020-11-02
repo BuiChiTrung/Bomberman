@@ -25,8 +25,10 @@ public class BombermanGame extends Application {
     // window size
     public static final int WIDTH = 31;
     public static final int HEIGHT = 13;
+
     public long lastFrame; // measure frame speed
-    
+    private static int frameCnt = 0;
+
     private GraphicsContext gc;
     private Canvas canvas;
 
@@ -35,6 +37,7 @@ public class BombermanGame extends Application {
     // 2D array contains arraylist
     public static ArrayList<Entity>[][] stillObjects = new ArrayList[WIDTH][HEIGHT];
     public static List<Entity> moveObjects =  new ArrayList<>();
+    public static List<Point> modifiedObjects = new ArrayList<>();
 
     public static void main(String[] args) {
         Application.launch(BombermanGame.class);
@@ -62,7 +65,9 @@ public class BombermanGame extends Application {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
-                render();
+                if (frameCnt == 0) render_all_entities();
+                else render_modified_entities();
+                frameCnt++;
                 update();
             }
         };
@@ -138,13 +143,26 @@ public class BombermanGame extends Application {
         moveObjects.forEach(Entity::update);
     }
 
-    public void render() {
+    public void render_all_entities() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         for (int x = 0; x < WIDTH; ++x)
             for (int y = 0; y < HEIGHT; ++y)
                 stillObjects[x][y].get(stillObjects[x][y].size() - 1).render(gc);
 
         moveObjects.forEach(g -> g.render(gc));
+        //System.out.println(System.currentTimeMillis() - lastFrame);
+        lastFrame = System.currentTimeMillis();
+    }
+
+    public void render_modified_entities() {
+        for (Point it : modifiedObjects) {
+            //System.out.print(it);
+            gc.clearRect(it.x, it.y, Sprite.SCALED_SIZE, Sprite.SCALED_SIZE);
+            stillObjects[(int)it.x][(int)it.y].get(stillObjects[(int)it.x][(int)it.y].size() - 1).render(gc);
+        }
+        moveObjects.forEach(g -> g.render(gc));
+
+        modifiedObjects.clear();
         //System.out.println(System.currentTimeMillis() - lastFrame);
         lastFrame = System.currentTimeMillis();
     }

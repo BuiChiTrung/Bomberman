@@ -34,7 +34,7 @@ public class MovingEntity extends Entity {
 
     }
 
-    private ArrayList<Point> getStandingCells(double x, double y) {
+    public ArrayList<Point> getStandingCells(double x, double y) {
         ArrayList<Point> standingCells = new ArrayList<Point>();
         if (x != floor(x) && y != floor(y)) {
             standingCells.add(new Point(floor(x), floor(y)));
@@ -63,11 +63,6 @@ public class MovingEntity extends Entity {
 
         ArrayList<Point> standingCells = getStandingCells(x, y);
 
-        System.out.println(pos);
-        for (Point it: standingCells) {
-            System.out.print(it);
-        }
-
         for (Point it : standingCells) {
             Entity lastEntity = BombermanGame.stillObjects[(int)it.x][(int)it.y].get(BombermanGame.stillObjects[(int)it.x][(int)it.y].size() - 1);
             if (lastEntity instanceof Brick || lastEntity instanceof Wall) return true;
@@ -76,5 +71,11 @@ public class MovingEntity extends Entity {
         return false;
     }
 
+    public void addToModifiedObjects(Point pos) {
+        ArrayList<Point> standingCells = getStandingCells(pos.x, pos.y);
 
+        for (Point it: standingCells) {
+            BombermanGame.modifiedObjects.add(it);
+        }
+    }
 }

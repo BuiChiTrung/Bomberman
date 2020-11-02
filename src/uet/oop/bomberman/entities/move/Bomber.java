@@ -4,6 +4,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.Point;
 import uet.oop.bomberman.entities.still.Brick;
 import uet.oop.bomberman.entities.still.Wall;
 import uet.oop.bomberman.graphics.Sprite;
@@ -13,6 +14,8 @@ import java.util.ArrayList;
 import static java.lang.Math.floor;
 
 public class Bomber extends MovingEntity {
+    private static double[] tryStep;
+
     private static Image[] img_state = {
             // 0 -> 2
             Sprite.player_up_0.getFxImage(),
@@ -40,6 +43,7 @@ public class Bomber extends MovingEntity {
     public Bomber(double x, double y, Image img) {
         super( x, y, img);
         velocity = 0.25;
+        tryStep = new double[]{0, -0.25, 0.25};
     }
 
     @Override
@@ -48,35 +52,69 @@ public class Bomber extends MovingEntity {
     }
 
     public void move(KeyCode eventDirection) {
+        System.out.println(pos + " " +  BombermanGame.modifiedObjects.size());
+        addToModifiedObjects(pos);
+
         if (eventDirection != direct)
             stepInDirect = 0;
         else
             stepInDirect = (stepInDirect + 1) % 3;
         direct = eventDirection;
 
-        //System.out.println(pos.x + " " + pos.y);
         switch (eventDirection) {
             case UP:
-                if (!hasObstacle(pos.x, pos.y - 0.25))
-                    pos.y-= 0.25;
+                moveUp();
                 img = img_state[0 + stepInDirect];
                 break;
             case LEFT:
-                if (!hasObstacle(pos.x - 0.25, pos.y))
-                    pos.x -= 0.25;
+                moveLeft();
                 img = img_state[3 + stepInDirect];
                 break;
             case DOWN:
-                if (!hasObstacle(pos.x, pos.y + 0.25))
-                    pos.y += 0.25;
+                moveDown();
                 img = img_state[6 + stepInDirect];
                 break;
             case RIGHT:
-                if (!hasObstacle(pos.x + 0.25, pos.y))
-                    pos.x += 0.25;
+                moveRight();
                 img = img_state[9 + stepInDirect];
                 break;
         }
+        addToModifiedObjects(pos);
+    }
 
+    private void moveUp() {
+        for (double stepX : tryStep)
+            if (!hasObstacle(pos.x + stepX, pos.y - velocity)) {
+                pos.x = pos.x + stepX;
+                pos.y = pos.y - velocity;
+                return;
+            }
+    }
+
+    private void moveLeft() {
+        for (double stepY : tryStep)
+            if (!hasObstacle(pos.x - velocity, pos.y + stepY)) {
+                pos.x = pos.x - velocity;
+                pos.y = pos.y + stepY;
+                return;
+            }
+    }
+
+    private void moveDown() {
+        for (double stepX : tryStep)
+            if (!hasObstacle(pos.x + stepX, pos.y + velocity)) {
+                pos.x = pos.x + stepX;
+                pos.y = pos.y + velocity;
+                return;
+            }
+    }
+
+    private void moveRight() {
+        for (double stepY : tryStep)
+            if (!hasObstacle(pos.x + velocity, pos.y + stepY)) {
+                pos.x = pos.x + velocity;
+                pos.y = pos.y + stepY;
+                return;
+            }
     }
 }

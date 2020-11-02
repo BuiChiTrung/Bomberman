@@ -9,6 +9,11 @@ public class Point {
         this.y = y;
     }
 
+    public Point(Point other) {
+        this.x = other.x;
+        this.y = other.y;
+    }
+
     public String toString() {
         return "(" + x + "," + y + ")";
     }
