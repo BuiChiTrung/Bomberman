@@ -25,6 +25,7 @@ public class BombermanGame extends Application {
     // window size
     public static final int WIDTH = 31;
     public static final int HEIGHT = 13;
+    public long lastFrame; // measure frame speed
     
     private GraphicsContext gc;
     private Canvas canvas;
@@ -141,7 +142,10 @@ public class BombermanGame extends Application {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         for (int x = 0; x < WIDTH; ++x)
             for (int y = 0; y < HEIGHT; ++y)
-                stillObjects[x][y].forEach(g -> g.render(gc));
+                stillObjects[x][y].get(stillObjects[x][y].size() - 1).render(gc);
+
         moveObjects.forEach(g -> g.render(gc));
+        //System.out.println(System.currentTimeMillis() - lastFrame);
+        lastFrame = System.currentTimeMillis();
     }
 }

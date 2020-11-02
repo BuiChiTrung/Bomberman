@@ -10,6 +10,8 @@ import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.ArrayList;
 
+import static java.lang.Math.floor;
+
 public class Bomber extends MovingEntity {
     private static Image[] img_state = {
             // 0 -> 2
@@ -37,6 +39,7 @@ public class Bomber extends MovingEntity {
 
     public Bomber(double x, double y, Image img) {
         super( x, y, img);
+        velocity = 0.25;
     }
 
     @Override
@@ -53,37 +56,26 @@ public class Bomber extends MovingEntity {
 
         switch (eventDirection) {
             case UP:
-                if (!hasObstacle(x, y - 1))
-                    y -= 1;
-                    img = img_state[0 + stepInDirect];
+                if (!hasObstacle(pos.x, pos.y - 1))
+                    pos.y-= 0.25;
+                img = img_state[0 + stepInDirect];
                 break;
             case LEFT:
-                if (!hasObstacle(x - 1, y))
-                    x -= 1;
-                    img = img_state[3 + stepInDirect];
+                if (!hasObstacle(pos.x - 1, pos.y))
+                    pos.x -= 0.25;
+                img = img_state[3 + stepInDirect];
                 break;
             case DOWN:
-                if (!hasObstacle(x, y + 1))
-                    y += 1;
-                    img = img_state[6 + stepInDirect];
+                if (!hasObstacle(pos.x, pos.y + 1))
+                    pos.y += 0.25;
+                img = img_state[6 + stepInDirect];
                 break;
             case RIGHT:
-                if (!hasObstacle(x + 1, y))
-                    x += 1;
-                    img = img_state[9 + stepInDirect];
+                if (!hasObstacle(pos.x + 1, pos.y))
+                    pos.x += 0.25;
+                img = img_state[9 + stepInDirect];
                 break;
         }
-        System.out.println(x + " " + y);
-    }
-
-    private boolean hasObstacle(double x, double y) {
-        if (x < 0 || x > BombermanGame.WIDTH) return true;
-        if (y < 0 || y > BombermanGame.HEIGHT) return true;
-        ArrayList<Entity>[][] stillObjects = BombermanGame.stillObjects;
-
-        Entity lastEntity = stillObjects[(int) x][(int) y].get(stillObjects[(int) x][(int) y].size() - 1);
-        if (lastEntity instanceof Brick || lastEntity instanceof Wall) return true;
-
-        return false;
+        //System.out.println(x + " " + y);
     }
 }
