@@ -8,12 +8,15 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.Point;
 import uet.oop.bomberman.entities.still.Brick;
 import uet.oop.bomberman.entities.still.Wall;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import static java.lang.Math.floor;
 import static javafx.scene.input.KeyCode.RIGHT;
 
 // moving object: bomber, enemy
@@ -31,15 +34,44 @@ public class MovingEntity extends Entity {
 
     }
 
+    private ArrayList<Point> getStandingCells(double x, double y) {
+        ArrayList<Point> standingCells = new ArrayList<Point>();
+        if (x != floor(x) && y != floor(y)) {
+            standingCells.add(new Point(floor(x), floor(y)));
+            standingCells.add(new Point(floor(x) + 1, floor(y)));
+            standingCells.add(new Point(floor(x), floor(y) + 1));
+            standingCells.add(new Point(floor(x) + 1, floor(y) + 1));
+        }
+        else if (x != floor(x)) {
+            standingCells.add(new Point(floor(x), y));
+            standingCells.add(new Point(floor(x) + 1, y));
+        }
+        else if (y != floor(y)) {
+            standingCells.add(new Point(x, floor(y)));
+            standingCells.add(new Point(x, floor(y) + 1));
+        }
+        else {
+            standingCells.add(new Point(x, y));
+        }
+
+        return standingCells;
+    }
 
     public boolean hasObstacle(double x, double y) {
         if (x < 0 || x > BombermanGame.WIDTH) return true;
         if (y < 0 || y > BombermanGame.HEIGHT) return true;
 
-        ArrayList<Entity>[][] stillObjects = BombermanGame.stillObjects;
+        ArrayList<Point> standingCells = getStandingCells(x, y);
 
-        Entity lastEntity = stillObjects[(int) x][(int) y].get(stillObjects[(int) x][(int) y].size() - 1);
-        if (lastEntity instanceof Brick || lastEntity instanceof Wall) return true;
+        System.out.println(pos);
+        for (Point it: standingCells) {
+            System.out.print(it);
+        }
+
+        for (Point it : standingCells) {
+            Entity lastEntity = BombermanGame.stillObjects[(int)it.x][(int)it.y].get(BombermanGame.stillObjects[(int)it.x][(int)it.y].size() - 1);
+            if (lastEntity instanceof Brick || lastEntity instanceof Wall) return true;
+        }
 
         return false;
     }

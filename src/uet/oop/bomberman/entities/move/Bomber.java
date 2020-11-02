@@ -54,28 +54,29 @@ public class Bomber extends MovingEntity {
             stepInDirect = (stepInDirect + 1) % 3;
         direct = eventDirection;
 
+        //System.out.println(pos.x + " " + pos.y);
         switch (eventDirection) {
             case UP:
-                if (!hasObstacle(pos.x, pos.y - 1))
+                if (!hasObstacle(pos.x, pos.y - 0.25))
                     pos.y-= 0.25;
                 img = img_state[0 + stepInDirect];
                 break;
             case LEFT:
-                if (!hasObstacle(pos.x - 1, pos.y))
+                if (!hasObstacle(pos.x - 0.25, pos.y))
                     pos.x -= 0.25;
                 img = img_state[3 + stepInDirect];
                 break;
             case DOWN:
-                if (!hasObstacle(pos.x, pos.y + 1))
+                if (!hasObstacle(pos.x, pos.y + 0.25))
                     pos.y += 0.25;
                 img = img_state[6 + stepInDirect];
                 break;
             case RIGHT:
-                if (!hasObstacle(pos.x + 1, pos.y))
+                if (!hasObstacle(pos.x + 0.25, pos.y))
                     pos.x += 0.25;
                 img = img_state[9 + stepInDirect];
                 break;
         }
-        //System.out.println(x + " " + y);
+
     }
 }
