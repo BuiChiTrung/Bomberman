@@ -164,6 +164,7 @@ public class BombermanGame extends Application {
      * only render modified entities to increase fps
      */
     public void render_modified_entities() {
+
         // clear cells contain modified entities and render again
         for (Point it : modifiedObjects) {
             //System.out.print(it);
@@ -173,7 +174,7 @@ public class BombermanGame extends Application {
         moveObjects.forEach(g -> g.render(gc));
 
         modifiedObjects.clear();
-        //System.out.println(System.currentTimeMillis() - lastFrame);
+
         lastFrame = System.currentTimeMillis();
     }
 }

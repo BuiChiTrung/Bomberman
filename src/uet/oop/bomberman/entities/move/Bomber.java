@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import static java.lang.Math.floor;
 
 public class Bomber extends MovingEntity {
+    private static final int PRESS_TIME_TO_CHANGE_IMG = 5;
     private static double[] tryStep;
 
     private static Image[] img_state = {
@@ -42,8 +43,8 @@ public class Bomber extends MovingEntity {
 
     public Bomber(double x, double y, Image img) {
         super( x, y, img);
-        velocity = 0.25;
-        tryStep = new double[]{0, -0.25, 0.25};
+        velocity = 0.125 / 2;
+        tryStep = new double[]{0, -velocity, velocity};
     }
 
     @Override
@@ -52,7 +53,6 @@ public class Bomber extends MovingEntity {
     }
 
     public void move(KeyCode eventDirection) {
-        if (BombermanGame.frameCnt % 2 != 0) return;
 
         System.out.println(pos);
         addToModifiedObjects(pos);
@@ -60,25 +60,25 @@ public class Bomber extends MovingEntity {
         if (eventDirection != direct)
             stepInDirect = 0;
         else
-            stepInDirect = (stepInDirect + 1) % 3;
+            stepInDirect = (stepInDirect + 1) % (PRESS_TIME_TO_CHANGE_IMG * 3);
         direct = eventDirection;
 
         switch (eventDirection) {
             case UP:
                 moveUp();
-                img = img_state[0 + stepInDirect];
+                img = img_state[0 + stepInDirect / PRESS_TIME_TO_CHANGE_IMG];
                 break;
             case LEFT:
                 moveLeft();
-                img = img_state[3 + stepInDirect];
+                img = img_state[3 + stepInDirect / PRESS_TIME_TO_CHANGE_IMG];
                 break;
             case DOWN:
                 moveDown();
-                img = img_state[6 + stepInDirect];
+                img = img_state[6 + stepInDirect / PRESS_TIME_TO_CHANGE_IMG];
                 break;
             case RIGHT:
                 moveRight();
-                img = img_state[9 + stepInDirect];
+                img = img_state[9 + stepInDirect / PRESS_TIME_TO_CHANGE_IMG];
                 break;
         }
         addToModifiedObjects(pos);
