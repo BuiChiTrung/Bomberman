@@ -52,7 +52,9 @@ public class Bomber extends MovingEntity {
     }
 
     public void move(KeyCode eventDirection) {
-        System.out.println(pos + " " +  BombermanGame.modifiedObjects.size());
+        if (BombermanGame.frameCnt % 2 != 0) return;
+
+        System.out.println(pos);
         addToModifiedObjects(pos);
 
         if (eventDirection != direct)

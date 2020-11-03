@@ -26,18 +26,19 @@ public class BombermanGame extends Application {
     public static final int WIDTH = 31;
     public static final int HEIGHT = 13;
 
-    public long lastFrame; // measure frame speed
-    private static int frameCnt = 0;
+    // the moment the last frame is rendered
+    public long lastFrame;
+    public static int frameCnt = 0;
 
     private GraphicsContext gc;
     private Canvas canvas;
-
-    private static Bomber bomber;
 
     // 2D array contains arraylist
     public static ArrayList<Entity>[][] stillObjects = new ArrayList[WIDTH][HEIGHT];
     public static List<Entity> moveObjects =  new ArrayList<>();
     public static List<Point> modifiedObjects = new ArrayList<>();
+
+    private static Bomber bomber;
 
     public static void main(String[] args) {
         Application.launch(BombermanGame.class);
@@ -138,11 +139,17 @@ public class BombermanGame extends Application {
         }
     }
 
+    /**
+     * useless
+     */
     public void update() {
         // call method update of Entity 
         moveObjects.forEach(Entity::update);
     }
 
+    /**
+     * render only when the game starts
+     */
     public void render_all_entities() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         for (int x = 0; x < WIDTH; ++x)
@@ -150,11 +157,14 @@ public class BombermanGame extends Application {
                 stillObjects[x][y].get(stillObjects[x][y].size() - 1).render(gc);
 
         moveObjects.forEach(g -> g.render(gc));
-        //System.out.println(System.currentTimeMillis() - lastFrame);
         lastFrame = System.currentTimeMillis();
     }
 
+    /**
+     * only render modified entities to increase fps
+     */
     public void render_modified_entities() {
+        // clear cells contain modified entities and render again
         for (Point it : modifiedObjects) {
             //System.out.print(it);
             gc.clearRect(it.x, it.y, Sprite.SCALED_SIZE, Sprite.SCALED_SIZE);
