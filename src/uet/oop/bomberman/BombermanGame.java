@@ -27,7 +27,7 @@ public class BombermanGame extends Application {
     public static final int HEIGHT = 13;
 
     // the moment the last frame is rendered
-    public long lastFrame;
+    public static long lastFrame;
     public static int frameCnt = 0;
 
     private GraphicsContext gc;
@@ -68,12 +68,13 @@ public class BombermanGame extends Application {
             public void handle(long l) {
                 if (frameCnt == 0) render_all_entities();
                 else render_modified_entities();
+
                 frameCnt++;
+
                 update();
             }
         };
         timer.start();
-
         createMap();
     }
 
@@ -151,30 +152,28 @@ public class BombermanGame extends Application {
      * render only when the game starts
      */
     public void render_all_entities() {
-        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         for (int x = 0; x < WIDTH; ++x)
             for (int y = 0; y < HEIGHT; ++y)
                 stillObjects[x][y].get(stillObjects[x][y].size() - 1).render(gc);
 
         moveObjects.forEach(g -> g.render(gc));
-        lastFrame = System.currentTimeMillis();
     }
 
     /**
      * only render modified entities to increase fps
      */
     public void render_modified_entities() {
-
         // clear cells contain modified entities and render again
+        if (modifiedObjects.isEmpty()) return;
+
         for (Point it : modifiedObjects) {
-            //System.out.print(it);
-            gc.clearRect(it.x, it.y, Sprite.SCALED_SIZE, Sprite.SCALED_SIZE);
+            //System.out.print(it + " " + frameCnt);
+            //gc.clearRect(it.x * Sprite.SCALED_SIZE, it.y * Sprite.SCALED_SIZE, Sprite.SCALED_SIZE, Sprite.SCALED_SIZE);
             stillObjects[(int)it.x][(int)it.y].get(stillObjects[(int)it.x][(int)it.y].size() - 1).render(gc);
         }
         moveObjects.forEach(g -> g.render(gc));
 
-        modifiedObjects.clear();
-
         lastFrame = System.currentTimeMillis();
+        modifiedObjects.clear();
     }
 }

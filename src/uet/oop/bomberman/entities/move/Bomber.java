@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import static java.lang.Math.floor;
 
 public class Bomber extends MovingEntity {
-    private static final int PRESS_TIME_TO_CHANGE_IMG = 5;
+    private static final int PRESS_TIME_TO_CHANGE_IMG = 1;
     private static double[] tryStep;
 
     private static Image[] img_state = {
@@ -43,7 +43,7 @@ public class Bomber extends MovingEntity {
 
     public Bomber(double x, double y, Image img) {
         super( x, y, img);
-        velocity = 0.125 / 2;
+        velocity = 0.25;
         tryStep = new double[]{0, -velocity, velocity};
     }
 
@@ -53,8 +53,11 @@ public class Bomber extends MovingEntity {
     }
 
     public void move(KeyCode eventDirection) {
-
-        System.out.println(pos);
+        //System.out.println(pos);
+        if (System.currentTimeMillis() - BombermanGame.lastFrame < 25 && eventDirection == direct) {
+            //modifiedObjects.clear();
+            return;
+        }
         addToModifiedObjects(pos);
 
         if (eventDirection != direct)
