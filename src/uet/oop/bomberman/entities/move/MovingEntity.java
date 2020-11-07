@@ -12,6 +12,7 @@ import uet.oop.bomberman.entities.Point;
 import uet.oop.bomberman.entities.still.Brick;
 import uet.oop.bomberman.entities.still.Wall;
 import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.timeline.CanvasManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,13 +65,13 @@ public class MovingEntity extends Entity {
      * check vị trí đang đứng có vật cản nào ko
      */
     public boolean hasObstacle(double x, double y) {
-        if (x < 0 || x > BombermanGame.WIDTH) return true;
-        if (y < 0 || y > BombermanGame.HEIGHT) return true;
+        if (x < 0 || x > CanvasManager.WIDTH) return true;
+        if (y < 0 || y > CanvasManager.HEIGHT) return true;
 
         ArrayList<Point> standingCells = getStandingCells(x, y);
 
         for (Point it : standingCells) {
-            Entity lastEntity = BombermanGame.stillObjects[(int)it.x][(int)it.y].get(BombermanGame.stillObjects[(int)it.x][(int)it.y].size() - 1);
+            Entity lastEntity = CanvasManager.stillObjects[(int)it.x][(int)it.y].get(CanvasManager.stillObjects[(int)it.x][(int)it.y].size() - 1);
             if (lastEntity instanceof Brick || lastEntity instanceof Wall) return true;
         }
 
@@ -84,7 +85,7 @@ public class MovingEntity extends Entity {
         ArrayList<Point> standingCells = getStandingCells(pos.x, pos.y);
 
         for (Point it: standingCells) {
-            BombermanGame.modifiedObjects.add(it);
+            CanvasManager.modifiedObjects.add(it);
         }
     }
 }

@@ -5,40 +5,15 @@ import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.entities.move.Bomber;
-import uet.oop.bomberman.entities.move.Enemy;
-import uet.oop.bomberman.entities.still.*;
-import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.timeline.CanvasManager;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
 
 public class BombermanGame extends Application {
-    // window size
-    public static final int WIDTH = 31;
-    public static final int HEIGHT = 13;
-
-    // the moment the last frame is rendered
-    public static long lastFrame;
-    public static int frameCnt = 0;
-
-    private GraphicsContext gc;
-    private Canvas canvas;
-
-    // 2D array contains arraylist
-    public static ArrayList<Entity>[][] stillObjects = new ArrayList[WIDTH][HEIGHT];
-    public static List<Entity> moveObjects =  new ArrayList<>();
-    public static List<Point> modifiedObjects = new ArrayList<>();
-
-    private static Bomber bomber;
+    public static Bomber bomber;
+    private CanvasManager canvasManager = new CanvasManager();
 
     public static void main(String[] args) {
         Application.launch(BombermanGame.class);
@@ -46,36 +21,27 @@ public class BombermanGame extends Application {
 
     @Override
     public void start(Stage stage) {
-        // Tao Canvas
-        canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
-        gc = canvas.getGraphicsContext2D();
-
         // Tao root container
         Group root = new Group();
-        root.getChildren().add(canvas);
+        root.getChildren().add(canvasManager.getCanvas());
 
         // Tao scene
         Scene scene = new Scene(root);
-
-        // Them scene vao stage
         stage.setScene(scene);
         stage.show();
 
         addEventHandler(scene);
+        canvasManager.createMap();
+        canvasManager.render_all_entities();
 
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
-                if (frameCnt == 0) render_all_entities();
-                else render_modified_entities();
-
-                frameCnt++;
-
-                update();
+                canvasManager.render_modified_entities();
+                System.out.println(System.currentTimeMillis() - canvasManager.getLastRenderTime());
             }
         };
         timer.start();
-        createMap();
     }
 
     public void addEventHandler(Scene scene) {
@@ -85,95 +51,5 @@ public class BombermanGame extends Application {
                 bomber.move(event.getCode());
             }
         });
-    }
-
-    public void createMap() {
-        try {
-            File map = new File("./res/levels/Level1.txt");
-            Scanner sc = new Scanner(map);
-            for (int y = 0; y < HEIGHT; ++y) {
-                String line = sc.nextLine();
-                for (int x = 0; x < WIDTH; ++x) {
-                    // Add grass to all cell
-                    stillObjects[x][y] = new ArrayList<>();
-                    stillObjects[x][y].add(new Grass(x, y, Sprite.grass.getFxImage()));
-
-                    switch (line.charAt(x)) {
-                        case '#':
-                            stillObjects[x][y].add(new Wall(x, y, Sprite.wall.getFxImage()));
-                            break;
-                        case '*':
-                            stillObjects[x][y].add(new Brick(x, y, Sprite.brick.getFxImage()));
-                            break;
-                        // Add item roi lay brick de len
-                        case 'x':
-                            stillObjects[x][y].add(new Portal(x, y, Sprite.portal.getFxImage()));
-                            stillObjects[x][y].add(new Brick(x, y, Sprite.brick.getFxImage()));
-                            break;
-                        case 'b':
-                            stillObjects[x][y].add(new BombItem(x, y, Sprite.powerup_bombs.getFxImage()));
-                            stillObjects[x][y].add(new Brick(x, y, Sprite.brick.getFxImage()));
-                            break;
-                        case 'f':
-                            stillObjects[x][y].add(new FlameItem(x, y, Sprite.powerup_flames.getFxImage()));
-                            stillObjects[x][y].add(new Brick(x, y, Sprite.brick.getFxImage()));
-                            break;
-                        case 's':
-                            stillObjects[x][y].add(new SpeedItem(x, y, Sprite.powerup_speed.getFxImage()));
-                            stillObjects[x][y].add(new Brick(x, y, Sprite.brick.getFxImage()));
-                            break;
-                        case 'p':
-                            bomber = new Bomber(x, y, Sprite.player_right_0.getFxImage());
-                            moveObjects.add(bomber);
-                            break;
-                        case '1':
-                            moveObjects.add(new Enemy(x, y, Sprite.balloom_right1.getFxImage()));
-                            break;
-                        case '2':
-                            moveObjects.add(new Enemy(x, y, Sprite.oneal_right1.getFxImage()));
-                            break;
-                    }
-                }
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("ERROR while reading map file");
-        }
-    }
-
-    /**
-     * useless
-     */
-    public void update() {
-        // call method update of Entity 
-        moveObjects.forEach(Entity::update);
-    }
-
-    /**
-     * render only when the game starts
-     */
-    public void render_all_entities() {
-        for (int x = 0; x < WIDTH; ++x)
-            for (int y = 0; y < HEIGHT; ++y)
-                stillObjects[x][y].get(stillObjects[x][y].size() - 1).render(gc);
-
-        moveObjects.forEach(g -> g.render(gc));
-    }
-
-    /**
-     * only render modified entities to increase fps
-     */
-    public void render_modified_entities() {
-        // clear cells contain modified entities and render again
-        if (modifiedObjects.isEmpty()) return;
-
-        for (Point it : modifiedObjects) {
-            //System.out.print(it + " " + frameCnt);
-            //gc.clearRect(it.x * Sprite.SCALED_SIZE, it.y * Sprite.SCALED_SIZE, Sprite.SCALED_SIZE, Sprite.SCALED_SIZE);
-            stillObjects[(int)it.x][(int)it.y].get(stillObjects[(int)it.x][(int)it.y].size() - 1).render(gc);
-        }
-        moveObjects.forEach(g -> g.render(gc));
-
-        lastFrame = System.currentTimeMillis();
-        modifiedObjects.clear();
     }
 }

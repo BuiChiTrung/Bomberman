@@ -2,16 +2,8 @@ package uet.oop.bomberman.entities.move;
 
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
-import uet.oop.bomberman.BombermanGame;
-import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.Point;
-import uet.oop.bomberman.entities.still.Brick;
-import uet.oop.bomberman.entities.still.Wall;
 import uet.oop.bomberman.graphics.Sprite;
-
-import java.util.ArrayList;
-
-import static java.lang.Math.floor;
+import uet.oop.bomberman.timeline.CanvasManager;
 
 public class Bomber extends MovingEntity {
     private static final int PRESS_TIME_TO_CHANGE_IMG = 1;
@@ -53,9 +45,7 @@ public class Bomber extends MovingEntity {
     }
 
     public void move(KeyCode eventDirection) {
-        //System.out.println(pos);
-        if (System.currentTimeMillis() - BombermanGame.lastFrame < 25 && eventDirection == direct) {
-            //modifiedObjects.clear();
+        if (System.currentTimeMillis() - CanvasManager.lastRenderTime < 25 && eventDirection == direct) {
             return;
         }
         addToModifiedObjects(pos);
