@@ -110,7 +110,6 @@ public class CanvasManager {
         if (modifiedObjects.isEmpty()) return;
 
         for (Point it : modifiedObjects) {
-            //System.out.print(it + " " + frameCnt);
             //gc.clearRect(it.x * Sprite.SCALED_SIZE, it.y * Sprite.SCALED_SIZE, Sprite.SCALED_SIZE, Sprite.SCALED_SIZE);
             stillObjects[(int)it.x][(int)it.y].get(stillObjects[(int)it.x][(int)it.y].size() - 1).render(gc);
         }

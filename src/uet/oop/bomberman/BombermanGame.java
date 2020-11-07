@@ -38,7 +38,6 @@ public class BombermanGame extends Application {
             @Override
             public void handle(long l) {
                 canvasManager.render_modified_entities();
-                System.out.println(System.currentTimeMillis() - canvasManager.getLastRenderTime());
             }
         };
         timer.start();
