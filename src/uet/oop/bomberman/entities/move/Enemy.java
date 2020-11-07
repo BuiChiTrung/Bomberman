@@ -1,10 +1,10 @@
-package uet.oop.bomberman.entities;
+package uet.oop.bomberman.entities.move;
 
 import javafx.scene.image.Image;
 
-public class Enemy extends Entity {
+public class Enemy extends MovingEntity {
 
-    public Enemy(int x, int y, Image img) {
+    public Enemy(double x, double y, Image img) {
         super(x, y, img);
     }
 
@@ -15,13 +15,13 @@ public class Enemy extends Entity {
 }
 
 class Balloon extends Enemy {
-    public Balloon(int x, int y, Image img) {
+    public Balloon(double x, double y, Image img) {
         super(x, y, img);
     }
 }
 
 class Oneal extends Enemy {
-    public Oneal(int x, int y, Image img) {
+    public Oneal(double x, double y, Image img) {
         super(x, y, img);
     }
 }
