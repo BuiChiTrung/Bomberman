@@ -79,8 +79,7 @@ public class CanvasManager {
                             stillObjects[x][y].add(new Brick(x, y, Sprite.brick.getFxImage()));
                             break;
                         case 'p':
-                            BombermanGame.bomber = new Bomber(x, y, Sprite.player_right_0.getFxImage());
-                            moveObjects.add(BombermanGame.bomber);
+                            moveObjects.add(Bomber.INSTANCE);
                             break;
                         case '1':
                             moveObjects.add(new Balloon(x, y, Sprite.balloom_right0.getFxImage()));

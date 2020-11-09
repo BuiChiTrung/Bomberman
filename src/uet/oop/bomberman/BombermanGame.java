@@ -13,7 +13,6 @@ import uet.oop.bomberman.timeline.CanvasManager;
 
 
 public class BombermanGame extends Application {
-    public static Bomber bomber;
     private CanvasManager canvasManager = new CanvasManager();
 
     public static void main(String[] args) {
@@ -51,7 +50,7 @@ public class BombermanGame extends Application {
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                bomber.move(event.getCode());
+                Bomber.INSTANCE.move(event.getCode());
             }
         });
     }

@@ -32,7 +32,9 @@ public class Bomber extends MovingEntity {
 
     };
 
-    public Bomber(double x, double y, Image img) {
+    public static final Bomber INSTANCE = new Bomber(1, 1, Sprite.player_right_0.getFxImage());
+
+    private Bomber(double x, double y, Image img) {
         super( x, y, img);
         velocity = 0.125;
         tryStep = new double[]{0, -velocity, velocity};
