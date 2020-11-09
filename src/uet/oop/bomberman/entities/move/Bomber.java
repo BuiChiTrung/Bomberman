@@ -3,13 +3,12 @@ package uet.oop.bomberman.entities.move;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import uet.oop.bomberman.graphics.Sprite;
-import uet.oop.bomberman.timeline.CanvasManager;
 
 public class Bomber extends MovingEntity {
-    private static final int PRESS_TIME_TO_CHANGE_IMG = 1;
+    private static final int PRESS_TIME_TO_CHANGE_IMG = 5;
     private static double[] tryStep;
 
-    private static Image[] img_state = {
+    private static Image[] imgState = {
             // 0 -> 2
             Sprite.player_up_0.getFxImage(),
             Sprite.player_up_1.getFxImage(),
@@ -35,49 +34,36 @@ public class Bomber extends MovingEntity {
 
     public Bomber(double x, double y, Image img) {
         super( x, y, img);
-        velocity = 0.25;
+        velocity = 0.125;
         tryStep = new double[]{0, -velocity, velocity};
     }
 
     @Override
-    public void update() {
-
-    }
+    public void update() {}
 
     public void move(KeyCode eventDirection) {
-        if (System.currentTimeMillis() - CanvasManager.lastRenderTime < 25 && eventDirection == direct) {
-            return;
-        }
-        addToModifiedObjects(pos);
+        // make bomber move slower.
+        //if (System.currentTimeMillis() - CanvasManager.lastRenderTime < 25 && eventDirection == direct) {
+        //    return;
+        //}
 
+        // render again old pos and new pos of bomber in canvas by adding to modified list
+        addToModifiedObjects(pos);
+        updateDirectAndStepInDirect(eventDirection);
+        updatePos(eventDirection);
+        updateImg();
+        addToModifiedObjects(pos);
+    }
+
+    protected void updateDirectAndStepInDirect(KeyCode eventDirection) {
         if (eventDirection != direct)
             stepInDirect = 0;
         else
-            stepInDirect = (stepInDirect + 1) % (PRESS_TIME_TO_CHANGE_IMG * 3);
+            stepInDirect = (stepInDirect + 1) % (PRESS_TIME_TO_CHANGE_IMG * NUMBER_OF_IMG_IN_ONE_DIRECTION);
         direct = eventDirection;
-
-        switch (eventDirection) {
-            case UP:
-                moveUp();
-                img = img_state[0 + stepInDirect / PRESS_TIME_TO_CHANGE_IMG];
-                break;
-            case LEFT:
-                moveLeft();
-                img = img_state[3 + stepInDirect / PRESS_TIME_TO_CHANGE_IMG];
-                break;
-            case DOWN:
-                moveDown();
-                img = img_state[6 + stepInDirect / PRESS_TIME_TO_CHANGE_IMG];
-                break;
-            case RIGHT:
-                moveRight();
-                img = img_state[9 + stepInDirect / PRESS_TIME_TO_CHANGE_IMG];
-                break;
-        }
-        addToModifiedObjects(pos);
     }
 
-    private void moveUp() {
+    protected void moveUp() {
         for (double stepX : tryStep)
             if (!hasObstacle(pos.x + stepX, pos.y - velocity)) {
                 pos.x = pos.x + stepX;
@@ -86,7 +72,7 @@ public class Bomber extends MovingEntity {
             }
     }
 
-    private void moveLeft() {
+    protected void moveLeft() {
         for (double stepY : tryStep)
             if (!hasObstacle(pos.x - velocity, pos.y + stepY)) {
                 pos.x = pos.x - velocity;
@@ -95,7 +81,7 @@ public class Bomber extends MovingEntity {
             }
     }
 
-    private void moveDown() {
+    protected void moveDown() {
         for (double stepX : tryStep)
             if (!hasObstacle(pos.x + stepX, pos.y + velocity)) {
                 pos.x = pos.x + stepX;
@@ -104,12 +90,31 @@ public class Bomber extends MovingEntity {
             }
     }
 
-    private void moveRight() {
+    protected void moveRight() {
         for (double stepY : tryStep)
             if (!hasObstacle(pos.x + velocity, pos.y + stepY)) {
                 pos.x = pos.x + velocity;
                 pos.y = pos.y + stepY;
                 return;
             }
+    }
+
+    @Override
+    protected void updateImg() {
+       switch (direct) {
+           case UP:
+               imgIndex = 0;
+               break;
+           case LEFT:
+               imgIndex = 3;
+               break;
+           case DOWN:
+               imgIndex = 6;
+               break;
+           case RIGHT:
+               imgIndex = 9;
+               break;
+       }
+       img = imgState[imgIndex + stepInDirect / PRESS_TIME_TO_CHANGE_IMG];
     }
 }

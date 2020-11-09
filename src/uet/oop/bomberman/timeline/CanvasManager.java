@@ -5,8 +5,13 @@ import javafx.scene.canvas.GraphicsContext;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.entities.move.Bomber;
-import uet.oop.bomberman.entities.move.Enemy;
+import uet.oop.bomberman.entities.move.MovingEntity;
+import uet.oop.bomberman.entities.move.enemy.Balloon;
+import uet.oop.bomberman.entities.move.enemy.Oneal;
 import uet.oop.bomberman.entities.still.*;
+import uet.oop.bomberman.entities.still.item.BombItem;
+import uet.oop.bomberman.entities.still.item.FlameItem;
+import uet.oop.bomberman.entities.still.item.SpeedItem;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.io.File;
@@ -26,8 +31,8 @@ public class CanvasManager {
     public static long lastRenderTime;
 
     // 2D array contains arraylist
-    public static ArrayList<Entity>[][] stillObjects = new ArrayList[WIDTH][HEIGHT];
-    public static List<Entity> moveObjects =  new ArrayList<>();
+    public static ArrayList<StillEntity>[][] stillObjects = new ArrayList[WIDTH][HEIGHT];
+    public static List<MovingEntity> moveObjects =  new ArrayList<>();
     public static List<Point> modifiedObjects = new ArrayList<>();
 
     public Canvas getCanvas() {
@@ -78,10 +83,10 @@ public class CanvasManager {
                             moveObjects.add(BombermanGame.bomber);
                             break;
                         case '1':
-                            moveObjects.add(new Enemy(x, y, Sprite.balloom_right1.getFxImage()));
+                            moveObjects.add(new Balloon(x, y, Sprite.balloom_right0.getFxImage()));
                             break;
                         case '2':
-                            moveObjects.add(new Enemy(x, y, Sprite.oneal_right1.getFxImage()));
+                            moveObjects.add(new Oneal(x, y, Sprite.oneal_right0.getFxImage()));
                             break;
                     }
                 }
