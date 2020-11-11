@@ -112,15 +112,4 @@ public abstract class MovingEntity extends Entity {
 
         return standingCells;
     }
-
-    /**
-     * khi nhân vật di chuyển sẽ có một số ô bị thay đổi, cần add vào list để frame sau render lại
-     */
-    public void addToModifiedObjects(Point pos) {
-        ArrayList<Point> standingCells = getStandingCells(pos.x, pos.y);
-
-        for (Point it: standingCells) {
-            CanvasManager.modifiedObjects.add(it);
-        }
-    }
 }

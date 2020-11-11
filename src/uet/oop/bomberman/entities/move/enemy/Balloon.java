@@ -33,11 +33,9 @@ public class Balloon extends Enemy {
 
         }
 
-        addToModifiedObjects(pos);
         updatePos(direct);
         updateDirectAndStepInDirect();
         updateImg();
-        addToModifiedObjects(pos);
 
         lastChange = System.currentTimeMillis();
     }
@@ -70,7 +68,8 @@ public class Balloon extends Enemy {
     protected void updateImg() {
         if (direct == KeyCode.LEFT) imgIndex = 0;
         else if (direct == KeyCode.RIGHT) imgIndex = 3;
-        img = imgState[imgIndex + (stepInDirect % (MOVE_TIME_TO_CHANGE_IMG * NUMBER_OF_IMG_IN_ONE_DIRECTION)) / MOVE_TIME_TO_CHANGE_IMG];
+        img = imgState[imgIndex +
+                (stepInDirect % (MOVE_TIME_TO_CHANGE_IMG * NUMBER_OF_IMG_IN_ONE_DIRECTION)) / MOVE_TIME_TO_CHANGE_IMG];
     }
 
 

@@ -32,14 +32,13 @@ public class BombermanGame extends Application {
 
         addEventHandler(scene);
         canvasManager.createMap();
-        canvasManager.render_all_entities();
 
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
                 for (MovingEntity moveObject : CanvasManager.moveObjects)
                     moveObject.update();
-                canvasManager.render_modified_entities();
+                canvasManager.render_all_entities();
             }
         };
 

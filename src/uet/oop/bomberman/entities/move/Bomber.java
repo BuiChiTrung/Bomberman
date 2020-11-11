@@ -49,12 +49,9 @@ public class Bomber extends MovingEntity {
         //    return;
         //}
 
-        // render again old pos and new pos of bomber in canvas by adding to modified list
-        addToModifiedObjects(pos);
         updateDirectAndStepInDirect(eventDirection);
         updatePos(eventDirection);
         updateImg();
-        addToModifiedObjects(pos);
     }
 
     protected void updateDirectAndStepInDirect(KeyCode eventDirection) {
