@@ -51,7 +51,6 @@ public class Balloon extends Enemy {
             if (stepInDirect % moveTimeToCrossOneCell == 0 && stepInDirect / moveTimeToCrossOneCell >= 3) {
                 Random changeDirect = new Random();
                 if (changeDirect.nextInt(3) >= 2) {
-                    System.out.println("hahah");
                     chooseNewDirect();
                 }
             }

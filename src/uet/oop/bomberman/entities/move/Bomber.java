@@ -37,18 +37,13 @@ public class Bomber extends MovingEntity {
     private Bomber(double x, double y, Image img) {
         super( x, y, img);
         velocity = 0.125;
-        tryStep = new double[]{0, -velocity, velocity};
+        tryStep = new double[]{0, -velocity * 2, velocity * 2, -velocity, velocity};
     }
 
     @Override
     public void update() {}
 
     public void move(KeyCode eventDirection) {
-        // make bomber move slower.
-        //if (System.currentTimeMillis() - CanvasManager.lastRenderTime < 25 && eventDirection == direct) {
-        //    return;
-        //}
-
         updateDirectAndStepInDirect(eventDirection);
         updatePos(eventDirection);
         updateImg();
