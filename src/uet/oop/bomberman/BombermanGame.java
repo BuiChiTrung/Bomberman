@@ -8,11 +8,12 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import uet.oop.bomberman.entities.move.Bomber;
+import uet.oop.bomberman.entities.move.MovingEntity;
 import uet.oop.bomberman.timeline.CanvasManager;
+import uet.oop.bomberman.timeline.Container;
 
 
 public class BombermanGame extends Application {
-    public static Bomber bomber;
     private CanvasManager canvasManager = new CanvasManager();
 
     public static void main(String[] args) {
@@ -32,14 +33,16 @@ public class BombermanGame extends Application {
 
         addEventHandler(scene);
         canvasManager.createMap();
-        canvasManager.render_all_entities();
 
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
-                canvasManager.render_modified_entities();
+                Container.enemy.forEach(enemy -> enemy.move());
+                Container.enemy.forEach(enemy -> enemy.changeDirection());
+                canvasManager.render_all_entities();
             }
         };
+
         timer.start();
     }
 
@@ -47,7 +50,7 @@ public class BombermanGame extends Application {
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                bomber.move(event.getCode());
+                Container.bomber.handle(event.getCode());
             }
         });
     }

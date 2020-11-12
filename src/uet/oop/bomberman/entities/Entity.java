@@ -21,13 +21,7 @@ public abstract class Entity {
      * allow changing background color of png image
      */
     public void render(GraphicsContext gc) {
-        SnapshotParameters params = new SnapshotParameters();
-        params.setFill(Color.TRANSPARENT);
-
-        ImageView iv = new ImageView(img);
-        Image base = iv.snapshot(params, null);
-
-        gc.drawImage(base, pos.x * Sprite.SCALED_SIZE, pos.y * Sprite.SCALED_SIZE);
+        gc.drawImage(img, pos.x * Sprite.SCALED_SIZE, pos.y * Sprite.SCALED_SIZE);
     }
     public abstract void update();
 }

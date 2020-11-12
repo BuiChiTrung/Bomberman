@@ -13,6 +13,7 @@ import uet.oop.bomberman.entities.still.Brick;
 import uet.oop.bomberman.entities.still.Wall;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.timeline.CanvasManager;
+import uet.oop.bomberman.timeline.Container;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,10 +22,16 @@ import static java.lang.Math.floor;
 import static javafx.scene.input.KeyCode.RIGHT;
 
 // moving object: bomber, enemy
-public class MovingEntity extends Entity {
-    protected KeyCode direct = RIGHT; // manage direction of object
-    protected int stepInDirect; // số bước liên tiếp đi theo cùng một hướng lấy mod 3 (nếu rẽ => reset về 0)
+public abstract class MovingEntity extends Entity {
+
+    protected static KeyCode[] directList = {KeyCode.UP, KeyCode.LEFT, KeyCode.DOWN, KeyCode.RIGHT};
+    protected KeyCode direct = RIGHT;       // manage direction of object
+    protected int stepInDirect;             // số bước liên tiếp đi theo cùng một hướng lấy mod 3 (nếu rẽ => reset về 0)
     protected double velocity;
+
+    public KeyCode getDirect() {
+        return direct;
+    }
 
     public MovingEntity(double x, double y, Image img) {
         super(x, y, img);
@@ -33,6 +40,22 @@ public class MovingEntity extends Entity {
     @Override
     public void update() {
 
+    }
+    /**
+     * check vị trí đang đứng có vật cản nào ko
+     */
+    public boolean hasObstacle(double x, double y) {
+        if (x < 0 || x > CanvasManager.WIDTH) return true;
+        if (y < 0 || y > CanvasManager.HEIGHT) return true;
+
+        ArrayList<Point> standingCells = getStandingCells(x, y);
+
+        for (Point it : standingCells) {
+            Entity lastEntity = Container.Objects[(int)it.x][(int)it.y].get(Container.Objects[(int)it.x][(int)it.y].size() - 1);
+            if (lastEntity instanceof Brick || lastEntity instanceof Wall) return true;
+        }
+
+        return false;
     }
 
     /**
@@ -59,33 +82,5 @@ public class MovingEntity extends Entity {
         }
 
         return standingCells;
-    }
-
-    /**
-     * check vị trí đang đứng có vật cản nào ko
-     */
-    public boolean hasObstacle(double x, double y) {
-        if (x < 0 || x > CanvasManager.WIDTH) return true;
-        if (y < 0 || y > CanvasManager.HEIGHT) return true;
-
-        ArrayList<Point> standingCells = getStandingCells(x, y);
-
-        for (Point it : standingCells) {
-            Entity lastEntity = CanvasManager.stillObjects[(int)it.x][(int)it.y].get(CanvasManager.stillObjects[(int)it.x][(int)it.y].size() - 1);
-            if (lastEntity instanceof Brick || lastEntity instanceof Wall) return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * khi nhân vật di chuyển sẽ có một số ô bị thay đổi, cần add vào list để frame sau render lại
-     */
-    public void addToModifiedObjects(Point pos) {
-        ArrayList<Point> standingCells = getStandingCells(pos.x, pos.y);
-
-        for (Point it: standingCells) {
-            CanvasManager.modifiedObjects.add(it);
-        }
     }
 }
