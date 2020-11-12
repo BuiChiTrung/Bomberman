@@ -1,7 +1,9 @@
 package uet.oop.bomberman.entities.move.enemy;
 
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
+import uet.oop.bomberman.entities.Point;
+import uet.oop.bomberman.entities.move.Bomber;
+import uet.oop.bomberman.entities.move.Direction;
 import uet.oop.bomberman.entities.move.MovingEntity;
 
 import java.util.Random;
@@ -45,6 +47,26 @@ public abstract class Enemy extends MovingEntity {
         if (!hasObstacle(pos.x + velocity, pos.y)) {
             collide = false;
             pos.x = pos.x + velocity;
+        }
+    }
+
+    protected void chooseRandomDirect() {
+        int randomIndexInDirectList = new Random().nextInt(4);
+        direct = Direction.directions[randomIndexInDirectList].getDirect();
+        stepInDirect = 0;
+    }
+
+    /**
+     * choose direct which decrease manhattan distance to bomber
+     */
+    protected void chooseAttackDirect() {
+        double currentDistance = pos.distance(Bomber.INSTANCE.getPos());
+        for (Direction dir : Direction.directions){
+            Point tryPos = new Point(pos.x + velocity * dir.getTranslateX(), pos.y + velocity * dir.getTranslateY());
+            if (!hasObstacle(tryPos.x, tryPos.y) && tryPos.distance(Bomber.INSTANCE.getPos()) < currentDistance) {
+                direct = dir.getDirect();
+                return;
+            }
         }
     }
 }

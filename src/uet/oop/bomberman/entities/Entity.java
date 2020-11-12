@@ -17,6 +17,14 @@ public abstract class Entity {
         this.img = img;
     }
 
+    public Point getPos() {
+        return pos;
+    }
+
+    public Image getImg() {
+        return img;
+    }
+
     /**
      * allow changing background color of png image
      */

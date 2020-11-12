@@ -40,6 +40,8 @@ public class Bomber extends MovingEntity {
         tryStep = new double[]{0, -velocity * 2, velocity * 2, -velocity, velocity};
     }
 
+
+
     @Override
     public void update() {}
 
