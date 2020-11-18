@@ -36,7 +36,7 @@ public class Bomber extends MovingEntity {
 
     public Bomber(double x, double y, Image img) {
         super( x, y, img);
-        velocity = 0.125;
+        velocity = 0.125 * 2;
         tryStep = new double[]{0, -velocity * 2, velocity * 2, -velocity, velocity};
     }
 

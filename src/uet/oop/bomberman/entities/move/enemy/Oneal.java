@@ -47,7 +47,9 @@ public class Oneal extends Enemy {
     }
     private Point nextDestination = pos;
     public void chase() {
+        System.out.println(pos.x + " " + pos.y + " " + nextDestination.x + " " + nextDestination.y);
         if(nextDestination.isEquals(pos)) {
+            pos = getMostAreaStandingCells();
             nextDestination = Util.getNextDestination(pos, Util.getDirection(Container.directionToBomber[(int)pos.x][(int)pos.y]));
             updateDirectionAndStepInDirect(Util.getDirection(Container.directionToBomber[(int)pos.x][(int)pos.y]));
         }
