@@ -4,6 +4,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import uet.oop.bomberman.entities.Point;
+import uet.oop.bomberman.entities.still.Brick;
+import uet.oop.bomberman.entities.still.Wall;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.timeline.Container;
 import uet.oop.bomberman.util.Util;
@@ -47,8 +49,8 @@ public class Oneal extends Enemy {
     }
     private Point nextDestination = pos;
     public void chase() {
-        System.out.println(pos.x + " " + pos.y + " " + nextDestination.x + " " + nextDestination.y);
-        if(nextDestination.isEquals(pos)) {
+        System.out.println(pos.x + " " + pos.y + " " + nextDestination.x + " " + nextDestination.y + " " + Util.getDirectionId(direct));
+        if(nextDestination.isEquals(pos) || Container.Objects[(int)nextDestination.x][(int)nextDestination.y].get(Container.Objects[(int)nextDestination.x][(int)nextDestination.y].size() - 1) instanceof Brick || Container.Objects[(int)nextDestination.x][(int)nextDestination.y].get(Container.Objects[(int)nextDestination.x][(int)nextDestination.y].size() - 1) instanceof Wall) {
             pos = getMostAreaStandingCells();
             nextDestination = Util.getNextDestination(pos, Util.getDirection(Container.directionToBomber[(int)pos.x][(int)pos.y]));
             updateDirectionAndStepInDirect(Util.getDirection(Container.directionToBomber[(int)pos.x][(int)pos.y]));

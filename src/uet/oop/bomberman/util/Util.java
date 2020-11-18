@@ -72,6 +72,12 @@ public class Util {
         catch(Exception ex) {
             System.out.println("BFS Error");
         }
+        for(int i = 0; i < CanvasManager.ROW; i++) {
+            for(int j = 0; j < CanvasManager.COLUMN; j++) {
+                System.out.print(Container.directionToBomber[i][j]);
+            }
+            System.out.println();
+        }
     }
 
     public static Point getNextDestination(Point pos, KeyCode key) {
