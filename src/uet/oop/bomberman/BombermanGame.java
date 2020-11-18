@@ -37,9 +37,9 @@ public class BombermanGame extends Application {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
+                Util.bfsFromBomber();
                 Container.enemy.forEach(enemy -> enemy.move());
                 canvasManager.render_all_entities();
-                Util.bfsFromBomber();
             }
         };
 

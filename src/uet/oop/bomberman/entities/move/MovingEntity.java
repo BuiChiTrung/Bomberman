@@ -25,7 +25,7 @@ import static javafx.scene.input.KeyCode.*;
 public abstract class MovingEntity extends Entity {
 
     protected static KeyCode[] directList = {UP, LEFT, DOWN, RIGHT};
-    protected KeyCode direct = RIGHT;       // manage direction of object
+    protected KeyCode direction = RIGHT;       // manage direction of object
     protected int stepInDirect;             // số bước liên tiếp đi theo cùng một hướng
     protected double velocity;
 
@@ -80,6 +80,9 @@ public abstract class MovingEntity extends Entity {
         return standingCells;
     }
 
+    /**
+     * Trả về ô mà Entity chiếm diện tích nhiều nhất
+     */
     public Point getMostAreaStandingCells(){
         if(pos.y % 1 == 0) {
             if(pos.x - (int)pos.x <= 0.5) {

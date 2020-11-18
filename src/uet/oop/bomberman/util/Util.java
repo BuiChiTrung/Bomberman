@@ -38,6 +38,9 @@ public class Util {
         return RIGHT;
     }
 
+    /**
+     * BFS từ vị trí của bomber
+     */
     public static void bfsFromBomber() {
         Point move[] = {new Point(0, -1), new Point(-1, 0), new Point(0, 1), new Point(1, 0)};
         for(int i = 0; i < CanvasManager.ROW; i++) {
@@ -72,16 +75,19 @@ public class Util {
         catch(Exception ex) {
             System.out.println("BFS Error");
         }
-        for(int i = 0; i < CanvasManager.ROW; i++) {
-            for(int j = 0; j < CanvasManager.COLUMN; j++) {
-                System.out.print(Container.directionToBomber[i][j]);
-            }
-            System.out.println();
-        }
+//        for(int i = 0; i < CanvasManager.ROW; i++) {
+//            for(int j = 0; j < CanvasManager.COLUMN; j++) {
+//                System.out.print(Container.directionToBomber[i][j]);
+//            }
+//            System.out.println();
+//        }
     }
 
-    public static Point getNextDestination(Point pos, KeyCode key) {
-        switch(key) {
+    /**
+     * Lấy vị trí tiếp theo theo hướng
+     */
+    public static Point getNextDestination(Point pos, KeyCode direction) {
+        switch(direction) {
             case LEFT:
                 return new Point((int)pos.x, (int)pos.y - 1);
             case UP:
@@ -92,5 +98,27 @@ public class Util {
                 return new Point((int)pos.x + 1, (int)pos.y);
         }
         return pos;
+    }
+
+    public static Point getNextPosition(Point pos, KeyCode direction) {
+        switch(direction) {
+            case LEFT:
+                return new Point(pos.x, pos.y - 1);
+            case UP:
+                return new Point(pos.x - 1, pos.y);
+            case RIGHT:
+                return new Point(pos.x, pos.y + 1);
+            case DOWN:
+                return new Point(pos.x + 1, pos.y);
+        }
+        return pos;
+    }
+
+    public static double euclidDistance(Point point1, Point point2) {
+        return Math.sqrt((point1.x - point2.x) * (point1.x - point2.x) + (point1.y - point2.y) * (point1.y - point2.y));
+    }
+
+    public static boolean blocked(Point pos) {
+        return Container.Objects[(int)pos.x][(int)pos.y].get(Container.Objects[(int)pos.x][(int)pos.y].size() - 1) instanceof Brick && Container.Objects[(int)pos.x][(int)pos.y].get(Container.Objects[(int)pos.x][(int)pos.y].size() - 1) instanceof Wall;
     }
 }

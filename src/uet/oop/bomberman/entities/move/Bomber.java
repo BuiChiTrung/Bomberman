@@ -65,11 +65,11 @@ public class Bomber extends MovingEntity {
     }
 
     protected void updateDirectAndStepInDirect(KeyCode eventDirection) {
-        if (eventDirection != direct)
+        if (eventDirection != direction)
             stepInDirect = 0;
         else
             stepInDirect += 1;
-        direct = eventDirection;
+        direction = eventDirection;
     }
 
     protected void moveLeft() {
@@ -113,7 +113,7 @@ public class Bomber extends MovingEntity {
     }
 
     public void render(GraphicsContext gc) {
-        gc.drawImage(img[Util.getDirectionId(direct)][(stepInDirect / NUMBER_OF_MOVE_TO_CHANGE_IMG) % NUMBER_OF_IMG_PER_DIRECTION], pos.y * Sprite.SCALED_SIZE, pos.x * Sprite.SCALED_SIZE);
+        gc.drawImage(img[Util.getDirectionId(direction)][(stepInDirect / NUMBER_OF_MOVE_TO_CHANGE_IMG) % NUMBER_OF_IMG_PER_DIRECTION], pos.y * Sprite.SCALED_SIZE, pos.x * Sprite.SCALED_SIZE);
     }
 
 }

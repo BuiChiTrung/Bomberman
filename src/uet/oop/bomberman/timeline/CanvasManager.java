@@ -47,7 +47,7 @@ public class CanvasManager {
                             Container.Objects[x][y].add(new Wall(x, y, Sprite.wall.getFxImage()));
                             break;
                         case '*':
-                            //Container.Objects[x][y].add(new Brick(x, y, Sprite.brick.getFxImage()));
+                            Container.Objects[x][y].add(new Brick(x, y, Sprite.brick.getFxImage()));
                             break;
                         // Add item roi lay brick de len
                         case 'x':

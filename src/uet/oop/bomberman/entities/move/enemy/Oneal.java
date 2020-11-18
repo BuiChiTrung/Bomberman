@@ -13,6 +13,7 @@ import uet.oop.bomberman.util.Util;
 public class Oneal extends Enemy {
     private static final int NUMBER_OF_MOVE_TO_CHANGE_IMG = 2;
     private static final int NUMBER_OF_IMG_PER_DIRECTION = 3;
+    private static long lastTimeChangeDirection = 0;
 
     private Image img[][] = {
 
@@ -36,11 +37,11 @@ public class Oneal extends Enemy {
     };
 
     protected void updateDirectionAndStepInDirect(KeyCode key) {
-        if (key != direct)
+        if (key != direction)
             stepInDirect = 0;
         else
             stepInDirect += 1;
-        direct = key;
+        direction = key;
     }
 
     public Oneal(double x, double y, Image img) {
@@ -48,8 +49,12 @@ public class Oneal extends Enemy {
         velocity /= 4;
     }
     private Point nextDestination = pos;
+
+    /**
+     * Đuổi theo Bomber.
+     */
     public void chase() {
-        System.out.println(pos.x + " " + pos.y + " " + nextDestination.x + " " + nextDestination.y + " " + Util.getDirectionId(direct));
+        //System.out.println(pos.x + " " + pos.y + " " + nextDestination.x + " " + nextDestination.y + " " + Util.getDirectionId(direct));
         if(nextDestination.isEquals(pos) || Container.Objects[(int)nextDestination.x][(int)nextDestination.y].get(Container.Objects[(int)nextDestination.x][(int)nextDestination.y].size() - 1) instanceof Brick || Container.Objects[(int)nextDestination.x][(int)nextDestination.y].get(Container.Objects[(int)nextDestination.x][(int)nextDestination.y].size() - 1) instanceof Wall) {
             pos = getMostAreaStandingCells();
             nextDestination = Util.getNextDestination(pos, Util.getDirection(Container.directionToBomber[(int)pos.x][(int)pos.y]));
@@ -57,12 +62,35 @@ public class Oneal extends Enemy {
         }
         moveAlongDirection();
     }
+
+    public boolean reachable() {
+        Point mostAreaCell = getMostAreaStandingCells();
+        return Container.directionToBomber[(int)mostAreaCell.x][(int)mostAreaCell.y] != 4;
+    }
+
+    private KeyCode chooseNewDirect() {
+        int directionAsNumber = (int)(Math.random() * ((3 - 0) + 1));
+        return Util.getDirection(directionAsNumber);
+    }
+
+    public void changeDirection() {
+        if(System.currentTimeMillis() - lastTimeChangeDirection > 100) {
+            KeyCode newDirect = chooseNewDirect();
+            updateDirectionAndStepInDirect(newDirect);
+            lastTimeChangeDirection = System.currentTimeMillis();
+        }
+    }
+
     @Override
     public void move() {
+        if(!reachable()) {
+            changeDirection();
+            moveAlongDirection();
+        }
         chase();
     }
 
     public void render(GraphicsContext gc) {
-        gc.drawImage(img[Util.getDirectionId(direct)][(stepInDirect / NUMBER_OF_MOVE_TO_CHANGE_IMG) % NUMBER_OF_IMG_PER_DIRECTION], pos.y * Sprite.SCALED_SIZE, pos.x * Sprite.SCALED_SIZE);
+        gc.drawImage(img[Util.getDirectionId(direction)][(stepInDirect / NUMBER_OF_MOVE_TO_CHANGE_IMG) % NUMBER_OF_IMG_PER_DIRECTION], pos.y * Sprite.SCALED_SIZE, pos.x * Sprite.SCALED_SIZE);
     }
 }

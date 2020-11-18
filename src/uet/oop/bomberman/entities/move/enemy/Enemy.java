@@ -11,7 +11,7 @@ import static javafx.scene.input.KeyCode.*;
 public abstract class Enemy extends MovingEntity {
     private static final double acceptedPass = 0.125;
     private static final double[] tryStep = {0, -acceptedPass * 2, acceptedPass * 2, -acceptedPass, acceptedPass};
-    protected KeyCode direct = RIGHT;
+    protected KeyCode direction = RIGHT;
     public Enemy(double x, double y, Image img) {
         super(x, y, img);
         velocity = 0.125;
@@ -20,7 +20,7 @@ public abstract class Enemy extends MovingEntity {
     public abstract void move();
 
     public void moveAlongDirection() {
-        switch (direct) {
+        switch (direction) {
             case UP:
                 moveUp();
                 break;
