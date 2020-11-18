@@ -18,5 +18,6 @@ public class Container {
 
     public static Bomber bomber;
 
+    //Hướng đi ngắn nhất đến bomber
     public static int[][] directionToBomber = new int[CanvasManager.ROW][CanvasManager.COLUMN];
 }

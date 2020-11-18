@@ -22,11 +22,9 @@ import java.util.Scanner;
 
 public class CanvasManager {
     // window size
-    public static final int WIDTH = 31;
-    public static final int HEIGHT = 13;
     public static final int ROW = 13;
     public static final int COLUMN = 31;
-    private final Canvas canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
+    private final Canvas canvas = new Canvas(Sprite.SCALED_SIZE * COLUMN, Sprite.SCALED_SIZE * ROW);
     private final GraphicsContext gc = canvas.getGraphicsContext2D();
 
     public Canvas getCanvas() {
