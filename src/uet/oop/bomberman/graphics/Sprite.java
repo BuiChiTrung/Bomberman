@@ -11,7 +11,7 @@ import java.nio.IntBuffer;
 public class Sprite {
 
 	public static final int DEFAULT_SIZE = 16;
-	public static final int SCALED_SIZE = DEFAULT_SIZE * 3; // x3 sprite size in _sheet to render
+	public static final int SCALED_SIZE = DEFAULT_SIZE * 2; // x3 sprite size in _sheet to render
 	private static final int TRANSPARENT_COLOR = 0xffff00ff;
 	public final int SIZE; // default size for all sprites - 16
 	private int _x, _y; // coordinate of sprite in _sheet

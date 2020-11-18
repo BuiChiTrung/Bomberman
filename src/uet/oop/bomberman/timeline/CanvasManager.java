@@ -1,5 +1,6 @@
 package uet.oop.bomberman.timeline;
 
+import com.sun.rowset.internal.Row;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import uet.oop.bomberman.entities.move.Bomber;
@@ -23,7 +24,8 @@ public class CanvasManager {
     // window size
     public static final int WIDTH = 31;
     public static final int HEIGHT = 13;
-
+    public static final int ROW = 13;
+    public static final int COLUMN = 31;
     private final Canvas canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
     private final GraphicsContext gc = canvas.getGraphicsContext2D();
 
@@ -35,19 +37,19 @@ public class CanvasManager {
         try {
             File map = new File("./res/levels/Level1.txt");
             Scanner sc = new Scanner(map);
-            for (int y = 0; y < HEIGHT; ++y) {
+            for (int x = 0; x < ROW; ++x) {
                 String line = sc.nextLine();
-                for (int x = 0; x < WIDTH; ++x) {
+                for (int y = 0; y < COLUMN; ++y) {
                     // Add grass to all cell
                     Container.Objects[x][y] = new ArrayList<>();
                     Container.Objects[x][y].add(new Grass(x, y, Sprite.grass.getFxImage()));
 
-                    switch (line.charAt(x)) {
+                    switch (line.charAt(y)) {
                         case '#':
                             Container.Objects[x][y].add(new Wall(x, y, Sprite.wall.getFxImage()));
                             break;
                         case '*':
-                            Container.Objects[x][y].add(new Brick(x, y, Sprite.brick.getFxImage()));
+                            //Container.Objects[x][y].add(new Brick(x, y, Sprite.brick.getFxImage()));
                             break;
                         // Add item roi lay brick de len
                         case 'x':
@@ -87,8 +89,8 @@ public class CanvasManager {
      * render only when the game starts
      */
     public void render_all_entities() {
-        for (int x = 0; x < WIDTH; ++x)
-            for (int y = 0; y < HEIGHT; ++y)
+        for (int x = 0; x < ROW; ++x)
+            for (int y = 0; y < COLUMN; ++y)
                 Container.Objects[x][y].get(Container.Objects[x][y].size() - 1).render(gc);
         Container.enemy.forEach(g -> g.render(gc));
         Container.bomber.render(gc);

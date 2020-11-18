@@ -6,66 +6,72 @@ import uet.oop.bomberman.entities.move.MovingEntity;
 
 import java.util.Random;
 
+import static javafx.scene.input.KeyCode.*;
+
 public abstract class Enemy extends MovingEntity {
-    protected static int moveTimeToCrossOneCell;
-    protected static final int NUMBER_OF_MOVE_TO_CHANGE_IMG = 2;
-    protected static final int NUMBER_OF_IMG_PER_DIRECTION = 3;
     private static final double acceptedPass = 0.125;
     private static final double[] tryStep = {0, -acceptedPass * 2, acceptedPass * 2, -acceptedPass, acceptedPass};
-
-    protected KeyCode direct = KeyCode.RIGHT;
-
+    protected KeyCode direct = RIGHT;
     public Enemy(double x, double y, Image img) {
         super(x, y, img);
-        velocity = 0.125 / 4;
+        velocity = 0.125;
     }
 
     public abstract void move();
 
-    public abstract void changeDirection();
+    public void moveAlongDirection() {
+        switch (direct) {
+            case UP:
+                moveUp();
+                break;
+            case LEFT:
+                moveLeft();
+                break;
+            case DOWN:
+                moveDown();
+                break;
+            case RIGHT:
+                moveRight();
+                break;
+        }
+    }
 
-    protected boolean moveUp() {
+    protected void moveLeft() {
         for (double stepX : tryStep) {
             if (!hasObstacle(pos.x + stepX, pos.y - velocity)) {
                 pos.x = pos.x + stepX;
                 pos.y = pos.y - velocity;
-                return true;
             }
         }
-        return false;
     }
 
-    protected boolean moveLeft() {
+    protected void moveUp() {
         for (double stepY : tryStep) {
             if (!hasObstacle(pos.x - velocity, pos.y + stepY)) {
                 pos.x = pos.x - velocity;
                 pos.y = pos.y + stepY;
-                return true;
             }
         }
-        return false;
     }
 
-    protected boolean moveDown() {
+    protected void moveRight() {
         for (double stepX : tryStep) {
             if (!hasObstacle(pos.x + stepX, pos.y + velocity)) {
                 pos.x = pos.x + stepX;
                 pos.y = pos.y + velocity;
-                return true;
+                return ;
             }
         }
-        return false;
     }
 
-    protected boolean moveRight() {
+    protected void moveDown() {
         for (double stepY : tryStep) {
             if (!hasObstacle(pos.x + velocity, pos.y + stepY)) {
                 pos.x = pos.x + velocity;
                 pos.y = pos.y + stepY;
-                return true;
+                return ;
             }
         }
-        return false;
     }
 }
 

@@ -18,20 +18,16 @@ import uet.oop.bomberman.timeline.Container;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.lang.Math.floor;
-import static javafx.scene.input.KeyCode.RIGHT;
+import static java.lang.Math.*;
+import static javafx.scene.input.KeyCode.*;
 
 // moving object: bomber, enemy
 public abstract class MovingEntity extends Entity {
 
-    protected static KeyCode[] directList = {KeyCode.UP, KeyCode.LEFT, KeyCode.DOWN, KeyCode.RIGHT};
+    protected static KeyCode[] directList = {UP, LEFT, DOWN, RIGHT};
     protected KeyCode direct = RIGHT;       // manage direction of object
-    protected int stepInDirect;             // số bước liên tiếp đi theo cùng một hướng lấy mod 3 (nếu rẽ => reset về 0)
+    protected int stepInDirect;             // số bước liên tiếp đi theo cùng một hướng
     protected double velocity;
-
-    public KeyCode getDirect() {
-        return direct;
-    }
 
     public MovingEntity(double x, double y, Image img) {
         super(x, y, img);
@@ -45,8 +41,8 @@ public abstract class MovingEntity extends Entity {
      * check vị trí đang đứng có vật cản nào ko
      */
     public boolean hasObstacle(double x, double y) {
-        if (x < 0 || x > CanvasManager.WIDTH) return true;
-        if (y < 0 || y > CanvasManager.HEIGHT) return true;
+        if (x < 0 || x > CanvasManager.ROW) return true;
+        if (y < 0 || y > CanvasManager.COLUMN) return true;
 
         ArrayList<Point> standingCells = getStandingCells(x, y);
 
@@ -82,5 +78,22 @@ public abstract class MovingEntity extends Entity {
         }
 
         return standingCells;
+    }
+
+    public Point getMostAreaStandingCells(){
+        if(pos.y % 1 == 0) {
+            if(pos.x - (int)pos.x <= 0.5) {
+                return new Point(floor(pos.x), pos.y);
+            }
+            else {
+                return new Point(ceil(pos.x), pos.y);
+            }
+        }
+        if(pos.y - (int)pos.y <= 0.5) {
+            return new Point(pos.x, floor(pos.y));
+        }
+        else {
+            return new Point(pos.x, ceil(pos.y));
+        }
     }
 }

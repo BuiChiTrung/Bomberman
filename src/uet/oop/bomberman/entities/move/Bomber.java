@@ -10,8 +10,7 @@ public class Bomber extends MovingEntity {
 
     private static final int NUMBER_OF_MOVE_TO_CHANGE_IMG = 2;
     private static final int NUMBER_OF_IMG_PER_DIRECTION = 3;
-    private static final double acceptedPass = 0.125;
-    private static final double[] tryStep = {0, -acceptedPass * 2, acceptedPass * 2, -acceptedPass, acceptedPass};
+    private static double[] tryStep;
     private static final Image[][] img = {
             //LEFT:0
             {Sprite.player_left_0.getFxImage(),
@@ -38,6 +37,7 @@ public class Bomber extends MovingEntity {
     public Bomber(double x, double y, Image img) {
         super( x, y, img);
         velocity = 0.125;
+        tryStep = new double[]{0, -velocity * 2, velocity * 2, -velocity, velocity};
     }
 
     public void handle(KeyCode key) {
@@ -49,17 +49,17 @@ public class Bomber extends MovingEntity {
 
     public void move(KeyCode eventDirection) {
         switch (eventDirection) {
-            case UP:
-                moveUp();
-                break;
             case LEFT:
                 moveLeft();
                 break;
-            case DOWN:
-                moveDown();
+            case UP:
+                moveUp();
                 break;
             case RIGHT:
                 moveRight();
+                break;
+            case DOWN:
+                moveDown();
                 break;
         }
     }
@@ -72,7 +72,7 @@ public class Bomber extends MovingEntity {
         direct = eventDirection;
     }
 
-    protected void moveUp() {
+    protected void moveLeft() {
         for (double stepX : tryStep) {
             if (!hasObstacle(pos.x + stepX, pos.y - velocity)) {
                 pos.x = pos.x + stepX;
@@ -82,7 +82,7 @@ public class Bomber extends MovingEntity {
         }
     }
 
-    protected void moveLeft() {
+    protected void moveUp() {
         for (double stepY : tryStep) {
             if (!hasObstacle(pos.x - velocity, pos.y + stepY)) {
                 pos.x = pos.x - velocity;
@@ -92,7 +92,7 @@ public class Bomber extends MovingEntity {
         }
     }
 
-    protected void moveDown() {
+    protected void moveRight() {
         for (double stepX : tryStep) {
             if (!hasObstacle(pos.x + stepX, pos.y + velocity)) {
                 pos.x = pos.x + stepX;
@@ -102,7 +102,7 @@ public class Bomber extends MovingEntity {
         }
     }
 
-    protected void moveRight() {
+    protected void moveDown() {
         for (double stepY : tryStep) {
             if (!hasObstacle(pos.x + velocity, pos.y + stepY)) {
                 pos.x = pos.x + velocity;
@@ -113,7 +113,7 @@ public class Bomber extends MovingEntity {
     }
 
     public void render(GraphicsContext gc) {
-        gc.drawImage(img[Util.getDirection(direct)][(stepInDirect / NUMBER_OF_MOVE_TO_CHANGE_IMG) % NUMBER_OF_IMG_PER_DIRECTION], pos.x * Sprite.SCALED_SIZE, pos.y * Sprite.SCALED_SIZE);
+        gc.drawImage(img[Util.getDirectionId(direct)][(stepInDirect / NUMBER_OF_MOVE_TO_CHANGE_IMG) % NUMBER_OF_IMG_PER_DIRECTION], pos.y * Sprite.SCALED_SIZE, pos.x * Sprite.SCALED_SIZE);
     }
 
 }

@@ -12,11 +12,11 @@ import java.util.List;
 
 public class Container {
     // 2D array contains arraylist
-    public static ArrayList<StillEntity>[][] Objects = new ArrayList[CanvasManager.WIDTH][CanvasManager.HEIGHT];
+    public static ArrayList<StillEntity>[][] Objects = new ArrayList[CanvasManager.ROW][CanvasManager.COLUMN];
 
     public static List<Enemy> enemy =  new ArrayList<>();
 
     public static Bomber bomber;
 
-
+    public static int[][] directionToBomber = new int[CanvasManager.ROW][CanvasManager.COLUMN];
 }

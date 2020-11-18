@@ -11,6 +11,7 @@ import uet.oop.bomberman.entities.move.Bomber;
 import uet.oop.bomberman.entities.move.MovingEntity;
 import uet.oop.bomberman.timeline.CanvasManager;
 import uet.oop.bomberman.timeline.Container;
+import uet.oop.bomberman.util.Util;
 
 
 public class BombermanGame extends Application {
@@ -33,13 +34,12 @@ public class BombermanGame extends Application {
 
         addEventHandler(scene);
         canvasManager.createMap();
-
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
                 Container.enemy.forEach(enemy -> enemy.move());
-                Container.enemy.forEach(enemy -> enemy.changeDirection());
                 canvasManager.render_all_entities();
+                Util.bfsFromBomber();
             }
         };
 
