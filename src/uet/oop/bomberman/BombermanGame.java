@@ -38,7 +38,7 @@ public class BombermanGame extends Application {
             @Override
             public void handle(long l) {
                 Util.bfsFromBomber();
-                Container.enemy.forEach(enemy -> enemy.move());
+                //Container.enemy.forEach(enemy -> enemy.move());
                 canvasManager.render_all_entities();
             }
         };

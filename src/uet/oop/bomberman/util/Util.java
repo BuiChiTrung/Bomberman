@@ -1,6 +1,7 @@
 package uet.oop.bomberman.util;
 
 import javafx.scene.input.KeyCode;
+import uet.oop.bomberman.entities.Direction;
 import uet.oop.bomberman.entities.Point;
 import uet.oop.bomberman.entities.still.Brick;
 import uet.oop.bomberman.entities.still.Wall;
@@ -11,33 +12,6 @@ import static javafx.scene.input.KeyCode.*;
 import java.util.LinkedList;
 import java.util.Queue;
 public class Util {
-    public static int getDirectionId(KeyCode key) {
-        switch (key) {
-            case LEFT:
-                return 0;
-            case UP:
-                return 1;
-            case RIGHT:
-                return 2;
-            case DOWN:
-                return 3;
-        }
-        return 0;
-    }
-    public static KeyCode getDirection(int id) {
-        switch (id) {
-            case 0:
-                return LEFT;
-            case 1:
-                return UP;
-            case 2:
-                return RIGHT;
-            case 3:
-                return DOWN;
-        }
-        return RIGHT;
-    }
-
     /**
      * BFS từ vị trí của bomber
      */
@@ -86,32 +60,12 @@ public class Util {
     /**
      * Lấy vị trí tiếp theo theo hướng
      */
-    public static Point getNextDestination(Point pos, KeyCode direction) {
-        switch(direction) {
-            case LEFT:
-                return new Point((int)pos.x, (int)pos.y - 1);
-            case UP:
-                return new Point((int)pos.x - 1, (int)pos.y);
-            case RIGHT:
-                return new Point((int)pos.x, (int)pos.y + 1);
-            case DOWN:
-                return new Point((int)pos.x + 1, (int)pos.y);
-        }
-        return pos;
+    public static Point getNextDestination(Point pos, Direction direction) {
+        return new Point((int)(pos.x + direction.getX()), (int)(pos.y + direction.getY()));
     }
 
-    public static Point getNextPosition(Point pos, KeyCode direction) {
-        switch(direction) {
-            case LEFT:
-                return new Point(pos.x, pos.y - 1);
-            case UP:
-                return new Point(pos.x - 1, pos.y);
-            case RIGHT:
-                return new Point(pos.x, pos.y + 1);
-            case DOWN:
-                return new Point(pos.x + 1, pos.y);
-        }
-        return pos;
+    public static Point getNextPosition(Point pos, Direction direction) {
+        return new Point(pos.x + direction.getX(), pos.y + direction.getY());
     }
 
     public static double euclidDistance(Point point1, Point point2) {

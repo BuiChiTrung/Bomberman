@@ -3,7 +3,9 @@ package uet.oop.bomberman.entities.move;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
+import uet.oop.bomberman.entities.Direction;
 import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.util.DirectionUtil;
 import uet.oop.bomberman.util.Util;
 
 public class Bomber extends MovingEntity {
@@ -36,84 +38,48 @@ public class Bomber extends MovingEntity {
 
     public Bomber(double x, double y, Image img) {
         super( x, y, img);
-        velocity = 0.125 * 2;
+        velocity = 0.125;
         tryStep = new double[]{0, -velocity * 2, velocity * 2, -velocity, velocity};
     }
 
     public void handle(KeyCode key) {
         if(key == KeyCode.RIGHT || key == KeyCode.LEFT || key == KeyCode.UP || key == KeyCode.DOWN) {
-            updateDirectAndStepInDirect(key);
-            move(key);
+            updateDirectAndStepInDirect(DirectionUtil.getDirectionFromKeyCode(key));
+            move();
         }
     }
 
-    public void move(KeyCode eventDirection) {
-        switch (eventDirection) {
-            case LEFT:
-                moveLeft();
-                break;
-            case UP:
-                moveUp();
-                break;
-            case RIGHT:
-                moveRight();
-                break;
-            case DOWN:
-                moveDown();
-                break;
+    public void move() {
+        for (double step : tryStep) {
+            double stepX;
+            double stepY;
+            if(direction.getX() != 0) {
+                stepX = 0;
+                stepY = step;
+            }
+            else {
+                stepX = step;
+                stepY = 0;
+            }
+            if (!hasObstacle(pos.x + stepX + velocity * direction.getX(), pos.y + stepY + velocity * direction.getY())) {
+                pos.x = pos.x + stepX + velocity * direction.getX();
+                pos.y = pos.y + stepY + velocity * direction.getY();
+                System.out.println(pos.x + " " + pos.y);
+                return;
+            }
         }
     }
 
-    protected void updateDirectAndStepInDirect(KeyCode eventDirection) {
-        if (eventDirection != direction)
+    protected void updateDirectAndStepInDirect(Direction newDirection) {
+        if (direction != newDirection)
             stepInDirect = 0;
         else
             stepInDirect += 1;
-        direction = eventDirection;
-    }
-
-    protected void moveLeft() {
-        for (double stepX : tryStep) {
-            if (!hasObstacle(pos.x + stepX, pos.y - velocity)) {
-                pos.x = pos.x + stepX;
-                pos.y = pos.y - velocity;
-                return;
-            }
-        }
-    }
-
-    protected void moveUp() {
-        for (double stepY : tryStep) {
-            if (!hasObstacle(pos.x - velocity, pos.y + stepY)) {
-                pos.x = pos.x - velocity;
-                pos.y = pos.y + stepY;
-                return;
-            }
-        }
-    }
-
-    protected void moveRight() {
-        for (double stepX : tryStep) {
-            if (!hasObstacle(pos.x + stepX, pos.y + velocity)) {
-                pos.x = pos.x + stepX;
-                pos.y = pos.y + velocity;
-                return;
-            }
-        }
-    }
-
-    protected void moveDown() {
-        for (double stepY : tryStep) {
-            if (!hasObstacle(pos.x + velocity, pos.y + stepY)) {
-                pos.x = pos.x + velocity;
-                pos.y = pos.y + stepY;
-                return;
-            }
-        }
+        direction = newDirection;
     }
 
     public void render(GraphicsContext gc) {
-        gc.drawImage(img[Util.getDirectionId(direction)][(stepInDirect / NUMBER_OF_MOVE_TO_CHANGE_IMG) % NUMBER_OF_IMG_PER_DIRECTION], pos.y * Sprite.SCALED_SIZE, pos.x * Sprite.SCALED_SIZE);
+        gc.drawImage(img[DirectionUtil.getDirectionId(direction)][(stepInDirect / NUMBER_OF_MOVE_TO_CHANGE_IMG) % NUMBER_OF_IMG_PER_DIRECTION], pos.y * Sprite.SCALED_SIZE, pos.x * Sprite.SCALED_SIZE);
     }
 
 }

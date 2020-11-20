@@ -7,6 +7,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.entities.Direction;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Point;
 import uet.oop.bomberman.entities.still.Brick;
@@ -24,8 +25,7 @@ import static javafx.scene.input.KeyCode.*;
 // moving object: bomber, enemy
 public abstract class MovingEntity extends Entity {
 
-    protected static KeyCode[] directList = {UP, LEFT, DOWN, RIGHT};
-    protected KeyCode direction = RIGHT;       // manage direction of object
+    protected Direction direction = Direction.RIGHT;       // manage direction of object
     protected int stepInDirect;             // số bước liên tiếp đi theo cùng một hướng
     protected double velocity;
 

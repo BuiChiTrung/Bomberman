@@ -3,7 +3,9 @@ package uet.oop.bomberman.entities.move.enemy;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
+import uet.oop.bomberman.entities.Direction;
 import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.util.DirectionUtil;
 import uet.oop.bomberman.util.Util;
 
 import java.security.Key;
@@ -44,18 +46,10 @@ public class Balloon extends Enemy {
 
     public void changeDirection() {
         if(System.currentTimeMillis() - lastTimeChangeDirection > 500) {
-            KeyCode newDirect = chooseNewDirect();
+            Direction newDirect = chooseNewDirect();
             updateDirectionAndStepInDirect(newDirect);
             lastTimeChangeDirection = System.currentTimeMillis();
         }
-    }
-
-    protected void updateDirectionAndStepInDirect(KeyCode key) {
-        if (key != direction)
-            stepInDirect = 0;
-        else
-            stepInDirect += 1;
-        direction = key;
     }
 
     @Override
@@ -64,12 +58,12 @@ public class Balloon extends Enemy {
         moveAlongDirection();
     }
 
-    private KeyCode chooseNewDirect() {
+    private Direction chooseNewDirect() {
         int directionAsNumber = (int)(Math.random() * ((3 - 0) + 1));
-        return Util.getDirection(directionAsNumber);
+        return DirectionUtil.getDirectionFromId(directionAsNumber);
     }
 
     public void render(GraphicsContext gc) {
-        gc.drawImage(img[Util.getDirectionId(direction)][(stepInDirect / NUMBER_OF_MOVE_TO_CHANGE_IMG) % NUMBER_OF_IMG_PER_DIRECTION], pos.y * Sprite.SCALED_SIZE, pos.x * Sprite.SCALED_SIZE);
+        gc.drawImage(img[DirectionUtil.getDirectionId(direction)][(stepInDirect / NUMBER_OF_MOVE_TO_CHANGE_IMG) % NUMBER_OF_IMG_PER_DIRECTION], pos.y * Sprite.SCALED_SIZE, pos.x * Sprite.SCALED_SIZE);
     }
 }
