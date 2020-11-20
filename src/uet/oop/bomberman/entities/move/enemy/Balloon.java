@@ -16,7 +16,7 @@ public class Balloon extends Enemy {
 
     public Balloon(double x, double y, Image img) {
         super(x, y, img);
-        velocity /= 2;
+        //velocity /= 2;
     }
 
     private static final Image[][] img = {
@@ -42,7 +42,7 @@ public class Balloon extends Enemy {
     };
 
     public void changeDirection() {
-        if(System.currentTimeMillis() - lastTimeChangeDirection > 500) {
+        if(System.currentTimeMillis() - lastTimeChangeDirection > 300) {
             Direction newDirect = chooseNewDirect();
             updateDirectionAndStepInDirect(newDirect);
             lastTimeChangeDirection = System.currentTimeMillis();

@@ -54,6 +54,14 @@ public abstract class MovingEntity extends Entity {
         }
     }
 
+    public void updateDirectAndStepInDirect(Direction newDirection) {
+        if (direction != newDirection)
+            stepInDirect = 0;
+        else
+            stepInDirect += 1;
+        direction = newDirection;
+    }
+
     /**
      * check vị trí đang đứng có vật cản nào ko
      */

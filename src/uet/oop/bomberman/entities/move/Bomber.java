@@ -12,7 +12,6 @@ public class Bomber extends MovingEntity {
 
     private static final int NUMBER_OF_MOVE_TO_CHANGE_IMG = 2;
     private static final int NUMBER_OF_IMG_PER_DIRECTION = 3;
-    private static double[] tryStep;
     private static final Image[][] img = {
             //LEFT:0
             {Sprite.player_left_0.getFxImage(),
@@ -39,7 +38,6 @@ public class Bomber extends MovingEntity {
     public Bomber(double x, double y, Image img) {
         super( x, y, img);
         velocity = 0.125 * 2;
-        tryStep = new double[]{0, -velocity * 2, velocity * 2, -velocity, velocity};
     }
 
     public void handle(KeyCode key) {
@@ -47,14 +45,9 @@ public class Bomber extends MovingEntity {
             updateDirectAndStepInDirect(DirectionUtil.getDirectionFromKeyCode(key));
             moveAlongDirection();
         }
-    }
-
-    protected void updateDirectAndStepInDirect(Direction newDirection) {
-        if (direction != newDirection)
-            stepInDirect = 0;
-        else
-            stepInDirect += 1;
-        direction = newDirection;
+        /*if(key == KeyCode.SPACE) {
+            Util.placeBomb(pos);
+        }*/
     }
 
     public void render(GraphicsContext gc) {

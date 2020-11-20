@@ -87,9 +87,11 @@ public class CanvasManager {
      * render only when the game starts
      */
     public void render_all_entities() {
-        for (int x = 0; x < ROW; ++x)
-            for (int y = 0; y < COLUMN; ++y)
+        for (int x = 0; x < ROW; ++x) {
+            for (int y = 0; y < COLUMN; ++y) {
                 Container.Objects[x][y].get(Container.Objects[x][y].size() - 1).render(gc);
+            }
+        }
         Container.enemy.forEach(g -> g.render(gc));
         Container.bomber.render(gc);
     }

@@ -3,10 +3,15 @@ package uet.oop.bomberman.util;
 import javafx.scene.input.KeyCode;
 import uet.oop.bomberman.entities.Direction;
 import uet.oop.bomberman.entities.Point;
+import uet.oop.bomberman.entities.still.Bomb;
 import uet.oop.bomberman.entities.still.Brick;
 import uet.oop.bomberman.entities.still.Wall;
+import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.timeline.CanvasManager;
 import uet.oop.bomberman.timeline.Container;
+
+import static java.lang.Math.ceil;
+import static java.lang.Math.floor;
 import static javafx.scene.input.KeyCode.*;
 
 import java.util.LinkedList;
@@ -55,5 +60,27 @@ public class Util {
 //            }
 //            System.out.println();
 //        }
+    }
+
+    public static Point getMostAreaStandingCells(Point pos){
+        if(pos.y % 1 == 0) {
+            if(pos.x - (int)pos.x <= 0.5) {
+                return new Point(floor(pos.x), pos.y);
+            }
+            else {
+                return new Point(ceil(pos.x), pos.y);
+            }
+        }
+        if(pos.y - (int)pos.y <= 0.5) {
+            return new Point(pos.x, floor(pos.y));
+        }
+        else {
+            return new Point(pos.x, ceil(pos.y));
+        }
+    }
+
+    public static void placeBomb(Point pos) {
+        Point bombPos = getMostAreaStandingCells(pos);
+        Container.Objects[(int)bombPos.x][(int)bombPos.y].add(new Bomb((int)bombPos.x, (int)bombPos.y, Sprite.bomb.getFxImage()));
     }
 }

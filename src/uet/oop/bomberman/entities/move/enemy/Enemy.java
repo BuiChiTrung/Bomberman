@@ -10,30 +10,9 @@ import java.util.Random;
 import static javafx.scene.input.KeyCode.*;
 
 public abstract class Enemy extends MovingEntity {
-    protected Direction direction = Direction.RIGHT;
     public Enemy(double x, double y, Image img) {
         super(x, y, img);
         velocity = 0.125;
-    }
-
-    public void moveAlongDirection() {
-        for (double step : tryStep) {
-            double stepX;
-            double stepY;
-            if(direction.getX() != 0) {
-                stepX = 0;
-                stepY = step;
-            }
-            else {
-                stepX = step;
-                stepY = 0;
-            }
-            if (!hasObstacle(pos.x + stepX + velocity * direction.getX(), pos.y + stepY + velocity * direction.getY())) {
-                pos.x = pos.x + stepX + velocity * direction.getX();
-                pos.y = pos.y + stepY + velocity * direction.getY();
-                return;
-            }
-        }
     }
 
     protected void updateDirectionAndStepInDirect(Direction nextDirection) {

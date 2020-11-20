@@ -43,7 +43,7 @@ public class Oneal extends Enemy {
 
     public Oneal(double x, double y, Image img) {
         super(x, y, img);
-        velocity /= 4;
+        //velocity /= 2;
     }
     private Point nextDestination = pos;
 
@@ -51,7 +51,7 @@ public class Oneal extends Enemy {
      * Đuổi theo Bomber.
      */
     public void chase() {
-        System.out.println(pos.x + " " + pos.y + " " + nextDestination.x + " " + nextDestination.y + " " + DirectionUtil.getDirectionId(direction));
+        //System.out.println(pos.x + " " + pos.y + " " + nextDestination.x + " " + nextDestination.y + " " + DirectionUtil.getDirectionId(direction));
         if(nextDestination.isEquals(pos) || MoveUtil.blocked(nextDestination)) {
             pos = getMostAreaStandingCells();
             nextDestination = MoveUtil.getNextDestination(pos, DirectionUtil.getDirectionFromId(Container.directionToBomber[(int)pos.x][(int)pos.y]));
