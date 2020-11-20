@@ -10,14 +10,15 @@ import uet.oop.bomberman.entities.still.Wall;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.timeline.Container;
 import uet.oop.bomberman.util.DirectionUtil;
+import uet.oop.bomberman.util.MoveUtil;
 import uet.oop.bomberman.util.Util;
 
 import java.nio.file.DirectoryIteratorException;
 
 public class Oneal extends Enemy {
+    private long lastMoveTime = 0;
     private static final int NUMBER_OF_MOVE_TO_CHANGE_IMG = 2;
     private static final int NUMBER_OF_IMG_PER_DIRECTION = 3;
-    private static long lastTimeChangeDirection = 0;
 
     private Image img[][] = {
 
@@ -50,10 +51,10 @@ public class Oneal extends Enemy {
      * Đuổi theo Bomber.
      */
     public void chase() {
-        //System.out.println(pos.x + " " + pos.y + " " + nextDestination.x + " " + nextDestination.y + " " + Util.getDirectionId(direct));
-        if(nextDestination.isEquals(pos) || Container.Objects[(int)nextDestination.x][(int)nextDestination.y].get(Container.Objects[(int)nextDestination.x][(int)nextDestination.y].size() - 1) instanceof Brick || Container.Objects[(int)nextDestination.x][(int)nextDestination.y].get(Container.Objects[(int)nextDestination.x][(int)nextDestination.y].size() - 1) instanceof Wall) {
+        System.out.println(pos.x + " " + pos.y + " " + nextDestination.x + " " + nextDestination.y + " " + DirectionUtil.getDirectionId(direction));
+        if(nextDestination.isEquals(pos) || MoveUtil.blocked(nextDestination)) {
             pos = getMostAreaStandingCells();
-            nextDestination = Util.getNextDestination(pos, DirectionUtil.getDirectionFromId(Container.directionToBomber[(int)pos.x][(int)pos.y]));
+            nextDestination = MoveUtil.getNextDestination(pos, DirectionUtil.getDirectionFromId(Container.directionToBomber[(int)pos.x][(int)pos.y]));
             updateDirectionAndStepInDirect(DirectionUtil.getDirectionFromId(Container.directionToBomber[(int)pos.x][(int)pos.y]));
         }
         moveAlongDirection();
@@ -66,25 +67,31 @@ public class Oneal extends Enemy {
 
     private Direction chooseNewDirection() {
         int directionAsNumber = (int)(Math.random() * ((3 - 0) + 1));
-        System.out.print(directionAsNumber);
         return DirectionUtil.getDirectionFromId(directionAsNumber);
     }
 
     public void changeDirection() {
-        if(System.currentTimeMillis() - lastTimeChangeDirection > 90) {
-            Direction newDirect = chooseNewDirection();
-            updateDirectionAndStepInDirect(newDirect);
-            lastTimeChangeDirection = System.currentTimeMillis();
-        }
+        Direction newDirect = chooseNewDirection();
+        updateDirectionAndStepInDirect(newDirect);
+    }
+
+    void RandomWalk() {
+        changeDirection();
+        moveAlongDirection();
     }
 
     @Override
     public void move() {
+        if(System.currentTimeMillis() - lastMoveTime < 20) {
+            return ;
+        }
         if(!reachable()) {
-            changeDirection();
-            moveAlongDirection();
+            RandomWalk();
+            lastMoveTime = System.currentTimeMillis();
+            return ;
         }
         chase();
+        lastMoveTime = System.currentTimeMillis();
     }
 
     public void render(GraphicsContext gc) {

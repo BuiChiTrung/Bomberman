@@ -27,5 +27,4 @@ public abstract class Entity {
     public void render(GraphicsContext gc) {
         gc.drawImage(img, pos.y * Sprite.SCALED_SIZE, pos.x * Sprite.SCALED_SIZE);
     }
-    public abstract void update();
 }

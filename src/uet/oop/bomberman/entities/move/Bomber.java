@@ -38,35 +38,14 @@ public class Bomber extends MovingEntity {
 
     public Bomber(double x, double y, Image img) {
         super( x, y, img);
-        velocity = 0.125;
+        velocity = 0.125 * 2;
         tryStep = new double[]{0, -velocity * 2, velocity * 2, -velocity, velocity};
     }
 
     public void handle(KeyCode key) {
         if(key == KeyCode.RIGHT || key == KeyCode.LEFT || key == KeyCode.UP || key == KeyCode.DOWN) {
             updateDirectAndStepInDirect(DirectionUtil.getDirectionFromKeyCode(key));
-            move();
-        }
-    }
-
-    public void move() {
-        for (double step : tryStep) {
-            double stepX;
-            double stepY;
-            if(direction.getX() != 0) {
-                stepX = 0;
-                stepY = step;
-            }
-            else {
-                stepX = step;
-                stepY = 0;
-            }
-            if (!hasObstacle(pos.x + stepX + velocity * direction.getX(), pos.y + stepY + velocity * direction.getY())) {
-                pos.x = pos.x + stepX + velocity * direction.getX();
-                pos.y = pos.y + stepY + velocity * direction.getY();
-                System.out.println(pos.x + " " + pos.y);
-                return;
-            }
+            moveAlongDirection();
         }
     }
 

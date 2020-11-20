@@ -2,20 +2,17 @@ package uet.oop.bomberman.entities.move.enemy;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
 import uet.oop.bomberman.entities.Direction;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.util.DirectionUtil;
 import uet.oop.bomberman.util.Util;
 
-import java.security.Key;
-import java.util.Random;
 
 public class Balloon extends Enemy {
     private static final int NUMBER_OF_MOVE_TO_CHANGE_IMG = 2;
     private static final int NUMBER_OF_IMG_PER_DIRECTION = 3;
     private long lastTimeChangeDirection = 0;
-
+    private long lastMoveTime = 0;
 
     public Balloon(double x, double y, Image img) {
         super(x, y, img);
@@ -54,8 +51,12 @@ public class Balloon extends Enemy {
 
     @Override
     public void move() {
+        if(System.currentTimeMillis() - lastMoveTime < 20) {
+            return ;
+        }
         changeDirection();
-        moveAlongDirection();
+        moveAlongDirection();;
+        lastMoveTime = System.currentTimeMillis();
     }
 
     private Direction chooseNewDirect() {

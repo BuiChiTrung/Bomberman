@@ -6,13 +6,10 @@ import uet.oop.bomberman.entities.Entity;
 /**
  * objects than can't move.
  */
-public class StillEntity extends Entity {
+public abstract class StillEntity extends Entity {
     public StillEntity(int x, int y, Image img) {
         super(x, y, img);
     }
 
-    @Override
-    public void update() {
-
-    }
+    public abstract void update();
 }
