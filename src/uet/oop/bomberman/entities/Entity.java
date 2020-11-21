@@ -21,15 +21,8 @@ public abstract class Entity {
         return pos;
     }
 
-    public Image getImg() {
-        return img;
-    }
-
-    /**
-     * allow changing background color of png image
-     */
     public void render(GraphicsContext gc) {
-        gc.drawImage(img, pos.x * Sprite.SCALED_SIZE, pos.y * Sprite.SCALED_SIZE);
+        gc.drawImage(img, pos.y * Sprite.SCALED_SIZE, pos.x * Sprite.SCALED_SIZE);
     }
     public abstract void update();
 }

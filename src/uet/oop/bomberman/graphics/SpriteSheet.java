@@ -18,14 +18,14 @@ public class SpriteSheet {
 
 	// image contains all sprites
 	public static SpriteSheet tiles = new SpriteSheet("/textures/classic.png", 256);
-	
+
 	public SpriteSheet(String path, int size) {
 		_path = path;
 		SIZE = size;
 		_pixels = new int[SIZE * SIZE];
 		load();
 	}
-	
+
 	private void load() {
 		try {
 			URL a = SpriteSheet.class.getResource(_path);

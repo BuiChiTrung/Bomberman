@@ -10,6 +10,8 @@ import javafx.stage.Stage;
 import uet.oop.bomberman.entities.move.Bomber;
 import uet.oop.bomberman.entities.move.MovingEntity;
 import uet.oop.bomberman.timeline.CanvasManager;
+import uet.oop.bomberman.timeline.Container;
+import uet.oop.bomberman.util.Util;
 
 
 public class BombermanGame extends Application {
@@ -36,8 +38,8 @@ public class BombermanGame extends Application {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
-                for (MovingEntity moveObject : CanvasManager.moveObjects)
-                    moveObject.update();
+                Util.bfsFromBomber();
+                Container.enemy.forEach(enemy -> enemy.move());
                 canvasManager.render_all_entities();
             }
         };
@@ -49,7 +51,7 @@ public class BombermanGame extends Application {
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                Bomber.INSTANCE.move(event.getCode());
+                Container.bomber.handle(event.getCode());
             }
         });
     }
