@@ -17,17 +17,11 @@ public abstract class Entity {
         this.img = img;
     }
 
-    /**
-     * allow changing background color of png image
-     */
-    public void render(GraphicsContext gc) {
-        SnapshotParameters params = new SnapshotParameters();
-        params.setFill(Color.TRANSPARENT);
-
-        ImageView iv = new ImageView(img);
-        Image base = iv.snapshot(params, null);
-
-        gc.drawImage(base, pos.x * Sprite.SCALED_SIZE, pos.y * Sprite.SCALED_SIZE);
+    public Point getPos() {
+        return pos;
     }
-    public abstract void update();
+
+    public void render(GraphicsContext gc) {
+        gc.drawImage(img, pos.y * Sprite.SCALED_SIZE, pos.x * Sprite.SCALED_SIZE);
+    }
 }

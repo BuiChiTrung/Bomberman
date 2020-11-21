@@ -7,32 +7,76 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.entities.Direction;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Point;
 import uet.oop.bomberman.entities.still.Brick;
 import uet.oop.bomberman.entities.still.Wall;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.timeline.CanvasManager;
+import uet.oop.bomberman.timeline.Container;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.lang.Math.floor;
-import static javafx.scene.input.KeyCode.RIGHT;
+import static java.lang.Math.*;
+import static javafx.scene.input.KeyCode.*;
 
 // moving object: bomber, enemy
-public class MovingEntity extends Entity {
-    protected KeyCode direct = RIGHT; // manage direction of object
-    protected int stepInDirect; // số bước liên tiếp đi theo cùng một hướng lấy mod 3 (nếu rẽ => reset về 0)
-    protected double velocity;
+public abstract class MovingEntity extends Entity {
+    protected static final double acceptedPass = 0.125;
+    protected static final double[] tryStep = {0, -acceptedPass * 2, acceptedPass * 2, -acceptedPass, acceptedPass};
+    public Direction direction = Direction.RIGHT;       // manage direction of object
+    protected int stepInDirect;                         // số bước liên tiếp đi theo cùng một hướng
+    protected double velocity = 0.125;
 
     public MovingEntity(double x, double y, Image img) {
         super(x, y, img);
     }
 
-    @Override
-    public void update() {
+    public void moveAlongDirection() {
+        for (double step : tryStep) {
+            double stepX;
+            double stepY;
+            if(direction.getX() != 0) {
+                stepX = 0;
+                stepY = step;
+            }
+            else {
+                stepX = step;
+                stepY = 0;
+            }
+            if (!hasObstacle(pos.x + stepX + velocity * direction.getX(), pos.y + stepY + velocity * direction.getY())) {
+                pos.x = pos.x + stepX + velocity * direction.getX();
+                pos.y = pos.y + stepY + velocity * direction.getY();
+                return;
+            }
+        }
+    }
 
+    public void updateDirectionAndStepInDirect(Direction newDirection) {
+        if (direction != newDirection)
+            stepInDirect = 0;
+        else
+            stepInDirect += 1;
+        direction = newDirection;
+    }
+
+    /**
+     * check vị trí đang đứng có vật cản nào ko
+     */
+    public boolean hasObstacle(double x, double y) {
+        if (x < 0 || x > CanvasManager.ROW) return true;
+        if (y < 0 || y > CanvasManager.COLUMN) return true;
+
+        ArrayList<Point> standingCells = getStandingCells(x, y);
+
+        for (Point it : standingCells) {
+            Entity lastEntity = Container.Objects[(int)it.x][(int)it.y].get(Container.Objects[(int)it.x][(int)it.y].size() - 1);
+            if (lastEntity instanceof Brick || lastEntity instanceof Wall) return true;
+        }
+
+        return false;
     }
 
     /**
@@ -62,30 +106,22 @@ public class MovingEntity extends Entity {
     }
 
     /**
-     * check vị trí đang đứng có vật cản nào ko
+     * Trả về ô mà Entity chiếm diện tích nhiều nhất
      */
-    public boolean hasObstacle(double x, double y) {
-        if (x < 0 || x > CanvasManager.WIDTH) return true;
-        if (y < 0 || y > CanvasManager.HEIGHT) return true;
-
-        ArrayList<Point> standingCells = getStandingCells(x, y);
-
-        for (Point it : standingCells) {
-            Entity lastEntity = CanvasManager.stillObjects[(int)it.x][(int)it.y].get(CanvasManager.stillObjects[(int)it.x][(int)it.y].size() - 1);
-            if (lastEntity instanceof Brick || lastEntity instanceof Wall) return true;
+    public Point getMostAreaStandingCells(){
+        if(pos.y % 1 == 0) {
+            if(pos.x - (int)pos.x <= 0.5) {
+                return new Point(floor(pos.x), pos.y);
+            }
+            else {
+                return new Point(ceil(pos.x), pos.y);
+            }
         }
-
-        return false;
-    }
-
-    /**
-     * khi nhân vật di chuyển sẽ có một số ô bị thay đổi, cần add vào list để frame sau render lại
-     */
-    public void addToModifiedObjects(Point pos) {
-        ArrayList<Point> standingCells = getStandingCells(pos.x, pos.y);
-
-        for (Point it: standingCells) {
-            CanvasManager.modifiedObjects.add(it);
+        if(pos.y - (int)pos.y <= 0.5) {
+            return new Point(pos.x, floor(pos.y));
+        }
+        else {
+            return new Point(pos.x, ceil(pos.y));
         }
     }
 }
