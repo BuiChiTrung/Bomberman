@@ -7,6 +7,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.entities.Direction;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Point;
 import uet.oop.bomberman.entities.still.Brick;
@@ -23,20 +24,44 @@ import static javafx.scene.input.KeyCode.*;
 
 // moving object: bomber, enemy
 public abstract class MovingEntity extends Entity {
-
-    protected static KeyCode[] directList = {UP, LEFT, DOWN, RIGHT};
-    protected KeyCode direction = RIGHT;       // manage direction of object
-    protected int stepInDirect;             // số bước liên tiếp đi theo cùng một hướng
-    protected double velocity;
+    protected static final double acceptedPass = 0.125;
+    protected static final double[] tryStep = {0, -acceptedPass * 2, acceptedPass * 2, -acceptedPass, acceptedPass};
+    public Direction direction = Direction.RIGHT;       // manage direction of object
+    protected int stepInDirect;                         // số bước liên tiếp đi theo cùng một hướng
+    protected double velocity = 0.125;
 
     public MovingEntity(double x, double y, Image img) {
         super(x, y, img);
     }
 
-    @Override
-    public void update() {
-
+    public void moveAlongDirection() {
+        for (double step : tryStep) {
+            double stepX;
+            double stepY;
+            if(direction.getX() != 0) {
+                stepX = 0;
+                stepY = step;
+            }
+            else {
+                stepX = step;
+                stepY = 0;
+            }
+            if (!hasObstacle(pos.x + stepX + velocity * direction.getX(), pos.y + stepY + velocity * direction.getY())) {
+                pos.x = pos.x + stepX + velocity * direction.getX();
+                pos.y = pos.y + stepY + velocity * direction.getY();
+                return;
+            }
+        }
     }
+
+    public void updateDirectionAndStepInDirect(Direction newDirection) {
+        if (direction != newDirection)
+            stepInDirect = 0;
+        else
+            stepInDirect += 1;
+        direction = newDirection;
+    }
+
     /**
      * check vị trí đang đứng có vật cản nào ko
      */

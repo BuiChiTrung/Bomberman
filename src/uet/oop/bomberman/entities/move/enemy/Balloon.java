@@ -75,22 +75,21 @@ package uet.oop.bomberman.entities.move.enemy;
 //=======
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
+import uet.oop.bomberman.entities.Direction;
 import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.util.DirectionUtil;
 import uet.oop.bomberman.util.Util;
 
-import java.security.Key;
-import java.util.Random;
 
 public class Balloon extends Enemy {
     private static final int NUMBER_OF_MOVE_TO_CHANGE_IMG = 2;
     private static final int NUMBER_OF_IMG_PER_DIRECTION = 3;
     private long lastTimeChangeDirection = 0;
-
+    private long lastMoveTime = 0;
 
     public Balloon(double x, double y, Image img) {
         super(x, y, img);
-        velocity /= 2;
+        //velocity /= 2;
     }
 
     private static final Image[][] img = {
@@ -115,35 +114,33 @@ public class Balloon extends Enemy {
 
     };
 
+    /**
+     * change direct after >= 300ms
+     */
     public void changeDirection() {
-        if(System.currentTimeMillis() - lastTimeChangeDirection > 500) {
-            KeyCode newDirect = chooseNewDirect();
+        if(System.currentTimeMillis() - lastTimeChangeDirection > 300) {
+            Direction newDirect = chooseNewDirect();
             updateDirectionAndStepInDirect(newDirect);
             lastTimeChangeDirection = System.currentTimeMillis();
         }
     }
 
-    protected void updateDirectionAndStepInDirect(KeyCode key) {
-        if (key != direction)
-            stepInDirect = 0;
-        else
-            stepInDirect += 1;
-        direction = key;
-    }
-
     @Override
     public void move() {
+        if(System.currentTimeMillis() - lastMoveTime < 20) {
+            return ;
+        }
         changeDirection();
         moveAlongDirection();
+        lastMoveTime = System.currentTimeMillis();
     }
 
-    private KeyCode chooseNewDirect() {
+    private Direction chooseNewDirect() {
         int directionAsNumber = (int)(Math.random() * ((3 - 0) + 1));
-        return Util.getDirection(directionAsNumber);
+        return DirectionUtil.getDirectionFromId(directionAsNumber);
     }
 
     public void render(GraphicsContext gc) {
-        gc.drawImage(img[Util.getDirectionId(direction)][(stepInDirect / NUMBER_OF_MOVE_TO_CHANGE_IMG) % NUMBER_OF_IMG_PER_DIRECTION], pos.y * Sprite.SCALED_SIZE, pos.x * Sprite.SCALED_SIZE);
+        gc.drawImage(img[DirectionUtil.getDirectionId(direction)][(stepInDirect / NUMBER_OF_MOVE_TO_CHANGE_IMG) % NUMBER_OF_IMG_PER_DIRECTION], pos.y * Sprite.SCALED_SIZE, pos.x * Sprite.SCALED_SIZE);
     }
-//>>>>>>> 7eac8d8e76bfb9d2f1571305cf1648e1ec270900
 }

@@ -1,43 +1,22 @@
 package uet.oop.bomberman.util;
 
 import javafx.scene.input.KeyCode;
+import uet.oop.bomberman.entities.Direction;
 import uet.oop.bomberman.entities.Point;
+import uet.oop.bomberman.entities.still.Bomb;
 import uet.oop.bomberman.entities.still.Brick;
 import uet.oop.bomberman.entities.still.Wall;
+import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.timeline.CanvasManager;
 import uet.oop.bomberman.timeline.Container;
+
+import static java.lang.Math.ceil;
+import static java.lang.Math.floor;
 import static javafx.scene.input.KeyCode.*;
 
 import java.util.LinkedList;
 import java.util.Queue;
 public class Util {
-    public static int getDirectionId(KeyCode key) {
-        switch (key) {
-            case LEFT:
-                return 0;
-            case UP:
-                return 1;
-            case RIGHT:
-                return 2;
-            case DOWN:
-                return 3;
-        }
-        return 0;
-    }
-    public static KeyCode getDirection(int id) {
-        switch (id) {
-            case 0:
-                return LEFT;
-            case 1:
-                return UP;
-            case 2:
-                return RIGHT;
-            case 3:
-                return DOWN;
-        }
-        return RIGHT;
-    }
-
     /**
      * BFS từ vị trí của bomber
      */
@@ -83,42 +62,25 @@ public class Util {
 //        }
     }
 
-    /**
-     * Lấy vị trí tiếp theo theo hướng
-     */
-    public static Point getNextDestination(Point pos, KeyCode direction) {
-        switch(direction) {
-            case LEFT:
-                return new Point((int)pos.x, (int)pos.y - 1);
-            case UP:
-                return new Point((int)pos.x - 1, (int)pos.y);
-            case RIGHT:
-                return new Point((int)pos.x, (int)pos.y + 1);
-            case DOWN:
-                return new Point((int)pos.x + 1, (int)pos.y);
+    public static Point getMostAreaStandingCells(Point pos){
+        if(pos.y % 1 == 0) {
+            if(pos.x - (int)pos.x <= 0.5) {
+                return new Point(floor(pos.x), pos.y);
+            }
+            else {
+                return new Point(ceil(pos.x), pos.y);
+            }
         }
-        return pos;
-    }
-
-    public static Point getNextPosition(Point pos, KeyCode direction) {
-        switch(direction) {
-            case LEFT:
-                return new Point(pos.x, pos.y - 1);
-            case UP:
-                return new Point(pos.x - 1, pos.y);
-            case RIGHT:
-                return new Point(pos.x, pos.y + 1);
-            case DOWN:
-                return new Point(pos.x + 1, pos.y);
+        if(pos.y - (int)pos.y <= 0.5) {
+            return new Point(pos.x, floor(pos.y));
         }
-        return pos;
+        else {
+            return new Point(pos.x, ceil(pos.y));
+        }
     }
 
-    public static double euclidDistance(Point point1, Point point2) {
-        return Math.sqrt((point1.x - point2.x) * (point1.x - point2.x) + (point1.y - point2.y) * (point1.y - point2.y));
-    }
-
-    public static boolean blocked(Point pos) {
-        return Container.Objects[(int)pos.x][(int)pos.y].get(Container.Objects[(int)pos.x][(int)pos.y].size() - 1) instanceof Brick && Container.Objects[(int)pos.x][(int)pos.y].get(Container.Objects[(int)pos.x][(int)pos.y].size() - 1) instanceof Wall;
+    public static void placeBomb(Point pos) {
+        Point bombPos = getMostAreaStandingCells(pos);
+        Container.Objects[(int)bombPos.x][(int)bombPos.y].add(new Bomb((int)bombPos.x, (int)bombPos.y, Sprite.bomb.getFxImage()));
     }
 }
