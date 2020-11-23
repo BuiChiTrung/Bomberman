@@ -3,8 +3,12 @@ package uet.oop.bomberman.entities.move;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
+import uet.oop.bomberman.entities.Point;
+import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.timeline.Container;
 import uet.oop.bomberman.util.DirectionUtil;
+import uet.oop.bomberman.util.Util;
 
 public class Bomber extends MovingEntity {
 
@@ -33,8 +37,11 @@ public class Bomber extends MovingEntity {
                     Sprite.player_dead_2.getFxImage()}
     };
 
-    public Bomber(double x, double y, Image img) {
-        super( x, y, img);
+    private int bombPower = 1;
+    private int bombNumber = 1;
+
+    public Bomber(Point pos, Image img) {
+        super(pos, img);
         velocity = 0.125;
     }
 
@@ -43,9 +50,13 @@ public class Bomber extends MovingEntity {
             updateDirectionAndStepInDirect(DirectionUtil.getDirectionFromKeyCode(key));
             moveAlongDirection();
         }
-        /*if(key == KeyCode.SPACE) {
-            Util.placeBomb(pos);
-        }*/
+        if(key == KeyCode.SPACE) {
+            Container.bomber.placeBomb();
+        }
+    }
+
+    private void placeBomb() {
+        Bomb bomb = new Bomb(Util.getMostAreaStandingCells(pos), Sprite.bomb.getFxImage());
     }
 
     public void render(GraphicsContext gc) {

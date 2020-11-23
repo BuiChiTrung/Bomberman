@@ -41,9 +41,8 @@ public class Oneal extends Enemy {
             {Sprite.oneal_dead.getFxImage()}
     };
 
-    public Oneal(double x, double y, Image img) {
-        super(x, y, img);
-        //velocity /= 2;
+    public Oneal(Point pos, Image img) {
+        super(pos, img);
     }
     private Point nextDestination = pos;
 

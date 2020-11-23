@@ -76,6 +76,7 @@ package uet.oop.bomberman.entities.move.enemy;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.entities.Direction;
+import uet.oop.bomberman.entities.Point;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.util.DirectionUtil;
 import uet.oop.bomberman.util.Util;
@@ -87,9 +88,8 @@ public class Balloon extends Enemy {
     private long lastTimeChangeDirection = 0;
     private long lastMoveTime = 0;
 
-    public Balloon(double x, double y, Image img) {
-        super(x, y, img);
-        //velocity /= 2;
+    public Balloon(Point pos, Image img) {
+        super(pos, img);
     }
 
     private static final Image[][] img = {

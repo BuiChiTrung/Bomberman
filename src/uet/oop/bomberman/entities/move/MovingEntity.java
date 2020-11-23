@@ -1,26 +1,17 @@
 package uet.oop.bomberman.entities.move;
 
-import javafx.scene.SnapshotParameters;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.paint.Color;
-import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Direction;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Point;
 import uet.oop.bomberman.entities.still.Brick;
 import uet.oop.bomberman.entities.still.Wall;
-import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.timeline.CanvasManager;
 import uet.oop.bomberman.timeline.Container;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static java.lang.Math.*;
-import static javafx.scene.input.KeyCode.*;
 
 // moving object: bomber, enemy
 public abstract class MovingEntity extends Entity {
@@ -30,8 +21,8 @@ public abstract class MovingEntity extends Entity {
     protected int stepInDirect;                         // số bước liên tiếp đi theo cùng một hướng
     protected double velocity = 0.125;
 
-    public MovingEntity(double x, double y, Image img) {
-        super(x, y, img);
+    public MovingEntity(Point pos, Image img) {
+        super(pos, img);
     }
 
     public void moveAlongDirection() {
@@ -83,7 +74,7 @@ public abstract class MovingEntity extends Entity {
      * return danh sách các ô mà nhân vật đứng trên ô đó. VD: tọa độ nhân vật là (1.5, 1.0) => nhân vạt đứng trên ô (1.0, 1.0) và (2.0, 1.0)
      */
     public ArrayList<Point> getStandingCells(double x, double y) {
-        ArrayList<Point> standingCells = new ArrayList<Point>();
+        ArrayList<Point> standingCells = new ArrayList<>();
         if (x != floor(x) && y != floor(y)) {
             standingCells.add(new Point(floor(x), floor(y)));
             standingCells.add(new Point(floor(x) + 1, floor(y)));
