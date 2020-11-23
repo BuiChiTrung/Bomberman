@@ -1,9 +1,7 @@
 package uet.oop.bomberman.util;
 
-import javafx.scene.input.KeyCode;
-import uet.oop.bomberman.entities.Direction;
 import uet.oop.bomberman.entities.Point;
-import uet.oop.bomberman.entities.still.Bomb;
+import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.entities.still.Brick;
 import uet.oop.bomberman.entities.still.Wall;
 import uet.oop.bomberman.graphics.Sprite;
@@ -12,7 +10,6 @@ import uet.oop.bomberman.timeline.Container;
 
 import static java.lang.Math.ceil;
 import static java.lang.Math.floor;
-import static javafx.scene.input.KeyCode.*;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -77,10 +74,5 @@ public class Util {
         else {
             return new Point(pos.x, ceil(pos.y));
         }
-    }
-
-    public static void placeBomb(Point pos) {
-        Point bombPos = getMostAreaStandingCells(pos);
-        Container.Objects[(int)bombPos.x][(int)bombPos.y].add(new Bomb((int)bombPos.x, (int)bombPos.y, Sprite.bomb.getFxImage()));
     }
 }
