@@ -19,6 +19,8 @@ public abstract class Enemy extends MovingEntity {
     }
 
     public abstract void move();
+
+
 }
 
 

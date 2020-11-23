@@ -39,10 +39,17 @@ public class Bomber extends MovingEntity {
 
     private int bombPower = 1;
     private int bombNumber = 1;
+    private boolean arrowKeyIsRelease = true;
 
     public Bomber(Point pos, Image img) {
         super(pos, img);
         velocity = 0.125;
+    }
+
+    public void move() {
+        if(!arrowKeyIsRelease) {
+            moveAlongDirection();
+        }
     }
 
     public void handle(KeyCode key) {
@@ -53,10 +60,12 @@ public class Bomber extends MovingEntity {
         if(key == KeyCode.SPACE) {
             Container.bomber.placeBomb();
         }
+        System.out.print(key);
     }
 
     private void placeBomb() {
-        Bomb bomb = new Bomb(Util.getMostAreaStandingCells(pos), Sprite.bomb.getFxImage());
+        Bomb bomb = new Bomb(Util.getMostAreaStandingCells(pos), Sprite.bomb0.getFxImage());
+        Container.bombs.add(bomb);
     }
 
     public void render(GraphicsContext gc) {

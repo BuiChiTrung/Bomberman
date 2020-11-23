@@ -1,10 +1,8 @@
 package uet.oop.bomberman.util;
 
 import uet.oop.bomberman.entities.Point;
-import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.entities.still.Brick;
 import uet.oop.bomberman.entities.still.Wall;
-import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.timeline.CanvasManager;
 import uet.oop.bomberman.timeline.Container;
 
@@ -37,8 +35,8 @@ public class Util {
                     if(!newPos.valid()) {
                         continue;
                     }
-                    if(Container.Objects[(int)newPos.x][(int)newPos.y].get(Container.Objects[(int)newPos.x][(int)newPos.y].size() - 1) instanceof Brick
-                            || Container.Objects[(int)newPos.x][(int)newPos.y].get(Container.Objects[(int)newPos.x][(int)newPos.y].size() - 1) instanceof Wall) {
+                    if(Container.objects[(int)newPos.x][(int)newPos.y].get(Container.objects[(int)newPos.x][(int)newPos.y].size() - 1) instanceof Brick
+                            || Container.objects[(int)newPos.x][(int)newPos.y].get(Container.objects[(int)newPos.x][(int)newPos.y].size() - 1) instanceof Wall) {
                         continue;
                     }
                     if(Container.directionToBomber[(int)newPos.x][(int)newPos.y] == 4) {

@@ -20,7 +20,7 @@ public class MoveUtil {
     }
 
     public static boolean blocked(Point pos) {
-        return Container.Objects[(int)pos.x][(int)pos.y].get(Container.Objects[(int)pos.x][(int)pos.y].size() - 1) instanceof Brick
-                || Container.Objects[(int)pos.x][(int)pos.y].get(Container.Objects[(int)pos.x][(int)pos.y].size() - 1) instanceof Wall;
+        return Container.objects[(int)pos.x][(int)pos.y].get(Container.objects[(int)pos.x][(int)pos.y].size() - 1) instanceof Brick
+                || Container.objects[(int)pos.x][(int)pos.y].get(Container.objects[(int)pos.x][(int)pos.y].size() - 1) instanceof Wall;
     }
 }

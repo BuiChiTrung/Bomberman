@@ -63,7 +63,7 @@ public abstract class MovingEntity extends Entity {
         ArrayList<Point> standingCells = getStandingCells(x, y);
 
         for (Point it : standingCells) {
-            Entity lastEntity = Container.Objects[(int)it.x][(int)it.y].get(Container.Objects[(int)it.x][(int)it.y].size() - 1);
+            Entity lastEntity = Container.objects[(int)it.x][(int)it.y].get(Container.objects[(int)it.x][(int)it.y].size() - 1);
             if (lastEntity instanceof Brick || lastEntity instanceof Wall) return true;
         }
 
