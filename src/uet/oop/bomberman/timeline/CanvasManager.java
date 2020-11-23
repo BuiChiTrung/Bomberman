@@ -82,7 +82,7 @@ public class CanvasManager {
     }
 
     public void render_all_entities() {
-        delayRenderTimeBetweenTwoFrame();
+        //delayRenderTimeBetweenTwoFrame();
 
         for (int x = 0; x < ROW; ++x) {
             for (int y = 0; y < COLUMN; ++y) {
@@ -94,9 +94,9 @@ public class CanvasManager {
         Container.bomber.render(gc);
     }
 
-    private void delayRenderTimeBetweenTwoFrame() {
-        while (System.currentTimeMillis() - lastRenderTime < 25) {
-            // loop until difference >= 100
+    public void delayRenderTimeBetweenTwoFrame() {
+        while (System.currentTimeMillis() - lastRenderTime < 40) {
+            // loop until difference >= 40
         }
         lastRenderTime = System.currentTimeMillis();
     }

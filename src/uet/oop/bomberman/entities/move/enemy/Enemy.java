@@ -15,7 +15,7 @@ import static javafx.scene.input.KeyCode.*;
 public abstract class Enemy extends MovingEntity {
     public Enemy(Point pos, Image img) {
         super(pos, img);
-        velocity = 0.125 / 4;
+        velocity = 0.125 / 2;
     }
 
     public abstract void move();

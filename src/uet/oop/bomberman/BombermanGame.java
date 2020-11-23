@@ -36,8 +36,10 @@ public class BombermanGame extends Application {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
+                canvasManager.delayRenderTimeBetweenTwoFrame();
                 Util.bfsFromBomber();
                 Container.enemies.forEach(enemy -> enemy.move());
+                Container.bomber.move();
                 canvasManager.render_all_entities();
             }
         };
@@ -49,7 +51,14 @@ public class BombermanGame extends Application {
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                Container.bomber.handle(event.getCode());
+                Container.bomber.handlePress(event.getCode());
+            }
+        });
+
+        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                Container.bomber.handleRelease(event.getCode());
             }
         });
     }
