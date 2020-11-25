@@ -18,6 +18,10 @@ public abstract class Enemy extends MovingEntity {
         velocity = 0.125 / 2;
     }
 
+    public void update() {
+        move();
+    }
+
     public abstract void move();
 
 

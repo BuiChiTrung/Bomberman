@@ -4,6 +4,7 @@ import javafx.scene.image.Image;
 import uet.oop.bomberman.entities.Direction;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Point;
+import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.entities.still.Brick;
 import uet.oop.bomberman.entities.still.Wall;
 import uet.oop.bomberman.timeline.CanvasManager;
@@ -63,10 +64,14 @@ public abstract class MovingEntity extends Entity {
         ArrayList<Point> standingCells = getStandingCells(x, y);
 
         for (Point it : standingCells) {
-            Entity lastEntity = Container.objects[(int)it.x][(int)it.y].get(Container.objects[(int)it.x][(int)it.y].size() - 1);
-            if (lastEntity instanceof Brick || lastEntity instanceof Wall) return true;
+            Entity entity = EntityAt(it);
+            if (entity instanceof Brick || entity instanceof Wall)
+                return true;
+            if (entity instanceof Bomb) {
+                if (!(this instanceof Bomber && ((Bomb) entity).isOnBomberFoot()))
+                    return true;
+            }
         }
-
         return false;
     }
 
@@ -94,6 +99,26 @@ public abstract class MovingEntity extends Entity {
         }
 
         return standingCells;
+    }
+
+    private boolean isBrickOrWall(Point it) {
+        Entity lastEntity = Container.objects[(int)it.x][(int)it.y].get(Container.objects[(int)it.x][(int)it.y].size() - 1);
+        return lastEntity instanceof Brick || lastEntity instanceof Wall;
+    }
+
+    private boolean isBomb(Point it) {
+        for (Bomb bomb : Container.bombs)
+            if (it.isEquals(bomb.getPos()))
+                return true;
+        return false;
+    }
+
+    private Entity EntityAt(Point it) {
+        for (Bomb bomb : Container.bombs)
+            if (it.isEquals(bomb.getPos()))
+                return bomb;
+
+        return Container.objects[(int)it.x][(int)it.y].get(Container.objects[(int)it.x][(int)it.y].size() - 1);
     }
 
     /**

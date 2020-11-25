@@ -57,13 +57,11 @@ public class Bomber extends MovingEntity {
         if(key == KeyCode.RIGHT || key == KeyCode.LEFT || key == KeyCode.UP || key == KeyCode.DOWN) {
             updateDirectionAndStepInDirect(DirectionUtil.getDirectionFromKeyCode(key));
             arrowKeyIsRelease = false;
-            //moveAlongDirection();
         }
         if(key == KeyCode.SPACE) {
-            Container.bomber.placeBomb();
-            //handlePress(KeyCode.DOWN);
+            //if (Container.bombs.size() < bombNumber)
+                Container.bomber.placeBomb();
         }
-        System.out.print(key);
     }
 
     public void handleRelease(KeyCode key) {
