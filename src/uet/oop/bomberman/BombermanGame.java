@@ -39,10 +39,10 @@ public class BombermanGame extends Application {
                 canvasManager.delayRenderTimeBetweenTwoFrame();
 
                 Util.bfsFromBomber();
-                Container.enemies.forEach(enemy -> enemy.update());
-                Container.bombs.forEach(bomb -> bomb.update());
-                Container.bomber.move();
-                canvasManager.render_all_entities();
+
+                Container.updateEntity();
+                Container.removeDestroyedEntity();
+                canvasManager.renderEntity();
             }
         };
 

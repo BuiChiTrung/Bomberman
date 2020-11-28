@@ -64,7 +64,7 @@ public abstract class MovingEntity extends Entity {
         ArrayList<Point> standingCells = getStandingCells(x, y);
 
         for (Point it : standingCells) {
-            Entity entity = EntityAt(it);
+            Entity entity = getEntityAtPosition(it);
             if (entity instanceof Brick || entity instanceof Wall)
                 return true;
             if (entity instanceof Bomb) {
@@ -101,25 +101,7 @@ public abstract class MovingEntity extends Entity {
         return standingCells;
     }
 
-    private boolean isBrickOrWall(Point it) {
-        Entity lastEntity = Container.objects[(int)it.x][(int)it.y].get(Container.objects[(int)it.x][(int)it.y].size() - 1);
-        return lastEntity instanceof Brick || lastEntity instanceof Wall;
-    }
 
-    private boolean isBomb(Point it) {
-        for (Bomb bomb : Container.bombs)
-            if (it.isEquals(bomb.getPos()))
-                return true;
-        return false;
-    }
-
-    private Entity EntityAt(Point it) {
-        for (Bomb bomb : Container.bombs)
-            if (it.isEquals(bomb.getPos()))
-                return bomb;
-
-        return Container.objects[(int)it.x][(int)it.y].get(Container.objects[(int)it.x][(int)it.y].size() - 1);
-    }
 
     /**
      * Trả về ô mà Entity chiếm diện tích nhiều nhất

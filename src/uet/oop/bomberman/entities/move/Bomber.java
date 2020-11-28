@@ -37,9 +37,13 @@ public class Bomber extends MovingEntity {
                     Sprite.player_dead_2.getFxImage()}
     };
 
-    private int bombPower = 1;
+    private int bombPower = 2;
     private int bombNumber = 1;
     private boolean arrowKeyIsRelease = true;
+
+    public int getBombPower() {
+        return bombPower;
+    }
 
     public Bomber(Point pos, Image img) {
         super(pos, img);

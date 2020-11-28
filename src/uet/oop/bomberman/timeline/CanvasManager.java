@@ -14,7 +14,6 @@ import uet.oop.bomberman.graphics.Sprite;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class CanvasManager {
@@ -37,7 +36,6 @@ public class CanvasManager {
                 String line = sc.nextLine();
                 for (int y = 0; y < COLUMN; ++y) {
                     // Add grass to all cell
-                    Container.objects[x][y] = new ArrayList<>();
                     Container.objects[x][y].add(new Grass(new Point(x, y), Sprite.grass.getFxImage()));
 
                     switch (line.charAt(y)) {
@@ -81,12 +79,14 @@ public class CanvasManager {
         }
     }
 
-    public void render_all_entities() {
+    public void renderEntity() {
         //delayRenderTimeBetweenTwoFrame();
 
         for (int x = 0; x < ROW; ++x) {
             for (int y = 0; y < COLUMN; ++y) {
                 Container.objects[x][y].get(Container.objects[x][y].size() - 1).render(gc);
+                if (!Container.flames[x][y].isEmpty())
+                    Container.flames[x][y].get(0).render(gc);
             }
         }
         Container.enemies.forEach(g -> g.render(gc));
