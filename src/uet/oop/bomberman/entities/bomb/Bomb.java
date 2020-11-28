@@ -1,11 +1,9 @@
 package uet.oop.bomberman.entities.bomb;
 
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.entities.Direction;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Point;
-import uet.oop.bomberman.entities.move.Bomber;
 import uet.oop.bomberman.entities.still.Brick;
 import uet.oop.bomberman.entities.still.Wall;
 import uet.oop.bomberman.graphics.Sprite;
@@ -29,7 +27,7 @@ public class Bomb extends Entity {
     public Bomb(Point pos, Image img) {
         super(pos, img);
         onBomberFoot = true;
-        placeMoment  = System.currentTimeMillis();
+        placeMoment = System.currentTimeMillis();
     }
 
     public boolean isOnBomberFoot() {
@@ -39,7 +37,7 @@ public class Bomb extends Entity {
     public void update() {
         updateImg();
         if (pos.distance(Container.bomber.getPos()) >= 1) onBomberFoot = false;  // bomb becomes an obstacle for bomber
-        if (System.currentTimeMillis() - placeMoment > timeToExplode) explode();
+        if (System.currentTimeMillis() - placeMoment > timeToExplode || onFlame()) explode();
     }
 
     /**
@@ -55,8 +53,9 @@ public class Bomb extends Entity {
         destroy = true;
     }
 
+
     private void createFlame() {
-        addFlameToAtPosition(pos);
+        addFlameAtPosition(pos);
 
         for (int directId = 0; directId <= 3; ++directId) {
             Direction dir = DirectionUtil.getDirectionFromId(directId);
@@ -67,24 +66,19 @@ public class Bomb extends Entity {
                 if (flamePos.valid()) {
                     Entity entity = getEntityAtPosition(flamePos);
 
-                    if      (entity instanceof Wall) break;
+                    if (entity instanceof Wall) break;
                     else if (entity instanceof Brick) {
-                        addFlameToAtPosition(flamePos);
+                        addFlameAtPosition(flamePos);
                         break;
-                    }
-                    else {
-                        addFlameToAtPosition(flamePos);
+                    } else {
+                        addFlameAtPosition(flamePos);
                     }
                 }
             }
         }
     }
 
-    private void addFlameToAtPosition(Point pos) {
-        Container.flames[(int)pos.x][(int)pos.y].add(new Flame(pos, Flame.imgState[0]));
-    }
-
-    public void render(GraphicsContext gc) {
-        gc.drawImage(img, pos.y * Sprite.SCALED_SIZE, pos.x * Sprite.SCALED_SIZE);
+    private void addFlameAtPosition(Point pos) {
+        Container.flames[(int) pos.x][(int) pos.y].add(new Flame(pos, Flame.imgState[0]));
     }
 }

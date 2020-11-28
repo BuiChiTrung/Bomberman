@@ -43,6 +43,10 @@ public class BombermanGame extends Application {
                 Container.updateEntity();
                 Container.removeDestroyedEntity();
                 canvasManager.renderEntity();
+                if (Container.bomber.isDestroy()) {
+                    Container.reset();
+                    canvasManager.createMap();
+                }
             }
         };
 

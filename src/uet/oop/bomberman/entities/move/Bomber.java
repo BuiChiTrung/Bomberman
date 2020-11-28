@@ -5,6 +5,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import uet.oop.bomberman.entities.Point;
 import uet.oop.bomberman.entities.bomb.Bomb;
+import uet.oop.bomberman.entities.move.enemy.Enemy;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.timeline.Container;
 import uet.oop.bomberman.util.DirectionUtil;
@@ -50,6 +51,19 @@ public class Bomber extends MovingEntity {
         velocity = 0.125;
     }
 
+    private void placeBomb() {
+        Bomb bomb = new Bomb(getMostAreaStandingCells(), Sprite.bomb0.getFxImage());
+        Container.bombs.add(bomb);
+    }
+
+    public boolean collideWithEnemy() {
+        for (Enemy enemy: Container.enemies) {
+            if (pos.distance(enemy.getPos()) < 1)
+                return true;
+        }
+        return false;
+    }
+
     @Override
     public void move() {
         if(!arrowKeyIsRelease) {
@@ -74,7 +88,6 @@ public class Bomber extends MovingEntity {
         }
     }
 
-
     public void handlePress(KeyCode key) {
         if(key == KeyCode.RIGHT || key == KeyCode.LEFT || key == KeyCode.UP || key == KeyCode.DOWN) {
             updateDirectionAndStepInDirect(DirectionUtil.getDirectionFromKeyCode(key));
@@ -90,10 +103,5 @@ public class Bomber extends MovingEntity {
         if(key == KeyCode.RIGHT || key == KeyCode.LEFT || key == KeyCode.UP || key == KeyCode.DOWN) {
             arrowKeyIsRelease = true;
         }
-    }
-
-    private void placeBomb() {
-        Bomb bomb = new Bomb(Util.getMostAreaStandingCells(pos), Sprite.bomb0.getFxImage());
-        Container.bombs.add(bomb);
     }
 }

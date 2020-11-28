@@ -74,10 +74,21 @@ public class Container {
         bombs.forEach(bomb -> bomb.update());
         for (int i = 0; i < CanvasManager.ROW; ++i)
             for (int j = 0; j < CanvasManager.COLUMN; ++j) {
-                Container.flames[i][j].forEach(flame -> flame.update());
-                Container.stillEntities[i][j].forEach(stillEntity -> stillEntity.update());
+                flames[i][j].forEach(flame -> flame.update());
+                stillEntities[i][j].forEach(stillEntity -> stillEntity.update());
             }
 
         bomber.update();
+    }
+
+    public static void reset() {
+        enemies = new ArrayList<>();
+        bombs = new ArrayList<>();
+        for (int i = 0; i < CanvasManager.ROW; ++i)
+            for (int j = 0; j < CanvasManager.COLUMN; ++j) {
+                stillEntities[i][j].clear();
+                flames[i][j].clear();
+            }
+        directionToBomber = new int[CanvasManager.ROW][CanvasManager.COLUMN];
     }
 }

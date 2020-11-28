@@ -110,7 +110,7 @@ public class Ballom extends Enemy {
 
     };
 
-    public static Image[][] getImgState() {
+    public Image[][] getImgState() {
         return imgState;
     }
 
@@ -140,20 +140,6 @@ public class Ballom extends Enemy {
         return DirectionUtil.getDirectionFromId(directionAsNumber);
     }
 
-    @Override
-    public void updateImg() {
-        img = imgState[DirectionUtil.getDirectionId(direction)][(stepInDirect / NUMBER_OF_MOVE_TO_CHANGE_IMG) % NUMBER_OF_IMG_PER_DIRECTION];
-    }
 
-    @Override
-    public void changeToDeathImg() {
-        imgId++;
-        if (imgId == DESTROY_IMG_ID) {
-            destroy = true;
-        }
-        else {
-            img = imgState[4][imgId / NUMBER_OF_MOVE_TO_CHANGE_IMG];
-        }
-    }
 }
 

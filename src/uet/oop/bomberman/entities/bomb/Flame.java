@@ -13,6 +13,7 @@ public class Flame extends Entity {
     private static final int DESTROY_IMG_ID = 24 * NUMBER_OF_FRAME_TO_CHANGE_IMG;
     public static Image[] imgState = new Image[24];
 
+    // provide path, size to use custom sprite
     static {
         try {
             imgState = new Image[]{
@@ -54,6 +55,9 @@ public class Flame extends Entity {
         updateImg();
     }
 
+    /**
+     * destroy khi chay het 24 anh
+     */
     private void updateImg() {
         imgId++;
         if (imgId == DESTROY_IMG_ID) {

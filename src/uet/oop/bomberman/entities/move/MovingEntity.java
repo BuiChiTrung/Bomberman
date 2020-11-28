@@ -5,11 +5,9 @@ import uet.oop.bomberman.entities.Direction;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Point;
 import uet.oop.bomberman.entities.bomb.Bomb;
-import uet.oop.bomberman.entities.move.enemy.Enemy;
 import uet.oop.bomberman.entities.still.Brick;
 import uet.oop.bomberman.entities.still.Wall;
 import uet.oop.bomberman.timeline.CanvasManager;
-import uet.oop.bomberman.timeline.Container;
 
 import java.util.ArrayList;
 
@@ -28,7 +26,7 @@ public abstract class MovingEntity extends Entity {
     }
 
     public void update() {
-        if (onFlame()) {
+        if (onFlame() || (this instanceof Bomber && ((Bomber) this).collideWithEnemy())) {
             changeToDeathImg();
         }
         else {

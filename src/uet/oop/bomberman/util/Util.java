@@ -16,13 +16,14 @@ public class Util {
      * BFS từ vị trí của bomber
      */
     public static void bfsFromBomber() {
-        Point move[] = {new Point(0, -1), new Point(-1, 0), new Point(0, 1), new Point(1, 0)};
+        Point[] move = {new Point(0, -1), new Point(-1, 0), new Point(0, 1), new Point(1, 0)};
         for(int i = 0; i < CanvasManager.ROW; i++) {
             for(int j = 0; j < CanvasManager.COLUMN; j++) {
                 Container.directionToBomber[i][j] = 4;
             }
         }
         Queue<Point> queue = new LinkedList<Point>();
+        //System.out.println(Container.bomber.isDestroy());
         Point BomberPos = Container.bomber.getMostAreaStandingCells();
         queue.offer(Container.bomber.getMostAreaStandingCells());
         Container.directionToBomber[(int)BomberPos.x][(int)BomberPos.y] = 0;
@@ -48,29 +49,6 @@ public class Util {
         }
         catch(Exception ex) {
             System.out.println("BFS Error");
-        }
-//        for(int i = 0; i < CanvasManager.ROW; i++) {
-//            for(int j = 0; j < CanvasManager.COLUMN; j++) {
-//                System.out.print(Container.directionToBomber[i][j]);
-//            }
-//            System.out.println();
-//        }
-    }
-
-    public static Point getMostAreaStandingCells(Point pos){
-        if(pos.y % 1 == 0) {
-            if(pos.x - (int)pos.x <= 0.5) {
-                return new Point(floor(pos.x), pos.y);
-            }
-            else {
-                return new Point(ceil(pos.x), pos.y);
-            }
-        }
-        if(pos.y - (int)pos.y <= 0.5) {
-            return new Point(pos.x, floor(pos.y));
-        }
-        else {
-            return new Point(pos.x, ceil(pos.y));
         }
     }
 }
