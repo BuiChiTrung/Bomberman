@@ -10,6 +10,7 @@ public abstract class Entity {
     protected Point pos;
     protected Image img;
     protected boolean destroy = false;
+    protected int imgId = -1;
 
     public Entity(Point pos, Image img) {
         this.pos = pos;
@@ -29,7 +30,11 @@ public abstract class Entity {
             if (it.isEquals(bomb.getPos()))
                 return bomb;
 
-        return Container.objects[(int)it.x][(int)it.y].get(Container.objects[(int)it.x][(int)it.y].size() - 1);
+        return Container.stillEntities[(int)it.x][(int)it.y].get(Container.stillEntities[(int)it.x][(int)it.y].size() - 1);
+    }
+
+    protected boolean onFlame() {
+        return !Container.flames[(int)pos.x][(int)pos.y].isEmpty();
     }
 
     public void render(GraphicsContext gc) {

@@ -5,6 +5,7 @@ import uet.oop.bomberman.entities.Direction;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Point;
 import uet.oop.bomberman.entities.bomb.Bomb;
+import uet.oop.bomberman.entities.move.enemy.Enemy;
 import uet.oop.bomberman.entities.still.Brick;
 import uet.oop.bomberman.entities.still.Wall;
 import uet.oop.bomberman.timeline.CanvasManager;
@@ -25,6 +26,20 @@ public abstract class MovingEntity extends Entity {
     public MovingEntity(Point pos, Image img) {
         super(pos, img);
     }
+
+    public void update() {
+        if (onFlame()) {
+            changeToDeathImg();
+        }
+        else {
+            move();
+            updateImg();
+        }
+    }
+
+    public abstract void changeToDeathImg();
+    public abstract void move();
+    public abstract void updateImg();
 
     public void moveAlongDirection() {
         for (double step : tryStep) {

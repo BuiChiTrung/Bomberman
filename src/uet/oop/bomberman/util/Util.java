@@ -35,8 +35,8 @@ public class Util {
                     if(!newPos.valid()) {
                         continue;
                     }
-                    if(Container.objects[(int)newPos.x][(int)newPos.y].get(Container.objects[(int)newPos.x][(int)newPos.y].size() - 1) instanceof Brick
-                            || Container.objects[(int)newPos.x][(int)newPos.y].get(Container.objects[(int)newPos.x][(int)newPos.y].size() - 1) instanceof Wall) {
+                    if(Container.stillEntities[(int)newPos.x][(int)newPos.y].get(Container.stillEntities[(int)newPos.x][(int)newPos.y].size() - 1) instanceof Brick
+                            || Container.stillEntities[(int)newPos.x][(int)newPos.y].get(Container.stillEntities[(int)newPos.x][(int)newPos.y].size() - 1) instanceof Wall) {
                         continue;
                     }
                     if(Container.directionToBomber[(int)newPos.x][(int)newPos.y] == 4) {

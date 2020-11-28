@@ -11,7 +11,7 @@ import java.util.List;
 
 public class Container {
     // 2D array contains arraylist
-    public static ArrayList<StillEntity>[][] objects = new ArrayList[CanvasManager.ROW][CanvasManager.COLUMN];
+    public static ArrayList<StillEntity>[][] stillEntities = new ArrayList[CanvasManager.ROW][CanvasManager.COLUMN];
 
     public static List<Enemy> enemies =  new ArrayList<>();
 
@@ -27,7 +27,7 @@ public class Container {
     static {
         for (int i = 0; i < CanvasManager.ROW; ++i)
             for (int j = 0; j < CanvasManager.COLUMN; ++j) {
-                objects[i][j] = new ArrayList<StillEntity>();
+                stillEntities[i][j] = new ArrayList<StillEntity>();
                 flames[i][j] = new ArrayList<Flame>();
             }
     }
@@ -51,10 +51,10 @@ public class Container {
 
         for (int i = 0; i < CanvasManager.ROW; ++i)
             for (int j = 0; j < CanvasManager.COLUMN; ++j) {
-                for (int l = 0; l < objects[i][j].size(); ++l) {
-                    StillEntity stillEntity = objects[i][j].get(l);
+                for (int l = 0; l < stillEntities[i][j].size(); ++l) {
+                    StillEntity stillEntity = stillEntities[i][j].get(l);
                     if (stillEntity.isDestroy()) {
-                        objects[i][j].remove(l);
+                        stillEntities[i][j].remove(l);
                         --l;
                     }
                 }
@@ -73,9 +73,11 @@ public class Container {
         enemies.forEach(enemy -> enemy.update());
         bombs.forEach(bomb -> bomb.update());
         for (int i = 0; i < CanvasManager.ROW; ++i)
-            for (int j = 0; j < CanvasManager.COLUMN; ++j)
-                if (!Container.flames[i][j].isEmpty())
-                    Container.flames[i][j].forEach(flame -> flame.update());
-        bomber.move();
+            for (int j = 0; j < CanvasManager.COLUMN; ++j) {
+                Container.flames[i][j].forEach(flame -> flame.update());
+                Container.stillEntities[i][j].forEach(stillEntity -> stillEntity.update());
+            }
+
+        bomber.update();
     }
 }

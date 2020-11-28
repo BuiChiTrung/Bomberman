@@ -13,7 +13,7 @@ import uet.oop.bomberman.timeline.Container;
 import uet.oop.bomberman.util.DirectionUtil;
 
 public class Bomb extends Entity {
-    private static final double timeToExplode = 1000;         // 1000ms
+    private static final double timeToExplode = 2000;         // milliseconds
     private boolean onBomberFoot;                             // check whether bomber still standing on bomb or not
     private long placeMoment;                                 // moment bomb is placed
     private static final int NUMBER_OF_FRAME_TO_CHANGE_IMG = 10;

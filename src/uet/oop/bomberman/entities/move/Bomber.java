@@ -14,7 +14,11 @@ public class Bomber extends MovingEntity {
 
     private static final int NUMBER_OF_MOVE_TO_CHANGE_IMG = 5;
     private static final int NUMBER_OF_IMG_PER_DIRECTION = 3;
-    private static final Image[][] img = {
+    private static final int DESTROY_IMG_ID = 3 * NUMBER_OF_MOVE_TO_CHANGE_IMG;
+    private int bombPower = 1;
+    private int bombNumber = 2;
+    private boolean arrowKeyIsRelease = true;
+    private static final Image[][] imgState = {
             //LEFT:0
             {Sprite.player_left_0.getFxImage(),
                     Sprite.player_left_1.getFxImage(),
@@ -31,15 +35,11 @@ public class Bomber extends MovingEntity {
             {Sprite.player_down_0.getFxImage(),
                     Sprite.player_down_1.getFxImage(),
                     Sprite.player_down_2.getFxImage()},
-            //DEAD:4
+            //DEATH:4
             {Sprite.player_dead_0.getFxImage(),
                     Sprite.player_dead_1.getFxImage(),
                     Sprite.player_dead_2.getFxImage()}
     };
-
-    private int bombPower = 2;
-    private int bombNumber = 1;
-    private boolean arrowKeyIsRelease = true;
 
     public int getBombPower() {
         return bombPower;
@@ -50,6 +50,7 @@ public class Bomber extends MovingEntity {
         velocity = 0.125;
     }
 
+    @Override
     public void move() {
         if(!arrowKeyIsRelease) {
             updateDirectionAndStepInDirect(direction);
@@ -57,13 +58,30 @@ public class Bomber extends MovingEntity {
         }
     }
 
+    @Override
+    public void updateImg() {
+        img = imgState[DirectionUtil.getDirectionId(direction)][(stepInDirect / NUMBER_OF_MOVE_TO_CHANGE_IMG) % NUMBER_OF_IMG_PER_DIRECTION];
+    }
+
+    @Override
+    public void changeToDeathImg() {
+        imgId++;
+        if (imgId == DESTROY_IMG_ID) {
+            destroy = true;
+        }
+        else {
+            img = imgState[4][imgId / NUMBER_OF_MOVE_TO_CHANGE_IMG];
+        }
+    }
+
+
     public void handlePress(KeyCode key) {
         if(key == KeyCode.RIGHT || key == KeyCode.LEFT || key == KeyCode.UP || key == KeyCode.DOWN) {
             updateDirectionAndStepInDirect(DirectionUtil.getDirectionFromKeyCode(key));
             arrowKeyIsRelease = false;
         }
         if(key == KeyCode.SPACE) {
-            //if (Container.bombs.size() < bombNumber)
+            if (Container.bombs.size() < bombNumber)
                 Container.bomber.placeBomb();
         }
     }
@@ -78,9 +96,4 @@ public class Bomber extends MovingEntity {
         Bomb bomb = new Bomb(Util.getMostAreaStandingCells(pos), Sprite.bomb0.getFxImage());
         Container.bombs.add(bomb);
     }
-
-    public void render(GraphicsContext gc) {
-        gc.drawImage(img[DirectionUtil.getDirectionId(direction)][(stepInDirect / NUMBER_OF_MOVE_TO_CHANGE_IMG) % NUMBER_OF_IMG_PER_DIRECTION], pos.y * Sprite.SCALED_SIZE, pos.x * Sprite.SCALED_SIZE);
-    }
-
 }

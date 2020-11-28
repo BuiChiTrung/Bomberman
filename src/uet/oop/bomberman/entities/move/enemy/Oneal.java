@@ -1,27 +1,16 @@
 package uet.oop.bomberman.entities.move.enemy;
 
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
 import uet.oop.bomberman.entities.Direction;
 import uet.oop.bomberman.entities.Point;
-import uet.oop.bomberman.entities.still.Brick;
-import uet.oop.bomberman.entities.still.Wall;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.timeline.Container;
 import uet.oop.bomberman.util.DirectionUtil;
 import uet.oop.bomberman.util.MoveUtil;
-import uet.oop.bomberman.util.Util;
-
-import java.nio.file.DirectoryIteratorException;
 
 public class Oneal extends Enemy {
     private long lastMoveTime = 0;
-    private static final int NUMBER_OF_MOVE_TO_CHANGE_IMG = 2;
-    private static final int NUMBER_OF_IMG_PER_DIRECTION = 3;
-
-    private Image img[][] = {
-
+    private static final Image[][] imgState = {
             {Sprite.oneal_left0.getFxImage(),
                     Sprite.oneal_left1.getFxImage(),
                     Sprite.oneal_left2.getFxImage()} ,
@@ -41,13 +30,18 @@ public class Oneal extends Enemy {
             {Sprite.oneal_dead.getFxImage()}
     };
 
+    public static Image[][] getImgState() {
+        return imgState;
+    }
+
     public Oneal(Point pos, Image img) {
         super(pos, img);
     }
+
     private Point nextDestination = pos;
 
     /**
-     * Đuổi theo Bomber.
+     * Chase Bomber.
      */
     public void chase() {
         //System.out.println(pos.x + " " + pos.y + " " + nextDestination.x + " " + nextDestination.y + " " + DirectionUtil.getDirectionId(direction));
@@ -65,7 +59,7 @@ public class Oneal extends Enemy {
     }
 
     private Direction chooseNewDirection() {
-        int directionAsNumber = (int)(Math.random() * ((3 - 0) + 1));
+        int directionAsNumber = (int)(Math.random() * ((3) + 1));
         return DirectionUtil.getDirectionFromId(directionAsNumber);
     }
 
@@ -93,7 +87,19 @@ public class Oneal extends Enemy {
         lastMoveTime = System.currentTimeMillis();
     }
 
-    public void render(GraphicsContext gc) {
-        gc.drawImage(img[DirectionUtil.getDirectionId(direction)][(stepInDirect / NUMBER_OF_MOVE_TO_CHANGE_IMG) % NUMBER_OF_IMG_PER_DIRECTION], pos.y * Sprite.SCALED_SIZE, pos.x * Sprite.SCALED_SIZE);
+    @Override
+    public void updateImg() {
+        img = imgState[DirectionUtil.getDirectionId(direction)][(stepInDirect / NUMBER_OF_MOVE_TO_CHANGE_IMG) % NUMBER_OF_IMG_PER_DIRECTION];
+    }
+
+    @Override
+    public void changeToDeathImg() {
+        imgId++;
+        if (imgId == DESTROY_IMG_ID) {
+            destroy = true;
+        }
+        else {
+            img = imgState[4][imgId / NUMBER_OF_MOVE_TO_CHANGE_IMG];
+        }
     }
 }
