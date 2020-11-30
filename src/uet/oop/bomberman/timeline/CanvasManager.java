@@ -2,6 +2,7 @@ package uet.oop.bomberman.timeline;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import uet.oop.bomberman.entities.Point;
 import uet.oop.bomberman.entities.move.Bomber;
 import uet.oop.bomberman.entities.move.enemy.Ballom;
@@ -13,6 +14,7 @@ import uet.oop.bomberman.entities.still.item.SpeedItem;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
@@ -47,7 +49,8 @@ public class CanvasManager {
                             break;
                         // Add item roi lay brick de len
                         case 'x':
-                            Container.stillEntities[x][y].add(new Portal(new Point(x, y), Sprite.portal.getFxImage()));
+                            //Container.stillEntities[x][y].add(new Portal(new Point(x, y), Sprite.portal.getFxImage()));
+                            Container.stillEntities[x][y].add(new Portal(new Point(x, y), new Image(new FileInputStream("res/sprites/custom_sprite/portal01.png"), Sprite.SCALED_SIZE, Sprite.SCALED_SIZE, true, true)));
                             Container.stillEntities[x][y].add(new Brick(new Point(x, y), Sprite.brick.getFxImage()));
                             break;
                         case 'b':
