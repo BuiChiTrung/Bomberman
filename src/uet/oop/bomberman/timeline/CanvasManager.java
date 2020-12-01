@@ -45,7 +45,7 @@ public class CanvasManager {
                             Container.stillEntities[x][y].add(new Wall(new Point(x, y), Sprite.wall.getFxImage()));
                             break;
                         case '*':
-                            Container.stillEntities[x][y].add(new Brick(new Point(x, y), Sprite.brick.getFxImage()));
+                            //Container.stillEntities[x][y].add(new Brick(new Point(x, y), Sprite.brick.getFxImage()));
                             break;
                         // Add item roi lay brick de len
                         case 'x':
@@ -55,24 +55,24 @@ public class CanvasManager {
                             break;
                         case 'b':
                             Container.stillEntities[x][y].add(new BombItem(new Point(x, y), Sprite.powerup_bombs.getFxImage()));
-                            Container.stillEntities[x][y].add(new Brick(new Point(x, y), Sprite.brick.getFxImage()));
+                            // Container.stillEntities[x][y].add(new Brick(new Point(x, y), Sprite.brick.getFxImage()));
                             break;
                         case 'f':
                             Container.stillEntities[x][y].add(new FlameItem(new Point(x, y), Sprite.powerup_flames.getFxImage()));
-                            Container.stillEntities[x][y].add(new Brick(new Point(x, y), Sprite.brick.getFxImage()));
+                            //Container.stillEntities[x][y].add(new Brick(new Point(x, y), Sprite.brick.getFxImage()));
                             break;
                         case 's':
                             Container.stillEntities[x][y].add(new SpeedItem(new Point(x, y), Sprite.powerup_speed.getFxImage()));
-                            Container.stillEntities[x][y].add(new Brick(new Point(x, y), Sprite.brick.getFxImage()));
+                            //Container.stillEntities[x][y].add(new Brick(new Point(x, y), Sprite.brick.getFxImage()));
                             break;
                         case 'p':
                             Container.bomber = new Bomber(new Point(x, y), Sprite.player_right_0.getFxImage());
                             break;
                         case '1':
-                            Container.enemies.add(new Ballom(new Point(x, y), Sprite.ballom_right0.getFxImage()));
+                            //Container.enemies.add(new Ballom(new Point(x, y), Sprite.ballom_right0.getFxImage()));
                             break;
                         case '2':
-                            Container.enemies.add(new Oneal(new Point(x, y), Sprite.oneal_right0.getFxImage()));
+                            //Container.enemies.add(new Oneal(new Point(x, y), Sprite.oneal_right0.getFxImage()));
                             break;
                     }
                 }
@@ -98,7 +98,7 @@ public class CanvasManager {
     }
 
     public void delayRenderTimeBetweenTwoFrame() {
-        while (System.currentTimeMillis() - lastRenderTime < 40) {
+        while (System.currentTimeMillis() - lastRenderTime < 20) {
             // loop until difference >= 40
         }
         lastRenderTime = System.currentTimeMillis();

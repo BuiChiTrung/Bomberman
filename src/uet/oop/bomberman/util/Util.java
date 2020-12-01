@@ -9,6 +9,7 @@ import uet.oop.bomberman.timeline.Container;
 import static java.lang.Math.ceil;
 import static java.lang.Math.floor;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 public class Util {
@@ -36,8 +37,8 @@ public class Util {
                     if(!newPos.valid()) {
                         continue;
                     }
-                    if(Container.stillEntities[(int)newPos.x][(int)newPos.y].get(Container.stillEntities[(int)newPos.x][(int)newPos.y].size() - 1) instanceof Brick
-                            || Container.stillEntities[(int)newPos.x][(int)newPos.y].get(Container.stillEntities[(int)newPos.x][(int)newPos.y].size() - 1) instanceof Wall) {
+                    if(getLast(Container.stillEntities[(int)newPos.x][(int)newPos.y]) instanceof Brick
+                            || getLast(Container.stillEntities[(int)newPos.x][(int)newPos.y]) instanceof Wall) {
                         continue;
                     }
                     if(Container.directionToBomber[(int)newPos.x][(int)newPos.y] == 4) {
@@ -50,5 +51,11 @@ public class Util {
         catch(Exception ex) {
             System.out.println("BFS Error");
         }
+    }
+    public static <T> T getLast(ArrayList<T> arr) {
+        return arr.get(arr.size() - 1);
+    }
+    public static <T> void removeLastEntity(ArrayList<T> arr) {
+        arr.remove(arr.size() - 1);
     }
 }

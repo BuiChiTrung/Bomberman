@@ -15,7 +15,7 @@ import static java.lang.Math.*;
 
 // moving object: bomber, enemy
 public abstract class MovingEntity extends Entity {
-    protected static final double acceptedPass = 0.125;
+    protected static final double acceptedPass = 0.125 / 2;
     protected static final double[] tryStep = {0, -acceptedPass * 2, acceptedPass * 2, -acceptedPass, acceptedPass};
     public Direction direction = Direction.RIGHT;       // manage direction of object
     protected int stepInDirect;                         // số bước liên tiếp đi theo cùng một hướng

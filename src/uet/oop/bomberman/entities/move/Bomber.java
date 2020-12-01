@@ -5,18 +5,25 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import uet.oop.bomberman.entities.Point;
 import uet.oop.bomberman.entities.bomb.Bomb;
+import uet.oop.bomberman.entities.bomb.Flame;
 import uet.oop.bomberman.entities.move.enemy.Enemy;
+import uet.oop.bomberman.entities.still.item.BombItem;
+import uet.oop.bomberman.entities.still.item.FlameItem;
+import uet.oop.bomberman.entities.still.item.SpeedItem;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.timeline.Container;
 import uet.oop.bomberman.util.DirectionUtil;
 import uet.oop.bomberman.util.Util;
+
+import java.lang.invoke.ConstantCallSite;
+import java.util.ArrayList;
 
 public class Bomber extends MovingEntity {
 
     private static final int NUMBER_OF_MOVE_TO_CHANGE_IMG = 5;
     private static final int NUMBER_OF_IMG_PER_DIRECTION = 3;
     private static final int DESTROY_IMG_ID = 3 * NUMBER_OF_MOVE_TO_CHANGE_IMG;
-    private int bombPower = 1;
+    private int bombPower = 5;
     private int bombNumber = 2;
     private boolean arrowKeyIsRelease = true;
     private static final Image[][] imgState = {
@@ -48,7 +55,7 @@ public class Bomber extends MovingEntity {
 
     public Bomber(Point pos, Image img) {
         super(pos, img);
-        velocity = 0.125;
+        velocity = 0.125 / 2;
     }
 
     private void placeBomb() {
@@ -70,8 +77,38 @@ public class Bomber extends MovingEntity {
             updateDirectionAndStepInDirect(direction);
             moveAlongDirection();
         }
+        eatItems();
     }
 
+    private void eatItems() {
+        ArrayList<Point> standingCells = getStandingCells(pos.x, pos.y);
+        for(Point pos: standingCells) {
+            if(Util.getLast(Container.stillEntities[(int)pos.x][(int)pos.y]) instanceof BombItem) {
+                addBomb();
+                Util.removeLastEntity(Container.stillEntities[(int)pos.x][(int)pos.y]);
+            }
+            if(Util.getLast(Container.stillEntities[(int)pos.x][(int)pos.y]) instanceof FlameItem) {
+                upgradePower();
+                Util.removeLastEntity(Container.stillEntities[(int)pos.x][(int)pos.y]);
+            }
+            if(Util.getLast(Container.stillEntities[(int)pos.x][(int)pos.y]) instanceof SpeedItem) {
+                increaseSpeed();
+                Util.removeLastEntity(Container.stillEntities[(int)pos.x][(int)pos.y]);
+            }
+        }
+    }
+
+    private void addBomb() {
+        bombNumber++;
+    }
+
+    private void upgradePower() {
+        bombPower++;
+    }
+
+    private void increaseSpeed() {
+        velocity *= 2;
+    }
     @Override
     public void updateImg() {
         img = imgState[DirectionUtil.getDirectionId(direction)][(stepInDirect / NUMBER_OF_MOVE_TO_CHANGE_IMG) % NUMBER_OF_IMG_PER_DIRECTION];
