@@ -25,6 +25,7 @@ public class Bomber extends MovingEntity {
     private static final int DESTROY_IMG_ID = 3 * NUMBER_OF_MOVE_TO_CHANGE_IMG;
     private int bombPower = 5;
     private int bombNumber = 2;
+    private boolean isIncreaseSpeed = false;
     private boolean arrowKeyIsRelease = true;
     private static final Image[][] imgState = {
             //LEFT:0
@@ -107,7 +108,11 @@ public class Bomber extends MovingEntity {
     }
 
     private void increaseSpeed() {
+        if(isIncreaseSpeed) {
+            return ;
+        }
         velocity *= 2;
+        isIncreaseSpeed = true;
     }
     @Override
     public void updateImg() {

@@ -15,7 +15,7 @@ import static java.lang.Math.*;
 
 // moving object: bomber, enemy
 public abstract class MovingEntity extends Entity {
-    protected static final double acceptedPass = 0.125 / 2;
+    protected static final double acceptedPass = 0.8;
     protected static final double[] tryStep = {0, -acceptedPass * 2, acceptedPass * 2, -acceptedPass, acceptedPass};
     public Direction direction = Direction.RIGHT;       // manage direction of object
     protected int stepInDirect;                         // số bước liên tiếp đi theo cùng một hướng
@@ -40,21 +40,16 @@ public abstract class MovingEntity extends Entity {
     public abstract void updateImg();
 
     public void moveAlongDirection() {
-        for (double step : tryStep) {
-            double stepX;
-            double stepY;
-            if(direction.getX() != 0) {
-                stepX = 0;
-                stepY = step;
-            }
-            else {
-                stepX = step;
-                stepY = 0;
-            }
-            if (!hasObstacle(pos.x + stepX + velocity * direction.getX(), pos.y + stepY + velocity * direction.getY())) {
-                pos.x = pos.x + stepX + velocity * direction.getX();
-                pos.y = pos.y + stepY + velocity * direction.getY();
-                return;
+        if(!hasObstacle(pos.x + direction.getX() * velocity, pos.y + direction.getY() * velocity)) {
+            pos.x += direction.getX() * velocity;
+            pos.y += direction.getY() * velocity;
+            return ;
+        }
+        if(getAreaOfMostStandingCells() > acceptedPass) {
+            Point newPos = getMostAreaStandingCells();
+            if(!hasObstacle(newPos.x + direction.getX() * velocity, newPos.y + direction.getY() * velocity)) {
+                pos.x = newPos.x + direction.getX() * velocity;
+                pos.y = newPos.y + direction.getY() * velocity;
             }
         }
     }
@@ -134,5 +129,12 @@ public abstract class MovingEntity extends Entity {
         else {
             return new Point(pos.x, ceil(pos.y));
         }
+    }
+
+    public double getAreaOfMostStandingCells() {
+        if(pos.x % 1 == 0) {
+            return Math.max(pos.y, 1 - pos.y);
+        }
+        return Math.max(pos.x, 1 - pos.x);
     }
 }
