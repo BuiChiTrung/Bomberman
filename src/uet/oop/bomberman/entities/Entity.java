@@ -25,6 +25,10 @@ public abstract class Entity {
         return destroy;
     }
 
+    public void setDestroy(boolean destroy) {
+        this.destroy = destroy;
+    }
+
     protected Entity getEntityAtPosition(Point it) {
         for (Bomb bomb : Container.bombs)
             if (it.isEquals(bomb.getPos()))
