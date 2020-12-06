@@ -8,6 +8,8 @@ import uet.oop.bomberman.timeline.Container;
 import uet.oop.bomberman.util.DirectionUtil;
 import uet.oop.bomberman.util.MoveUtil;
 
+import java.util.Random;
+
 public class Oneal extends Enemy {
     private long lastMoveTime = 0;
     private static final Image[][] imgState = {
@@ -29,6 +31,7 @@ public class Oneal extends Enemy {
 
             {Sprite.oneal_dead.getFxImage()}
     };
+    private boolean alreadyGetNextDestination = false;
 
     public Image[][] getImgState() {
         return imgState;
@@ -45,7 +48,8 @@ public class Oneal extends Enemy {
      */
     public void chase() {
         //System.out.println(pos.x + " " + pos.y + " " + nextDestination.x + " " + nextDestination.y + " " + DirectionUtil.getDirectionId(direction));
-        if(nextDestination.isEquals(pos) || MoveUtil.blocked(nextDestination)) {
+        if(nextDestination.isEquals(pos) || MoveUtil.blocked(nextDestination) || !alreadyGetNextDestination) {
+            alreadyGetNextDestination = true;
             pos = getMostAreaStandingCells();
             nextDestination = MoveUtil.getNextDestination(pos, DirectionUtil.getDirectionFromId(Container.directionToBomber[(int)pos.x][(int)pos.y]));
             updateDirectionAndStepInDirect(DirectionUtil.getDirectionFromId(Container.directionToBomber[(int)pos.x][(int)pos.y]));
@@ -58,15 +62,34 @@ public class Oneal extends Enemy {
         return Container.directionToBomber[(int)mostAreaCell.x][(int)mostAreaCell.y] != 4;
     }
 
+    public void randomWalk() {
+        alreadyGetNextDestination = false;
+        if (needToChangeDirect())
+            updateDirectionAndStepInDirect(chooseRandomDirection());
+        else
+            updateDirectionAndStepInDirect(direction);
 
-    public void changeDirection() {
-        Direction newDirect = chooseRandomDirection();
-        updateDirectionAndStepInDirect(newDirect);
+        Point oldPos = new Point(pos);
+        collide = false;
+
+        moveAlongDirection();
+        if (oldPos.isEquals(pos))
+            collide = true;
     }
 
-    void RandomWalk() {
-        changeDirection();
-        moveAlongDirection();
+    private boolean needToChangeDirect() {
+        return collide || moveInOneDirectLongEnough();
+    }
+
+    /**
+     * xác suất 66% đổi hướng khi đi thẳng liên tiếp >= 3 ô.
+     */
+    private boolean moveInOneDirectLongEnough() {
+        if (stepInDirect % moveTimeToCrossOneCell == 0 && stepInDirect / moveTimeToCrossOneCell >= 3) {
+            Random changeDirect = new Random();
+            return changeDirect.nextInt(3) >= 2;
+        }
+        return false;
     }
 
     @Override
@@ -75,7 +98,7 @@ public class Oneal extends Enemy {
             return ;
         }
         if(!reachable()) {
-            RandomWalk();
+            randomWalk();
             lastMoveTime = System.currentTimeMillis();
             return ;
         }
