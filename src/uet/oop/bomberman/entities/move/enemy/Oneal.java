@@ -58,13 +58,9 @@ public class Oneal extends Enemy {
         return Container.directionToBomber[(int)mostAreaCell.x][(int)mostAreaCell.y] != 4;
     }
 
-    private Direction chooseNewDirection() {
-        int directionAsNumber = (int)(Math.random() * ((3) + 1));
-        return DirectionUtil.getDirectionFromId(directionAsNumber);
-    }
 
     public void changeDirection() {
-        Direction newDirect = chooseNewDirection();
+        Direction newDirect = chooseRandomDirection();
         updateDirectionAndStepInDirect(newDirect);
     }
 

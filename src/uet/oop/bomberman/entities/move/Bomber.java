@@ -1,12 +1,10 @@
 package uet.oop.bomberman.entities.move;
 
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Point;
 import uet.oop.bomberman.entities.bomb.Bomb;
-import uet.oop.bomberman.entities.bomb.Flame;
 import uet.oop.bomberman.entities.move.enemy.Enemy;
 import uet.oop.bomberman.entities.still.item.BombItem;
 import uet.oop.bomberman.entities.still.item.FlameItem;
@@ -17,7 +15,6 @@ import uet.oop.bomberman.timeline.Container;
 import uet.oop.bomberman.util.DirectionUtil;
 import uet.oop.bomberman.util.Util;
 
-import java.lang.invoke.ConstantCallSite;
 import java.util.ArrayList;
 
 public class Bomber extends MovingEntity {
@@ -25,7 +22,7 @@ public class Bomber extends MovingEntity {
     private static final int NUMBER_OF_MOVE_TO_CHANGE_IMG = 5;
     private static final int NUMBER_OF_IMG_PER_DIRECTION = 3;
     private static final int DESTROY_IMG_ID = 3 * NUMBER_OF_MOVE_TO_CHANGE_IMG;
-    private int bombPower = 2;
+    private int bombPower = 1;
     private int bombNumber = 2;
     private boolean isIncreaseSpeed = false;
     private boolean arrowKeyIsRelease = true;
@@ -80,10 +77,10 @@ public class Bomber extends MovingEntity {
             updateDirectionAndStepInDirect(direction);
             moveAlongDirection();
         }
-        eatItems();
+        eatItem();
     }
 
-    private void eatItems() {
+    private void eatItem() {
         ArrayList<Point> standingCells = getStandingCells(pos.x, pos.y);
 
         for(Point pos: standingCells) {

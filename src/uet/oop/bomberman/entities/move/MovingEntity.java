@@ -19,7 +19,7 @@ public abstract class MovingEntity extends Entity {
     protected static final double[] tryStep = {0, -acceptedPass * 2, acceptedPass * 2, -acceptedPass, acceptedPass};
     public Direction direction = Direction.RIGHT;       // manage direction of object
     protected int stepInDirect;                         // số bước liên tiếp đi theo cùng một hướng
-    protected double velocity = 0.125;
+    protected double velocity;
 
     public MovingEntity(Point pos, Image img) {
         super(pos, img);
