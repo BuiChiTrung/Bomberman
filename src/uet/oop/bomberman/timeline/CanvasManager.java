@@ -83,16 +83,15 @@ public class CanvasManager {
     }
 
     public void renderEntity() {
-        //delayRenderTimeBetweenTwoFrame();
-
         for (int x = 0; x < ROW; ++x) {
             for (int y = 0; y < COLUMN; ++y) {
+                // Grass is rendered every frame
+                Container.stillEntities[x][y].get(0).render(gc);
                 Container.stillEntities[x][y].get(Container.stillEntities[x][y].size() - 1).render(gc);
                 if (!Container.flames[x][y].isEmpty())
                     Container.flames[x][y].get(0).render(gc);
             }
         }
-        Container.bombs.forEach(bomb -> bomb.render(gc));
         Container.enemies.forEach(g -> g.render(gc));
         Container.bomber.render(gc);
     }

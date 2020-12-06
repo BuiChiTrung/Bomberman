@@ -2,9 +2,9 @@ package uet.oop.bomberman.entities;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.timeline.Container;
+import uet.oop.bomberman.util.Util;
 
 public abstract class Entity {
     protected Point pos;
@@ -30,11 +30,8 @@ public abstract class Entity {
     }
 
     protected Entity getEntityAtPosition(Point it) {
-        for (Bomb bomb : Container.bombs)
-            if (it.isEquals(bomb.getPos()))
-                return bomb;
-
-        return Container.stillEntities[(int)it.x][(int)it.y].get(Container.stillEntities[(int)it.x][(int)it.y].size() - 1);
+//        return Container.stillEntities[(int)it.x][(int)it.y].get(Container.stillEntities[(int)it.x][(int)it.y].size() - 1);
+        return Util.getLast(Container.stillEntities[(int)it.x][(int)it.y]);
     }
 
     protected boolean onFlame() {
