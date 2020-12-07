@@ -3,12 +3,13 @@ package uet.oop.bomberman.entities.still.bomb;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Point;
+import uet.oop.bomberman.entities.still.StillEntity;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-public class Flame extends Entity {
+public class Flame extends StillEntity {
     private static final int NUMBER_OF_FRAME_TO_CHANGE_IMG = 2;
     private static final int DESTROY_IMG_ID = 24 * NUMBER_OF_FRAME_TO_CHANGE_IMG;
     public static Image[] imgState = new Image[24];
