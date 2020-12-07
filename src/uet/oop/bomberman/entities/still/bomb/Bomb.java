@@ -10,6 +10,7 @@ import uet.oop.bomberman.entities.still.Wall;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.timeline.Container;
 import uet.oop.bomberman.util.DirectionUtil;
+import uet.oop.bomberman.util.SoundUtil;
 
 public class Bomb extends StillEntity {
     private static final double timeToExplode = 2500;         // milliseconds
@@ -38,7 +39,10 @@ public class Bomb extends StillEntity {
     public void update() {
         updateImg();
         if (pos.distance(Container.bomber.getPos()) >= 1) onBomberFoot = false;  // bomb becomes an obstacle for bomber
-        if (System.currentTimeMillis() - placeMoment > timeToExplode || onFlame()) explode();
+        if (System.currentTimeMillis() - placeMoment > timeToExplode || onFlame()) {
+            explode();
+            SoundUtil.playExplodingSound();
+        }
     }
 
     /**

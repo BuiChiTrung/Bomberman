@@ -8,6 +8,8 @@ import uet.oop.bomberman.timeline.Container;
 import uet.oop.bomberman.util.DirectionUtil;
 import uet.oop.bomberman.util.MoveUtil;
 
+import java.util.Random;
+
 public class Oneal extends Enemy {
     private long lastMoveTime = 0;
     private static final Image[][] imgState = {
@@ -36,6 +38,7 @@ public class Oneal extends Enemy {
 
     public Oneal(Point pos, Image img) {
         super(pos, img);
+        attackRadius = 99999;
     }
 
     private Point nextDestination = pos;
@@ -45,7 +48,8 @@ public class Oneal extends Enemy {
      */
     public void chase() {
         //System.out.println(pos.x + " " + pos.y + " " + nextDestination.x + " " + nextDestination.y + " " + DirectionUtil.getDirectionId(direction));
-        if(nextDestination.isEquals(pos) || MoveUtil.blocked(nextDestination)) {
+        if(nextDestination.isEquals(pos) || MoveUtil.blocked(nextDestination) || !alreadyGetNextDestination) {
+            alreadyGetNextDestination = true;
             pos = getMostAreaStandingCells();
             nextDestination = MoveUtil.getNextDestination(pos, DirectionUtil.getDirectionFromId(Container.directionToBomber[(int)pos.x][(int)pos.y]));
             updateDirectionAndStepInDirect(DirectionUtil.getDirectionFromId(Container.directionToBomber[(int)pos.x][(int)pos.y]));
@@ -58,24 +62,13 @@ public class Oneal extends Enemy {
         return Container.directionToBomber[(int)mostAreaCell.x][(int)mostAreaCell.y] != 4;
     }
 
-
-    public void changeDirection() {
-        Direction newDirect = chooseRandomDirection();
-        updateDirectionAndStepInDirect(newDirect);
-    }
-
-    void RandomWalk() {
-        changeDirection();
-        moveAlongDirection();
-    }
-
     @Override
     public void move() {
         if(System.currentTimeMillis() - lastMoveTime < 20) {
             return ;
         }
         if(!reachable()) {
-            RandomWalk();
+            randomWalk();
             lastMoveTime = System.currentTimeMillis();
             return ;
         }

@@ -3,6 +3,7 @@ package uet.oop.bomberman.util;
 import uet.oop.bomberman.entities.Point;
 import uet.oop.bomberman.entities.still.Brick;
 import uet.oop.bomberman.entities.still.Wall;
+import uet.oop.bomberman.entities.still.bomb.Bomb;
 import uet.oop.bomberman.timeline.CanvasManager;
 import uet.oop.bomberman.timeline.Container;
 
@@ -38,7 +39,8 @@ public class Util {
                         continue;
                     }
                     if(getLast(Container.stillEntities[(int)newPos.x][(int)newPos.y]) instanceof Brick
-                            || getLast(Container.stillEntities[(int)newPos.x][(int)newPos.y]) instanceof Wall) {
+                            || getLast(Container.stillEntities[(int)newPos.x][(int)newPos.y]) instanceof Wall
+                            || checkContainBomb(new Point(newPos.x, newPos.y))) {
                         continue;
                     }
                     if(Container.directionToBomber[(int)newPos.x][(int)newPos.y] == 4) {
@@ -57,5 +59,19 @@ public class Util {
     }
     public static <T> void removeLastEntity(ArrayList<T> arr) {
         arr.remove(arr.size() - 1);
+    }
+
+    public static boolean checkContainBomb(Point pos) {
+        return getLast(Container.stillEntities[(int) pos.x][(int) pos.y]) instanceof Bomb;
+//        for(Bomb bomb: Container.bombs) {
+//            if(bomb.getPos().x == pos.x && bomb.getPos().y == pos.y) {
+//                return true;
+//            }
+//        }
+//        return false;
+    }
+
+    public static double getDistance(Point p, Point q) {
+        return Math.sqrt((p.x - q.x) * (p.x - q.x) + (p.y - q.y) * (p.y - q.y));
     }
 }

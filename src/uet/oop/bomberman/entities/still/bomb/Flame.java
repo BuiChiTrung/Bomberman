@@ -10,7 +10,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class Flame extends StillEntity {
-    private static final int NUMBER_OF_FRAME_TO_CHANGE_IMG = 2;
+    private static final int NUMBER_OF_FRAME_TO_CHANGE_IMG = 1;
     private static final int DESTROY_IMG_ID = 24 * NUMBER_OF_FRAME_TO_CHANGE_IMG;
     public static Image[] imgState = new Image[24];
 
