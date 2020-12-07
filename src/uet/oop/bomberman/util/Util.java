@@ -1,9 +1,9 @@
 package uet.oop.bomberman.util;
 
 import uet.oop.bomberman.entities.Point;
-import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.entities.still.Brick;
 import uet.oop.bomberman.entities.still.Wall;
+import uet.oop.bomberman.entities.still.bomb.Bomb;
 import uet.oop.bomberman.timeline.CanvasManager;
 import uet.oop.bomberman.timeline.Container;
 
@@ -62,12 +62,13 @@ public class Util {
     }
 
     public static boolean checkContainBomb(Point pos) {
-        for(Bomb bomb: Container.bombs) {
-            if(bomb.getPos().x == pos.x && bomb.getPos().y == pos.y) {
-                return true;
-            }
-        }
-        return false;
+        return getLast(Container.stillEntities[(int) pos.x][(int) pos.y]) instanceof Bomb;
+//        for(Bomb bomb: Container.bombs) {
+//            if(bomb.getPos().x == pos.x && bomb.getPos().y == pos.y) {
+//                return true;
+//            }
+//        }
+//        return false;
     }
 
     public static double getDistance(Point p, Point q) {

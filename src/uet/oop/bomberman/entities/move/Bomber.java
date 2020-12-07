@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Point;
-import uet.oop.bomberman.entities.bomb.Bomb;
+import uet.oop.bomberman.entities.still.bomb.Bomb;
 import uet.oop.bomberman.entities.move.enemy.Enemy;
 import uet.oop.bomberman.entities.still.item.BombItem;
 import uet.oop.bomberman.entities.still.item.FlameItem;
@@ -23,7 +23,8 @@ public class Bomber extends MovingEntity {
     private static final int NUMBER_OF_IMG_PER_DIRECTION = 3;
     private static final int DESTROY_IMG_ID = 3 * NUMBER_OF_MOVE_TO_CHANGE_IMG;
     private int bombPower = 1;
-    private int bombNumber = 2;
+    private int bombNumber = 1;
+    private int currentPlacedBomb = 0;
     private boolean isIncreaseSpeed = false;
     private boolean arrowKeyIsRelease = true;
     private static final Image[][] imgState = {
@@ -53,6 +54,10 @@ public class Bomber extends MovingEntity {
         return bombPower;
     }
 
+    public void updateCurrentPlacedBomb() {
+        currentPlacedBomb--;
+    }
+
     public Bomber(Point pos, Image img) {
         super(pos, img);
         velocity = 0.125 / 2;
@@ -60,7 +65,8 @@ public class Bomber extends MovingEntity {
 
     private void placeBomb() {
         Bomb bomb = new Bomb(getMostAreaStandingCells(), Sprite.bomb0.getFxImage());
-        Container.bombs.add(bomb);
+        Container.stillEntities[(int) bomb.getPos().x][(int) bomb.getPos().y].add(bomb);
+        currentPlacedBomb++;
     }
 
     public boolean collideWithEnemy() {
@@ -132,7 +138,7 @@ public class Bomber extends MovingEntity {
             arrowKeyIsRelease = false;
         }
         if(key == KeyCode.SPACE) {
-            if (Container.bombs.size() < bombNumber)
+            if (currentPlacedBomb < bombNumber)
                 Container.bomber.placeBomb();
         }
     }

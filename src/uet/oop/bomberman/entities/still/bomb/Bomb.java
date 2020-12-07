@@ -1,18 +1,19 @@
-package uet.oop.bomberman.entities.bomb;
+package uet.oop.bomberman.entities.still.bomb;
 
 import javafx.scene.image.Image;
 import uet.oop.bomberman.entities.Direction;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Point;
 import uet.oop.bomberman.entities.still.Brick;
+import uet.oop.bomberman.entities.still.StillEntity;
 import uet.oop.bomberman.entities.still.Wall;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.timeline.Container;
 import uet.oop.bomberman.util.DirectionUtil;
 import uet.oop.bomberman.util.SoundUtil;
 
-public class Bomb extends Entity {
-    private static final double timeToExplode = 2000;         // milliseconds
+public class Bomb extends StillEntity {
+    private static final double timeToExplode = 2500;         // milliseconds
     private boolean onBomberFoot;                             // check whether bomber still standing on bomb or not
     private long placeMoment;                                 // moment bomb is placed
     private static final int NUMBER_OF_FRAME_TO_CHANGE_IMG = 10;
@@ -54,6 +55,7 @@ public class Bomb extends Entity {
 
     private void explode() {
         createFlame();
+        Container.bomber.updateCurrentPlacedBomb();
         destroy = true;
     }
 
