@@ -5,7 +5,7 @@ import uet.oop.bomberman.timeline.CanvasManager;
 public class Point {
     public double x;
     public double y;
-    private final double eps = 0.125;
+    private static final double eps = 0;
     public Point(double x, double y) {
         this.x = x;
         this.y = y;

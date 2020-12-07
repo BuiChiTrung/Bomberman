@@ -1,55 +1,55 @@
 package uet.oop.bomberman.entities.move;
 
-import javafx.scene.SnapshotParameters;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.paint.Color;
-import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Direction;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Point;
+import uet.oop.bomberman.entities.still.bomb.Bomb;
 import uet.oop.bomberman.entities.still.Brick;
 import uet.oop.bomberman.entities.still.Wall;
-import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.timeline.CanvasManager;
-import uet.oop.bomberman.timeline.Container;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static java.lang.Math.*;
-import static javafx.scene.input.KeyCode.*;
 
 // moving object: bomber, enemy
 public abstract class MovingEntity extends Entity {
-    protected static final double acceptedPass = 0.125;
+    protected static final double acceptedPass = 0.8;
     protected static final double[] tryStep = {0, -acceptedPass * 2, acceptedPass * 2, -acceptedPass, acceptedPass};
     public Direction direction = Direction.RIGHT;       // manage direction of object
     protected int stepInDirect;                         // số bước liên tiếp đi theo cùng một hướng
-    protected double velocity = 0.125;
+    protected double velocity;
 
-    public MovingEntity(double x, double y, Image img) {
-        super(x, y, img);
+    public MovingEntity(Point pos, Image img) {
+        super(pos, img);
     }
 
+    public void update() {
+        if (onFlame() || (this instanceof Bomber && ((Bomber) this).collideWithEnemy())) {
+            changeToDeathImg();
+        }
+        else {
+            move();
+            updateImg();
+        }
+    }
+
+    public abstract void changeToDeathImg();
+    public abstract void move();
+    public abstract void updateImg();
+
     public void moveAlongDirection() {
-        for (double step : tryStep) {
-            double stepX;
-            double stepY;
-            if(direction.getX() != 0) {
-                stepX = 0;
-                stepY = step;
-            }
-            else {
-                stepX = step;
-                stepY = 0;
-            }
-            if (!hasObstacle(pos.x + stepX + velocity * direction.getX(), pos.y + stepY + velocity * direction.getY())) {
-                pos.x = pos.x + stepX + velocity * direction.getX();
-                pos.y = pos.y + stepY + velocity * direction.getY();
-                return;
+        if(!hasObstacle(pos.x + direction.getX() * velocity, pos.y + direction.getY() * velocity)) {
+            pos.x += direction.getX() * velocity;
+            pos.y += direction.getY() * velocity;
+            return ;
+        }
+        if(getAreaOfMostStandingCells() > acceptedPass) {
+            Point newPos = getMostAreaStandingCells();
+            if(!hasObstacle(newPos.x + direction.getX() * velocity, newPos.y + direction.getY() * velocity)) {
+                pos.x = newPos.x + direction.getX() * velocity;
+                pos.y = newPos.y + direction.getY() * velocity;
             }
         }
     }
@@ -72,10 +72,14 @@ public abstract class MovingEntity extends Entity {
         ArrayList<Point> standingCells = getStandingCells(x, y);
 
         for (Point it : standingCells) {
-            Entity lastEntity = Container.Objects[(int)it.x][(int)it.y].get(Container.Objects[(int)it.x][(int)it.y].size() - 1);
-            if (lastEntity instanceof Brick || lastEntity instanceof Wall) return true;
+            Entity entity = getEntityAtPosition(it);
+            if (entity instanceof Brick || entity instanceof Wall)
+                return true;
+            if (entity instanceof Bomb) {
+                if (!(this instanceof Bomber && ((Bomb) entity).isOnBomberFoot()))
+                    return true;
+            }
         }
-
         return false;
     }
 
@@ -83,7 +87,7 @@ public abstract class MovingEntity extends Entity {
      * return danh sách các ô mà nhân vật đứng trên ô đó. VD: tọa độ nhân vật là (1.5, 1.0) => nhân vạt đứng trên ô (1.0, 1.0) và (2.0, 1.0)
      */
     public ArrayList<Point> getStandingCells(double x, double y) {
-        ArrayList<Point> standingCells = new ArrayList<Point>();
+        ArrayList<Point> standingCells = new ArrayList<>();
         if (x != floor(x) && y != floor(y)) {
             standingCells.add(new Point(floor(x), floor(y)));
             standingCells.add(new Point(floor(x) + 1, floor(y)));
@@ -103,25 +107,5 @@ public abstract class MovingEntity extends Entity {
         }
 
         return standingCells;
-    }
-
-    /**
-     * Trả về ô mà Entity chiếm diện tích nhiều nhất
-     */
-    public Point getMostAreaStandingCells(){
-        if(pos.y % 1 == 0) {
-            if(pos.x - (int)pos.x <= 0.5) {
-                return new Point(floor(pos.x), pos.y);
-            }
-            else {
-                return new Point(ceil(pos.x), pos.y);
-            }
-        }
-        if(pos.y - (int)pos.y <= 0.5) {
-            return new Point(pos.x, floor(pos.y));
-        }
-        else {
-            return new Point(pos.x, ceil(pos.y));
-        }
     }
 }

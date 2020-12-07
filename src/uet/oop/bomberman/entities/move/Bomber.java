@@ -1,16 +1,33 @@
 package uet.oop.bomberman.entities.move;
 
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
+import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.Point;
+import uet.oop.bomberman.entities.still.bomb.Bomb;
+import uet.oop.bomberman.entities.move.enemy.Enemy;
+import uet.oop.bomberman.entities.still.item.BombItem;
+import uet.oop.bomberman.entities.still.item.FlameItem;
+import uet.oop.bomberman.entities.still.item.Item;
+import uet.oop.bomberman.entities.still.item.SpeedItem;
 import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.timeline.Container;
 import uet.oop.bomberman.util.DirectionUtil;
+import uet.oop.bomberman.util.Util;
+
+import java.util.ArrayList;
 
 public class Bomber extends MovingEntity {
 
     private static final int NUMBER_OF_MOVE_TO_CHANGE_IMG = 5;
     private static final int NUMBER_OF_IMG_PER_DIRECTION = 3;
-    private static final Image[][] img = {
+    private static final int DESTROY_IMG_ID = 3 * NUMBER_OF_MOVE_TO_CHANGE_IMG;
+    private int bombPower = 1;
+    private int bombNumber = 1;
+    private int currentPlacedBomb = 0;
+    private boolean isIncreaseSpeed = false;
+    private boolean arrowKeyIsRelease = true;
+    private static final Image[][] imgState = {
             //LEFT:0
             {Sprite.player_left_0.getFxImage(),
                     Sprite.player_left_1.getFxImage(),
@@ -27,29 +44,108 @@ public class Bomber extends MovingEntity {
             {Sprite.player_down_0.getFxImage(),
                     Sprite.player_down_1.getFxImage(),
                     Sprite.player_down_2.getFxImage()},
-            //DEAD:4
+            //DEATH:4
             {Sprite.player_dead_0.getFxImage(),
                     Sprite.player_dead_1.getFxImage(),
                     Sprite.player_dead_2.getFxImage()}
     };
 
-    public Bomber(double x, double y, Image img) {
-        super( x, y, img);
-        velocity = 0.125;
+    public int getBombPower() {
+        return bombPower;
     }
 
-    public void handle(KeyCode key) {
-        if(key == KeyCode.RIGHT || key == KeyCode.LEFT || key == KeyCode.UP || key == KeyCode.DOWN) {
-            updateDirectionAndStepInDirect(DirectionUtil.getDirectionFromKeyCode(key));
+    public void updateCurrentPlacedBomb() {
+        currentPlacedBomb--;
+    }
+
+    public Bomber(Point pos, Image img) {
+        super(pos, img);
+        velocity = 0.125 / 2;
+    }
+
+    private void placeBomb() {
+        Bomb bomb = new Bomb(getMostAreaStandingCells(), Sprite.bomb0.getFxImage());
+        Container.stillEntities[(int) bomb.getPos().x][(int) bomb.getPos().y].add(bomb);
+        currentPlacedBomb++;
+    }
+
+    public boolean collideWithEnemy() {
+        for (Enemy enemy: Container.enemies) {
+            if (pos.distance(enemy.getPos()) < 1)
+                return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void move() {
+        if(!arrowKeyIsRelease) {
+            updateDirectionAndStepInDirect(direction);
             moveAlongDirection();
         }
-        /*if(key == KeyCode.SPACE) {
-            Util.placeBomb(pos);
-        }*/
+        eatItem();
     }
 
-    public void render(GraphicsContext gc) {
-        gc.drawImage(img[DirectionUtil.getDirectionId(direction)][(stepInDirect / NUMBER_OF_MOVE_TO_CHANGE_IMG) % NUMBER_OF_IMG_PER_DIRECTION], pos.y * Sprite.SCALED_SIZE, pos.x * Sprite.SCALED_SIZE);
+    private void eatItem() {
+        ArrayList<Point> standingCells = getStandingCells(pos.x, pos.y);
+
+        for(Point pos: standingCells) {
+            Entity entity = Util.getLast(Container.stillEntities[(int)pos.x][(int)pos.y]);
+            if (entity instanceof Item) {
+                if(entity instanceof BombItem) addBomb();
+                if(entity instanceof FlameItem) upgradePower();
+                if(entity instanceof SpeedItem) increaseSpeed();
+                entity.setDestroy(true);
+            }
+        }
     }
 
+    private void addBomb() {
+        bombNumber++;
+    }
+
+    private void upgradePower() {
+        bombPower++;
+    }
+
+    private void increaseSpeed() {
+        if(isIncreaseSpeed) {
+            return ;
+        }
+        velocity *= 2;
+        isIncreaseSpeed = true;
+    }
+
+    @Override
+    public void updateImg() {
+        img = imgState[DirectionUtil.getDirectionId(direction)][(stepInDirect / NUMBER_OF_MOVE_TO_CHANGE_IMG) % NUMBER_OF_IMG_PER_DIRECTION];
+    }
+
+    @Override
+    public void changeToDeathImg() {
+        imgId++;
+        if (imgId == DESTROY_IMG_ID) {
+            destroy = true;
+        }
+        else {
+            img = imgState[4][imgId / NUMBER_OF_MOVE_TO_CHANGE_IMG];
+        }
+    }
+
+    public void handlePress(KeyCode key) {
+        if(key == KeyCode.RIGHT || key == KeyCode.LEFT || key == KeyCode.UP || key == KeyCode.DOWN) {
+            updateDirectionAndStepInDirect(DirectionUtil.getDirectionFromKeyCode(key));
+            arrowKeyIsRelease = false;
+        }
+        if(key == KeyCode.SPACE) {
+            if (currentPlacedBomb < bombNumber)
+                Container.bomber.placeBomb();
+        }
+    }
+
+    public void handleRelease(KeyCode key) {
+        if(key == KeyCode.RIGHT || key == KeyCode.LEFT || key == KeyCode.UP || key == KeyCode.DOWN) {
+            arrowKeyIsRelease = true;
+        }
+    }
 }
