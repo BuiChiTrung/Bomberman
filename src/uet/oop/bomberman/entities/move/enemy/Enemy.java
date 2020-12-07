@@ -104,7 +104,7 @@ public abstract class Enemy extends MovingEntity {
         if(System.currentTimeMillis() - lastMoveTime < 20) {
             return ;
         }
-        System.out.println(reachable() + " " + (Util.getDistance(this.pos, Container.bomber.getPos()) < attackRadius));
+        //System.out.println(reachable() + " " + (Util.getDistance(this.pos, Container.bomber.getPos()) < attackRadius));
         if(!reachable() || Util.getDistance(this.pos, Container.bomber.getPos()) > attackRadius) {
             randomWalk();
             lastMoveTime = System.currentTimeMillis();

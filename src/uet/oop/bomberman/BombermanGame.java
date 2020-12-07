@@ -9,6 +9,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import uet.oop.bomberman.timeline.CanvasManager;
 import uet.oop.bomberman.timeline.Container;
+import uet.oop.bomberman.util.SoundUtil;
 import uet.oop.bomberman.util.Util;
 
 
@@ -32,7 +33,7 @@ public class BombermanGame extends Application {
 
         addEventHandler(scene);
         canvasManager.createMap();
-
+        SoundUtil.playThemeSound();
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
