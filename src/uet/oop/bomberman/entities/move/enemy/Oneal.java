@@ -31,7 +31,6 @@ public class Oneal extends Enemy {
 
             {Sprite.oneal_dead.getFxImage()}
     };
-    private boolean alreadyGetNextDestination = false;
 
     public Image[][] getImgState() {
         return imgState;
@@ -39,6 +38,7 @@ public class Oneal extends Enemy {
 
     public Oneal(Point pos, Image img) {
         super(pos, img);
+        attackRadius = 99999;
     }
 
     private Point nextDestination = pos;
@@ -60,36 +60,6 @@ public class Oneal extends Enemy {
     public boolean reachable() {
         Point mostAreaCell = getMostAreaStandingCells();
         return Container.directionToBomber[(int)mostAreaCell.x][(int)mostAreaCell.y] != 4;
-    }
-
-    public void randomWalk() {
-        alreadyGetNextDestination = false;
-        if (needToChangeDirect())
-            updateDirectionAndStepInDirect(chooseRandomDirection());
-        else
-            updateDirectionAndStepInDirect(direction);
-
-        Point oldPos = new Point(pos);
-        collide = false;
-
-        moveAlongDirection();
-        if (oldPos.isEquals(pos))
-            collide = true;
-    }
-
-    private boolean needToChangeDirect() {
-        return collide || moveInOneDirectLongEnough();
-    }
-
-    /**
-     * xác suất 66% đổi hướng khi đi thẳng liên tiếp >= 3 ô.
-     */
-    private boolean moveInOneDirectLongEnough() {
-        if (stepInDirect % moveTimeToCrossOneCell == 0 && stepInDirect / moveTimeToCrossOneCell >= 3) {
-            Random changeDirect = new Random();
-            return changeDirect.nextInt(3) >= 2;
-        }
-        return false;
     }
 
     @Override

@@ -69,4 +69,8 @@ public class Util {
         }
         return false;
     }
+
+    public static double getDistance(Point p, Point q) {
+        return Math.sqrt((p.x - q.x) * (p.x - q.x) + (p.y - q.y) * (p.y - q.y));
+    }
 }
