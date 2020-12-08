@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.timeline.CanvasManager;
 import uet.oop.bomberman.timeline.Container;
+import uet.oop.bomberman.timeline.MenuScene;
 import uet.oop.bomberman.util.SoundUtil;
 import uet.oop.bomberman.util.Util;
 
@@ -32,18 +33,18 @@ public class BombermanGame extends Application {
         primaryStage = stage;
         primaryStage.setTitle("Bomberman");
 
-        String path= "src/uet/oop/bomberman/timeline/MenuScene.fxml";
-        Parent rootNode = FXMLLoader.load(Paths.get(path).toUri().toURL());
-        Scene menuScene = new Scene(rootNode, Sprite.SCALED_SIZE * 31, Sprite.SCALED_SIZE * 13);
+//        String path= "src/uet/oop/bomberman/timeline/MenuScene.fxml";
+//        Parent rootNode = FXMLLoader.load(Paths.get(path).toUri().toURL());
+//        Scene menuScene = new Scene(rootNode, Sprite.SCALED_SIZE * 31, Sprite.SCALED_SIZE * 13);
+//
+//        menuScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+//            @Override
+//            public void handle(KeyEvent event) {
+//                startGame();
+//            }
+//        });
 
-        menuScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                startGame();
-            }
-        });
-
-        primaryStage.setScene(menuScene);
+        primaryStage.setScene(MenuScene.getMenuScene());
         primaryStage.show();
     }
 
