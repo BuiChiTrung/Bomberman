@@ -3,35 +3,57 @@ package uet.oop.bomberman;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.timeline.CanvasManager;
 import uet.oop.bomberman.timeline.Container;
 import uet.oop.bomberman.util.SoundUtil;
 import uet.oop.bomberman.util.Util;
 
+import java.io.IOException;
+import java.nio.file.Paths;
+
 
 public class BombermanGame extends Application {
-    private CanvasManager canvasManager = new CanvasManager();
+    private static Stage primaryStage;
+    private static CanvasManager canvasManager = new CanvasManager();
 
     public static void main(String[] args) {
         Application.launch(BombermanGame.class);
     }
 
     @Override
-    public void start(Stage stage) {
-        // Tao root container
+    public void start(Stage stage) throws IOException {
+        primaryStage = stage;
+        primaryStage.setTitle("Bomberman");
+
+        String path= "src/uet/oop/bomberman/timeline/MenuScene.fxml";
+        Parent rootNode = FXMLLoader.load(Paths.get(path).toUri().toURL());
+        Scene menuScene = new Scene(rootNode, Sprite.SCALED_SIZE * 31, Sprite.SCALED_SIZE * 13);
+
+        menuScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                startGame();
+            }
+        });
+
+        primaryStage.setScene(menuScene);
+        primaryStage.show();
+    }
+
+    public static void startGame() {
         Group root = new Group();
         root.getChildren().add(canvasManager.getCanvas());
+        Scene gameScene = new Scene(root);
 
-        // Tao scene
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-
-        addEventHandler(scene);
+        primaryStage.setScene(gameScene);
+        addEventHandler(gameScene);
         canvasManager.createMap();
         SoundUtil.playThemeSound();
         AnimationTimer timer = new AnimationTimer() {
@@ -54,15 +76,15 @@ public class BombermanGame extends Application {
         timer.start();
     }
 
-    public void addEventHandler(Scene scene) {
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+    public static void addEventHandler(Scene gameScene) {
+        gameScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
                 Container.bomber.handlePress(event.getCode());
             }
         });
 
-        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+        gameScene.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
                 Container.bomber.handleRelease(event.getCode());

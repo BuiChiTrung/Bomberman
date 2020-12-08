@@ -1,0 +1,26 @@
+#image {
+    -fx-background-image: url("https://www.talkwalker.com/images/2020/blog-headers/image-analysis.png");
+}
+#navbar {
+    -fx-background-color: #2c3e50;
+}
+#title {
+    -fx-text-alignment: center;
+}
+
+#classicButton{
+    -fx-background-color: #2c3e50;
+    -fx-font-family: Fondamento;
+    -fx-font-size: 22px;
+}
+#classicButton:hover {
+    -fx-font-size: 25px;
+}
+#customButton{
+    -fx-background-color: #2c3e50;
+    -fx-font-family: Fondamento;
+    -fx-font-size: 22px;
+}
+#customButton:hover {
+    -fx-font-size: 25px;
+}
