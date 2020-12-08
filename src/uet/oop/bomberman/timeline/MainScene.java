@@ -1,8 +1,12 @@
 package uet.oop.bomberman.timeline;
 
+import javafx.event.EventHandler;
+import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyEvent;
 import uet.oop.bomberman.entities.Point;
 import uet.oop.bomberman.entities.move.Bomber;
 import uet.oop.bomberman.entities.move.enemy.Ballom;
@@ -18,19 +22,52 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class CanvasManager {
+public class MainScene {
     // window size
     public static final int ROW = 13;
     public static final int COLUMN = 31;
-    private final Canvas canvas = new Canvas(Sprite.SCALED_SIZE * COLUMN, Sprite.SCALED_SIZE * ROW);
-    private final GraphicsContext gc = canvas.getGraphicsContext2D();
+    private static Scene scene = null;
+
+    private static GraphicsContext gc;
     public static long lastRenderTime;
 
-    public Canvas getCanvas() {
-        return canvas;
+    public static Scene getScene() {
+        if (scene == null)
+            scene = setUpScene();
+        return scene;
     }
 
-    public void createMap() {
+    private static Scene setUpScene() {
+        Canvas canvas = new Canvas(Sprite.SCALED_SIZE * COLUMN, Sprite.SCALED_SIZE * ROW);
+        gc = canvas.getGraphicsContext2D();
+
+        Group rootNode = new Group();
+        scene = new Scene(rootNode);
+        addEventHandler();
+        createMap();
+
+        rootNode.getChildren().add(canvas);
+
+        return scene;
+    }
+
+    public static void addEventHandler() {
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                Container.bomber.handlePress(event.getCode());
+            }
+        });
+
+        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                Container.bomber.handleRelease(event.getCode());
+            }
+        });
+    }
+
+    public static void createMap() {
         try {
             File map = new File("./res/levels/Level1.txt");
             Scanner sc = new Scanner(map);
@@ -82,7 +119,17 @@ public class CanvasManager {
         }
     }
 
-    public void renderEntity() {
+    public static void loop() {
+        Container.updateEntity();
+        Container.removeDestroyedEntity();
+        renderEntity();
+        if (Container.bomber.isDestroy()) {
+            Container.reset();
+            createMap();
+        }
+    }
+
+    public static void renderEntity() {
         for (int x = 0; x < ROW; ++x) {
             for (int y = 0; y < COLUMN; ++y) {
                 // Grass is rendered every frame
@@ -94,12 +141,5 @@ public class CanvasManager {
         }
         Container.enemies.forEach(g -> g.render(gc));
         Container.bomber.render(gc);
-    }
-
-    public void delayRenderTimeBetweenTwoFrame() {
-        while (System.currentTimeMillis() - lastRenderTime < 30) {
-            // loop until difference >= 40
-        }
-        lastRenderTime = System.currentTimeMillis();
     }
 }

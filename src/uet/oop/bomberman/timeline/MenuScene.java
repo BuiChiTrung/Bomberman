@@ -9,19 +9,18 @@ import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.nio.file.Paths;
 
 public class MenuScene {
-    private static Scene menuScene = null;
+    private static Scene scene = null;
 
     private static Scene setUpMenuScene() {
         try {
             String path= "src/uet/oop/bomberman/timeline/MenuScene.fxml";
             Parent rootNode = FXMLLoader.load(Paths.get(path).toUri().toURL());
-            menuScene = new Scene(rootNode, Sprite.SCALED_SIZE * 31, Sprite.SCALED_SIZE * 13);
+            scene = new Scene(rootNode, Sprite.SCALED_SIZE * 31, Sprite.SCALED_SIZE * 13);
 
-            menuScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
                 @Override
                 public void handle(KeyEvent event) {
                     BombermanGame.startGame();
@@ -31,13 +30,13 @@ public class MenuScene {
             System.out.println("ERROR WHILE LOADING FXML");
         }
 
-        return menuScene;
+        return scene;
     }
 
-    public static Scene getMenuScene() {
-        if (menuScene == null)
-            menuScene = setUpMenuScene();
-        return menuScene;
+    public static Scene getScene() {
+        if (scene == null)
+            scene = setUpMenuScene();
+        return scene;
     }
 
     public static void main(String[] args) {

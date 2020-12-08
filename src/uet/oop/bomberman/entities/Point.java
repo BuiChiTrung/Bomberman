@@ -1,6 +1,6 @@
 package uet.oop.bomberman.entities;
 
-import uet.oop.bomberman.timeline.CanvasManager;
+import uet.oop.bomberman.timeline.MainScene;
 
 public class Point {
     public double x;
@@ -20,7 +20,7 @@ public class Point {
      * check inside board
      */
     public boolean valid() {
-        return x >= 0 && x < CanvasManager.ROW && y >=0 && y < CanvasManager.COLUMN;
+        return x >= 0 && x < MainScene.ROW && y >=0 && y < MainScene.COLUMN;
     }
 
     public boolean isEquals(Point p) {
