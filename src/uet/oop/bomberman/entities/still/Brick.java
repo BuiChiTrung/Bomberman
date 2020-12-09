@@ -3,6 +3,7 @@ package uet.oop.bomberman.entities.still;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.entities.Point;
 import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.util.ImgFactory;
 
 public class Brick extends StillEntity {
     private int imgId = -1;
@@ -13,11 +14,7 @@ public class Brick extends StillEntity {
         super(pos, img);
     }
 
-    private static final Image[] imgState = {
-        Sprite.brick_exploded0.getFxImage(),
-        Sprite.brick_exploded1.getFxImage(),
-        Sprite.brick_exploded2.getFxImage(),
-    };
+    private static final Image[] imgState = ImgFactory.brickImg;
 
     @Override
     public void update() {

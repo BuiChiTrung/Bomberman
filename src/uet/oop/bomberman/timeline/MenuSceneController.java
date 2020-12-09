@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.util.ImgFactory;
 
 public class MenuSceneController {
     @FXML
@@ -17,12 +18,12 @@ public class MenuSceneController {
     private ImageView image;
 
     public void handleCustomButton() {
-        System.out.println("haha");
+        ImgFactory.createClassicImg();
         BombermanGame.startGame();
     }
 
     public void handleClassicButton() {
-        System.out.println("haha");
+        ImgFactory.createClassicImg();
         BombermanGame.startGame();
     }
 }

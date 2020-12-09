@@ -1,12 +1,9 @@
 package uet.oop.bomberman.timeline;
 
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
-import javafx.scene.input.KeyEvent;
 import uet.oop.bomberman.entities.Point;
 import uet.oop.bomberman.entities.move.Bomber;
 import uet.oop.bomberman.entities.move.enemy.Ballom;
@@ -16,9 +13,9 @@ import uet.oop.bomberman.entities.still.item.BombItem;
 import uet.oop.bomberman.entities.still.item.FlameItem;
 import uet.oop.bomberman.entities.still.item.SpeedItem;
 import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.util.ImgFactory;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
@@ -29,7 +26,6 @@ public class MainScene {
     private static Scene scene = null;
 
     private static GraphicsContext gc;
-    public static long lastRenderTime;
 
     public static Scene getScene() {
         if (scene == null)
@@ -52,19 +48,9 @@ public class MainScene {
     }
 
     public static void addEventHandler() {
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                Container.bomber.handlePress(event.getCode());
-            }
-        });
+        scene.setOnKeyPressed(event -> Container.bomber.handlePress(event.getCode()));
 
-        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                Container.bomber.handleRelease(event.getCode());
-            }
-        });
+        scene.setOnKeyReleased(event -> Container.bomber.handleRelease(event.getCode()));
     }
 
     public static void createMap() {
@@ -75,11 +61,11 @@ public class MainScene {
                 String line = sc.nextLine();
                 for (int y = 0; y < COLUMN; ++y) {
                     // Add grass to all cell
-                    Container.stillEntities[x][y].add(new Grass(new Point(x, y), Sprite.grass.getFxImage()));
+                    Container.stillEntities[x][y].add(new Grass(new Point(x, y), ImgFactory.grassImg));
 
                     switch (line.charAt(y)) {
                         case '#':
-                            Container.stillEntities[x][y].add(new Wall(new Point(x, y), Sprite.wall.getFxImage()));
+                            Container.stillEntities[x][y].add(new Wall(new Point(x, y), ImgFactory.wallImg));
                             break;
                         case '*':
                             Container.stillEntities[x][y].add(new Brick(new Point(x, y), Sprite.brick.getFxImage()));
@@ -87,29 +73,29 @@ public class MainScene {
                         // Add item roi lay brick de len
                         case 'x':
                             //Container.stillEntities[x][y].add(new Portal(new Point(x, y), Sprite.portal.getFxImage()));
-                            Container.stillEntities[x][y].add(new Portal(new Point(x, y), new Image(new FileInputStream("res/sprites/custom_sprite/portal01.png"), Sprite.SCALED_SIZE, Sprite.SCALED_SIZE, true, true)));
+                            Container.stillEntities[x][y].add(new Portal(new Point(x, y), ImgFactory.portalImg));//new Image(new FileInputStream("res/sprites/custom_sprite/portal01.png"), Sprite.SCALED_SIZE, Sprite.SCALED_SIZE, true, true)));
                             Container.stillEntities[x][y].add(new Brick(new Point(x, y), Sprite.brick.getFxImage()));
                             break;
                         case 'b':
-                            Container.stillEntities[x][y].add(new BombItem(new Point(x, y), Sprite.powerup_bombs.getFxImage()));
+                            Container.stillEntities[x][y].add(new BombItem(new Point(x, y), ImgFactory.bombItemImg));
                             //Container.stillEntities[x][y].add(new Brick(new Point(x, y), Sprite.brick.getFxImage()));
                             break;
                         case 'f':
-                            Container.stillEntities[x][y].add(new FlameItem(new Point(x, y), Sprite.powerup_flames.getFxImage()));
+                            Container.stillEntities[x][y].add(new FlameItem(new Point(x, y), ImgFactory.flameItemImg));
                             //Container.stillEntities[x][y].add(new Brick(new Point(x, y), Sprite.brick.getFxImage()));
                             break;
                         case 's':
-                            Container.stillEntities[x][y].add(new SpeedItem(new Point(x, y), Sprite.powerup_speed.getFxImage()));
+                            Container.stillEntities[x][y].add(new SpeedItem(new Point(x, y), ImgFactory.speedItemImg));
                             //Container.stillEntities[x][y].add(new Brick(new Point(x, y), Sprite.brick.getFxImage()));
                             break;
                         case 'p':
-                            Container.bomber = new Bomber(new Point(x, y), Sprite.player_right_0.getFxImage());
+                            Container.bomber = new Bomber(new Point(x, y), ImgFactory.bomberImg[2][0]);
                             break;
                         case '1':
-                            Container.enemies.add(new Ballom(new Point(x, y), Sprite.ballom_right0.getFxImage()));
+                            Container.enemies.add(new Ballom(new Point(x, y), ImgFactory.ballomImg[2][0]));
                             break;
                         case '2':
-                            Container.enemies.add(new Oneal(new Point(x, y), Sprite.oneal_right0.getFxImage()));
+                            Container.enemies.add(new Oneal(new Point(x, y), ImgFactory.onealImg[2][0]));
                             break;
                     }
                 }

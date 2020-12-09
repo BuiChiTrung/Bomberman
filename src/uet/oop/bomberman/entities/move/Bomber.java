@@ -13,6 +13,7 @@ import uet.oop.bomberman.entities.still.item.SpeedItem;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.timeline.Container;
 import uet.oop.bomberman.util.DirectionUtil;
+import uet.oop.bomberman.util.ImgFactory;
 import uet.oop.bomberman.util.Util;
 
 import java.util.ArrayList;
@@ -27,28 +28,7 @@ public class Bomber extends MovingEntity {
     private int currentPlacedBomb = 0;
     private boolean isIncreaseSpeed = false;
     private boolean arrowKeyIsRelease = true;
-    private static final Image[][] imgState = {
-            //LEFT:0
-            {Sprite.player_left_0.getFxImage(),
-                    Sprite.player_left_1.getFxImage(),
-                    Sprite.player_left_2.getFxImage()},
-            //UP:1
-            {Sprite.player_up_0.getFxImage(),
-                    Sprite.player_up_1.getFxImage(),
-                    Sprite.player_up_2.getFxImage()},
-            //RIGHT:2
-            {Sprite.player_right_0.getFxImage(),
-                    Sprite.player_right_1.getFxImage(),
-                    Sprite.player_right_2.getFxImage()},
-            //DOWN:3
-            {Sprite.player_down_0.getFxImage(),
-                    Sprite.player_down_1.getFxImage(),
-                    Sprite.player_down_2.getFxImage()},
-            //DEATH:4
-            {Sprite.player_dead_0.getFxImage(),
-                    Sprite.player_dead_1.getFxImage(),
-                    Sprite.player_dead_2.getFxImage()}
-    };
+    private static final Image[][] imgState = ImgFactory.bomberImg;
 
     public int getBombPower() {
         return bombPower;

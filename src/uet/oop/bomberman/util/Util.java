@@ -61,10 +61,4 @@ public class Util {
     public static boolean checkContainBomb(Point pos) {
         return getLast(Container.stillEntities[(int) pos.x][(int) pos.y]) instanceof Bomb;
     }
-
-    public static double getDistance(Point p, Point q) {
-        return Math.sqrt((p.x - q.x) * (p.x - q.x) + (p.y - q.y) * (p.y - q.y));
-    }
-
-
 }
