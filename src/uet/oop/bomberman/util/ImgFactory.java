@@ -94,6 +94,7 @@ public class ImgFactory {
         flameItemImg = Sprite.powerup_flames.getFxImage();
 
         brickImg = new Image[]{
+                Sprite.brick.getFxImage(),
                 Sprite.brick_exploded0.getFxImage(),
                 Sprite.brick_exploded1.getFxImage(),
                 Sprite.brick_exploded2.getFxImage(),
