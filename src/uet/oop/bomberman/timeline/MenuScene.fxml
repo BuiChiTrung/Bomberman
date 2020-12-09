@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="416.0" prefWidth="992" stylesheets="@MenuScene.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uet.oop.bomberman.timeline.MenuSceneController">
+   <children>
+       <ImageView fx:id="image" fitHeight="416.0" fitWidth="834.0" pickOnBounds="true">
+         <effect>
+            <InnerShadow choke="0.2" />
+         </effect>
+         <image>
+            <Image url="@../../../../../res/textures/background1.jpg" />
+         </image>
+       </ImageView>
+       <VBox fx:id="navbar" prefHeight="400.0" prefWidth="297.0">
+         <children>
+            <Region prefHeight="94.0" prefWidth="158.0" />
+            <Label fx:id="title" prefHeight="34.0" prefWidth="158.0" text=" Choose Map" textAlignment="JUSTIFY">
+               <font>
+                  <Font name="Fondamento Regular" size="26.0" />
+               </font>
+               <textFill>
+                  <LinearGradient endX="0.4423076923076923" endY="0.48557692307692313" startX="0.5288461538461539" startY="0.048076923076923045">
+                     <stops>
+                        <Stop color="BLACK" />
+                        <Stop color="BLACK" offset="0.9966666666666666" />
+                        <Stop color="#ecf0f1" offset="1.0" />
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+            </Label>
+            <Region prefHeight="95.0" prefWidth="158.0" />
+            <Button fx:id="customButton" mnemonicParsing="false" onAction="#handleCustomButton" prefHeight="25.0" prefWidth="158.0" text="Custom" textAlignment="CENTER">
+               <font>
+                  <Font size="22.0" />
+               </font>
+               <textFill>
+                  <LinearGradient endX="0.4423076923076923" endY="0.48557692307692313" startX="0.7067307692307692" startY="0.13461538461538458">
+                     <stops>
+                        <Stop color="BLACK" />
+                        <Stop color="BLACK" offset="0.9966666666666666" />
+                        <Stop color="BLACK" offset="1.0" />
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+            </Button>
+            <Button fx:id="classicButton" mnemonicParsing="false" onAction="#handleClassicButton" prefHeight="25.0" prefWidth="158.0" text="Classic" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Button>
+         </children>
+         <effect>
+            <InnerShadow choke="0.2" height="33.14" radius="13.035" />
+         </effect></VBox>
+   </children>
+</HBox>

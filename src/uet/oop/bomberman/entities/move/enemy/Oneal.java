@@ -1,36 +1,15 @@
 package uet.oop.bomberman.entities.move.enemy;
 
 import javafx.scene.image.Image;
-import uet.oop.bomberman.entities.Direction;
 import uet.oop.bomberman.entities.Point;
-import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.timeline.Container;
 import uet.oop.bomberman.util.DirectionUtil;
+import uet.oop.bomberman.util.ImgFactory;
 import uet.oop.bomberman.util.MoveUtil;
-
-import java.util.Random;
 
 public class Oneal extends Enemy {
     private long lastMoveTime = 0;
-    private static final Image[][] imgState = {
-            {Sprite.oneal_left0.getFxImage(),
-                    Sprite.oneal_left1.getFxImage(),
-                    Sprite.oneal_left2.getFxImage()} ,
-
-            {Sprite.oneal_left0.getFxImage(),
-                    Sprite.oneal_left1.getFxImage(),
-                    Sprite.oneal_left2.getFxImage()} ,
-
-            {Sprite.oneal_right0.getFxImage(),
-                    Sprite.oneal_right1.getFxImage(),
-                    Sprite.oneal_right2.getFxImage()} ,
-
-            {Sprite.oneal_right0.getFxImage(),
-                    Sprite.oneal_right1.getFxImage(),
-                    Sprite.oneal_right2.getFxImage()} ,
-
-            {Sprite.oneal_dead.getFxImage()}
-    };
+    private static final Image[][] imgState = ImgFactory.onealImg;
 
     public Image[][] getImgState() {
         return imgState;

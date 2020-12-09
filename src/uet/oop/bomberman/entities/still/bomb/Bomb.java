@@ -7,9 +7,9 @@ import uet.oop.bomberman.entities.Point;
 import uet.oop.bomberman.entities.still.Brick;
 import uet.oop.bomberman.entities.still.StillEntity;
 import uet.oop.bomberman.entities.still.Wall;
-import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.timeline.Container;
 import uet.oop.bomberman.util.DirectionUtil;
+import uet.oop.bomberman.util.ImgFactory;
 import uet.oop.bomberman.util.SoundUtil;
 
 public class Bomb extends StillEntity {
@@ -20,11 +20,7 @@ public class Bomb extends StillEntity {
     private static final int NUMBER_OF_IMG = 3;
     private int imgId = -1;
 
-    private final Image[] imgArray = {
-            Sprite.bomb0.getFxImage(),
-            Sprite.bomb1.getFxImage(),
-            Sprite.bomb2.getFxImage()
-    };
+    private final Image[] imgArray = ImgFactory.bombImg;
 
     public Bomb(Point pos, Image img) {
         super(pos, img);

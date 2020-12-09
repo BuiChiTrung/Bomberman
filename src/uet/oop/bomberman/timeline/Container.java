@@ -11,22 +11,22 @@ import java.util.List;
 
 public class Container {
     // 2D array contains arraylist
-    public static ArrayList<StillEntity>[][] stillEntities = new ArrayList[CanvasManager.ROW][CanvasManager.COLUMN];
+    public static ArrayList<StillEntity>[][] stillEntities = new ArrayList[MainScene.ROW][MainScene.COLUMN];
 
     public static List<Enemy> enemies =  new ArrayList<>();
 
     public static Bomber bomber;
 
     //Shortest direction to bomber
-    public static int[][] directionToBomber = new int[CanvasManager.ROW][CanvasManager.COLUMN];
+    public static int[][] directionToBomber = new int[MainScene.ROW][MainScene.COLUMN];
 
     public static ArrayList<Bomb> bombs = new ArrayList<>();
 
-    public static ArrayList<Flame>[][] flames = new ArrayList[CanvasManager.ROW][CanvasManager.COLUMN];
+    public static ArrayList<Flame>[][] flames = new ArrayList[MainScene.ROW][MainScene.COLUMN];
 
     static {
-        for (int i = 0; i < CanvasManager.ROW; ++i)
-            for (int j = 0; j < CanvasManager.COLUMN; ++j) {
+        for (int i = 0; i < MainScene.ROW; ++i)
+            for (int j = 0; j < MainScene.COLUMN; ++j) {
                 stillEntities[i][j] = new ArrayList<StillEntity>();
                 flames[i][j] = new ArrayList<Flame>();
             }
@@ -42,8 +42,8 @@ public class Container {
         }
 
 
-        for (int i = 0; i < CanvasManager.ROW; ++i)
-            for (int j = 0; j < CanvasManager.COLUMN; ++j) {
+        for (int i = 0; i < MainScene.ROW; ++i)
+            for (int j = 0; j < MainScene.COLUMN; ++j) {
                 for (int l = 0; l < stillEntities[i][j].size(); ++l) {
                     StillEntity stillEntity = stillEntities[i][j].get(l);
                     if (stillEntity.isDestroy()) {
@@ -64,8 +64,8 @@ public class Container {
 
     public static void updateEntity() {
         enemies.forEach(enemy -> enemy.update());
-        for (int i = 0; i < CanvasManager.ROW; ++i)
-            for (int j = 0; j < CanvasManager.COLUMN; ++j) {
+        for (int i = 0; i < MainScene.ROW; ++i)
+            for (int j = 0; j < MainScene.COLUMN; ++j) {
                 flames[i][j].forEach(flame -> flame.update());
                 stillEntities[i][j].forEach(stillEntity -> stillEntity.update());
             }
@@ -76,11 +76,11 @@ public class Container {
     public static void reset() {
         enemies = new ArrayList<>();
         bombs = new ArrayList<>();
-        for (int i = 0; i < CanvasManager.ROW; ++i)
-            for (int j = 0; j < CanvasManager.COLUMN; ++j) {
+        for (int i = 0; i < MainScene.ROW; ++i)
+            for (int j = 0; j < MainScene.COLUMN; ++j) {
                 stillEntities[i][j].clear();
                 flames[i][j].clear();
             }
-        directionToBomber = new int[CanvasManager.ROW][CanvasManager.COLUMN];
+        directionToBomber = new int[MainScene.ROW][MainScene.COLUMN];
     }
 }

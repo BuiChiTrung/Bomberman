@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 import uet.oop.bomberman.entities.Direction;
 import uet.oop.bomberman.entities.Point;
 import uet.oop.bomberman.entities.move.MovingEntity;
-import uet.oop.bomberman.timeline.CanvasManager;
+import uet.oop.bomberman.timeline.MainScene;
 import uet.oop.bomberman.timeline.Container;
 import uet.oop.bomberman.util.DirectionUtil;
 import uet.oop.bomberman.util.MoveUtil;
@@ -105,7 +105,7 @@ public abstract class Enemy extends MovingEntity {
             return ;
         }
         //System.out.println(reachable() + " " + (Util.getDistance(this.pos, Container.bomber.getPos()) < attackRadius));
-        if(!reachable() || Util.getDistance(this.pos, Container.bomber.getPos()) > attackRadius) {
+        if(!reachable() || pos.distance(Container.bomber.getPos())> attackRadius) {
             randomWalk();
             lastMoveTime = System.currentTimeMillis();
             return ;
@@ -117,7 +117,7 @@ public abstract class Enemy extends MovingEntity {
      * factory design pattern.
      */
     public Image[][] getImgState() {
-        return new Image[CanvasManager.ROW][CanvasManager.COLUMN];
+        return new Image[MainScene.ROW][MainScene.COLUMN];
     }
 }
 

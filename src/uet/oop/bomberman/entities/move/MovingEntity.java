@@ -7,7 +7,7 @@ import uet.oop.bomberman.entities.Point;
 import uet.oop.bomberman.entities.still.bomb.Bomb;
 import uet.oop.bomberman.entities.still.Brick;
 import uet.oop.bomberman.entities.still.Wall;
-import uet.oop.bomberman.timeline.CanvasManager;
+import uet.oop.bomberman.timeline.MainScene;
 
 import java.util.ArrayList;
 
@@ -66,8 +66,8 @@ public abstract class MovingEntity extends Entity {
      * check vị trí đang đứng có vật cản nào ko
      */
     public boolean hasObstacle(double x, double y) {
-        if (x < 0 || x > CanvasManager.ROW) return true;
-        if (y < 0 || y > CanvasManager.COLUMN) return true;
+        if (x < 0 || x > MainScene.ROW) return true;
+        if (y < 0 || y > MainScene.COLUMN) return true;
 
         ArrayList<Point> standingCells = getStandingCells(x, y);
 
