@@ -6,9 +6,9 @@ import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.util.ImgFactory;
 
 public class Brick extends StillEntity {
-    private int imgId = 0;
-    private static final int NUMBER_OF_FRAME_TO_CHANGE_IMG = 5;
-    private static final int DESTROY_IMG_ID = 4 * NUMBER_OF_FRAME_TO_CHANGE_IMG;
+    private int imgId = -1;
+    private static final int NUMBER_OF_FRAME_TO_CHANGE_IMG = 8;
+    private static final int DESTROY_IMG_ID = 3 * NUMBER_OF_FRAME_TO_CHANGE_IMG;
 
     public Brick(Point pos, Image img) {
         super(pos, img);

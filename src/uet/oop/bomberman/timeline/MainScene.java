@@ -4,6 +4,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Point;
 import uet.oop.bomberman.entities.move.Bomber;
 import uet.oop.bomberman.entities.move.enemy.Ballom;
@@ -14,6 +15,7 @@ import uet.oop.bomberman.entities.still.item.FlameItem;
 import uet.oop.bomberman.entities.still.item.SpeedItem;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.util.ImgFactory;
+import uet.oop.bomberman.util.Util;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -68,25 +70,24 @@ public class MainScene {
                             Container.stillEntities[x][y].add(new Wall(new Point(x, y), ImgFactory.wallImg));
                             break;
                         case '*':
-                            Container.stillEntities[x][y].add(new Brick(new Point(x, y), Sprite.brick.getFxImage()));
+                            Container.stillEntities[x][y].add(new Brick(new Point(x, y), ImgFactory.brickImg[0]));
                             break;
                         // Add item roi lay brick de len
                         case 'x':
-                            //Container.stillEntities[x][y].add(new Portal(new Point(x, y), Sprite.portal.getFxImage()));
-                            Container.stillEntities[x][y].add(new Portal(new Point(x, y), ImgFactory.portalImg));//new Image(new FileInputStream("res/sprites/custom_sprite/portal01.png"), Sprite.SCALED_SIZE, Sprite.SCALED_SIZE, true, true)));
-                            Container.stillEntities[x][y].add(new Brick(new Point(x, y), Sprite.brick.getFxImage()));
+                            Container.stillEntities[x][y].add(new Portal(new Point(x, y), ImgFactory.portalImg));
+                            Container.stillEntities[x][y].add(new Brick(new Point(x, y), ImgFactory.brickImg[0]));
                             break;
                         case 'b':
                             Container.stillEntities[x][y].add(new BombItem(new Point(x, y), ImgFactory.bombItemImg));
-                            //Container.stillEntities[x][y].add(new Brick(new Point(x, y), Sprite.brick.getFxImage()));
+                            //Container.stillEntities[x][y].add(new Brick(new Point(x, y), ImgFactory.brickImg[0]));
                             break;
                         case 'f':
                             Container.stillEntities[x][y].add(new FlameItem(new Point(x, y), ImgFactory.flameItemImg));
-                            //Container.stillEntities[x][y].add(new Brick(new Point(x, y), Sprite.brick.getFxImage()));
+                            //Container.stillEntities[x][y].add(new Brick(new Point(x, y), ImgFactory.brickImg[0]));
                             break;
                         case 's':
                             Container.stillEntities[x][y].add(new SpeedItem(new Point(x, y), ImgFactory.speedItemImg));
-                            //Container.stillEntities[x][y].add(new Brick(new Point(x, y), Sprite.brick.getFxImage()));
+                            //Container.stillEntities[x][y].add(new Brick(new Point(x, y), ImgFactory.brickImg[0]));
                             break;
                         case 'p':
                             Container.bomber = new Bomber(new Point(x, y), ImgFactory.bomberImg[2][0]);
@@ -120,9 +121,14 @@ public class MainScene {
             for (int y = 0; y < COLUMN; ++y) {
                 // Grass is rendered every frame
                 Container.stillEntities[x][y].get(0).render(gc);
-                Container.stillEntities[x][y].get(Container.stillEntities[x][y].size() - 1).render(gc);
+
+                Entity entity = Util.getLast(Container.stillEntities[x][y]);
+                if (!(entity instanceof Brick)) entity.render(gc);
+
                 if (!Container.flames[x][y].isEmpty())
                     Container.flames[x][y].get(0).render(gc);
+                if ((entity instanceof Brick)) entity.render(gc);
+
             }
         }
         Container.enemies.forEach(g -> g.render(gc));

@@ -18,7 +18,7 @@ public class MenuSceneController {
     private ImageView image;
 
     public void handleCustomButton() {
-        ImgFactory.createClassicImg();
+        ImgFactory.createCustomImg();
         BombermanGame.startGame();
     }
 

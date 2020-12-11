@@ -25,6 +25,12 @@ public class ImgFactory {
 
     public static void createClassicImg() {
         createConstantImg();
+        bombImg = new Image[]{
+                Sprite.bomb0.getFxImage(),
+                Sprite.bomb1.getFxImage(),
+                Sprite.bomb2.getFxImage()
+        };
+
         ballomImg = new Image[][]{
                 //LEFT
                 {Sprite.ballom_left0.getFxImage(),
@@ -104,13 +110,102 @@ public class ImgFactory {
         portalImg = Sprite.portal.getFxImage();
     }
 
-    public static void createConstantImg() {
-        bombImg = new Image[]{
-                Sprite.bomb0.getFxImage(),
-                Sprite.bomb1.getFxImage(),
-                Sprite.bomb2.getFxImage()
-        };
+    public static void createCustomImg() {
+        createConstantImg();
+        try {
+            bombImg = new Image[]{
+                    new Image(new FileInputStream("res/sprites/custom_sprite/bomb01.png"), Sprite.SCALED_SIZE, Sprite.SCALED_SIZE, true, true),
+                    new Image(new FileInputStream("res/sprites/custom_sprite/bomb02.png"), Sprite.SCALED_SIZE, Sprite.SCALED_SIZE, true, true),
+                    new Image(new FileInputStream("res/sprites/custom_sprite/bomb03.png"), Sprite.SCALED_SIZE, Sprite.SCALED_SIZE, true, true),
+            };
 
+            ballomImg = new Image[][]{
+                    //LEFT
+                    {Sprite.ballom_left0.getFxImage(),
+                            Sprite.ballom_left1.getFxImage(),
+                            Sprite.ballom_left2.getFxImage()},
+                    //UP
+                    {Sprite.ballom_left0.getFxImage(),
+                            Sprite.ballom_left1.getFxImage(),
+                            Sprite.ballom_left2.getFxImage()},
+                    //RIGHT
+                    {Sprite.ballom_right0.getFxImage(),
+                            Sprite.ballom_right1.getFxImage(),
+                            Sprite.ballom_right2.getFxImage()},
+                    //UP
+                    {Sprite.ballom_right0.getFxImage(),
+                            Sprite.ballom_right1.getFxImage(),
+                            Sprite.ballom_right2.getFxImage()},
+                    // DIE
+                    {Sprite.ballom_dead.getFxImage()}
+            };
+
+            onealImg = new Image[][] {
+                    {Sprite.oneal_left0.getFxImage(),
+                            Sprite.oneal_left1.getFxImage(),
+                            Sprite.oneal_left2.getFxImage()} ,
+
+                    {Sprite.oneal_left0.getFxImage(),
+                            Sprite.oneal_left1.getFxImage(),
+                            Sprite.oneal_left2.getFxImage()} ,
+
+                    {Sprite.oneal_right0.getFxImage(),
+                            Sprite.oneal_right1.getFxImage(),
+                            Sprite.oneal_right2.getFxImage()} ,
+
+                    {Sprite.oneal_right0.getFxImage(),
+                            Sprite.oneal_right1.getFxImage(),
+                            Sprite.oneal_right2.getFxImage()} ,
+
+                    {Sprite.oneal_dead.getFxImage()}
+            };
+
+            bomberImg = new Image[][] {
+                    //LEFT:0
+                    {Sprite.player_left_0.getFxImage(),
+                            Sprite.player_left_1.getFxImage(),
+                            Sprite.player_left_2.getFxImage()},
+                    //UP:1
+                    {Sprite.player_up_0.getFxImage(),
+                            Sprite.player_up_1.getFxImage(),
+                            Sprite.player_up_2.getFxImage()},
+                    //RIGHT:2
+                    {
+                            Sprite.player_right_0.getFxImage(),
+                            //new Image(new FileInputStream("res/sprites/custom_sprite/player09.png"), Sprite.SCALED_SIZE, Sprite.SCALED_SIZE, true, true),
+                            Sprite.player_right_1.getFxImage(),
+                            Sprite.player_right_2.getFxImage()},
+                    //DOWN:3
+                    {Sprite.player_down_0.getFxImage(),
+                            Sprite.player_down_1.getFxImage(),
+                            Sprite.player_down_2.getFxImage()},
+                    //DEATH:4
+                    {Sprite.player_dead_0.getFxImage(),
+                            Sprite.player_dead_1.getFxImage(),
+                            Sprite.player_dead_2.getFxImage()}
+            };
+
+            bombItemImg = new Image(new FileInputStream("res/sprites/custom_sprite/itembomb.png"), Sprite.SCALED_SIZE, Sprite.SCALED_SIZE, true, true);
+            speedItemImg = new Image(new FileInputStream("res/sprites/custom_sprite/itemspeed.png"), Sprite.SCALED_SIZE, Sprite.SCALED_SIZE, true, true);
+            flameItemImg = new Image(new FileInputStream("res/sprites/custom_sprite/itemflame.png"), Sprite.SCALED_SIZE, Sprite.SCALED_SIZE, true, true);
+
+            brickImg = new Image[]{
+                    new Image(new FileInputStream("res/sprites/custom_sprite/brick02.png"), Sprite.SCALED_SIZE, Sprite.SCALED_SIZE, true, true),
+                    new Image(new FileInputStream("res/sprites/custom_sprite/brick03.png"), Sprite.SCALED_SIZE, Sprite.SCALED_SIZE, true, true),
+                    new Image(new FileInputStream("res/sprites/custom_sprite/brick04.png"), Sprite.SCALED_SIZE, Sprite.SCALED_SIZE, true, true),
+                    //Sprite.brick_exploded2.getFxImage(),
+            };
+            wallImg = new Image(new FileInputStream("res/sprites/custom_sprite/grass02.png"), Sprite.SCALED_SIZE, Sprite.SCALED_SIZE, true, true);
+            grassImg = new Image(new FileInputStream("res/sprites/custom_sprite/grass08.jpg"), Sprite.SCALED_SIZE, Sprite.SCALED_SIZE, true, true);
+            portalImg = new Image(new FileInputStream("res/sprites/custom_sprite/portal01.png"), Sprite.SCALED_SIZE, Sprite.SCALED_SIZE, true, true);;
+        }
+        // new Image(new FileInputStream("res/sprites/custom_sprite/"), Sprite.SCALED_SIZE, Sprite.SCALED_SIZE, true, true),
+        catch (FileNotFoundException e) {
+            System.out.println("Error while init img");
+        }
+    }
+
+    public static void createConstantImg() {
         try {
             flameImg = new Image[]{
                     new Image(new FileInputStream("res/sprites/custom_sprite/flame01.png"), Sprite.SCALED_SIZE, Sprite.SCALED_SIZE, true, true),
