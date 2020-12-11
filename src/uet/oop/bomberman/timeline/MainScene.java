@@ -109,7 +109,7 @@ public class MainScene {
         Container.updateEntity();
         Container.removeDestroyedEntity();
         renderEntity();
-        if (Container.bomber.isDestroy()) {
+        if (Container.bomber.isRemovableFromContainer()) {
             Container.reset();
             createMap();
         }

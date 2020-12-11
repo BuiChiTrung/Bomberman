@@ -52,7 +52,7 @@ public class Bomb extends StillEntity {
     private void explode() {
         createFlame();
         Container.bomber.updateCurrentPlacedBomb();
-        destroy = true;
+        removableFromContainer = true;
     }
 
 

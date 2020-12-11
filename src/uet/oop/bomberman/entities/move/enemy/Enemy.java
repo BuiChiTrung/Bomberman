@@ -9,7 +9,6 @@ import uet.oop.bomberman.timeline.MainScene;
 import uet.oop.bomberman.timeline.Container;
 import uet.oop.bomberman.util.DirectionUtil;
 import uet.oop.bomberman.util.MoveUtil;
-import uet.oop.bomberman.util.Util;
 
 import java.util.Random;
 
@@ -42,7 +41,7 @@ public abstract class Enemy extends MovingEntity {
     public void changeToDeathImg() {
         imgId++;
         if (imgId == DESTROY_IMG_ID) {
-            destroy = true;
+            removableFromContainer = true;
         }
         else {
             img = getImgState()[4][imgId / NUMBER_OF_MOVE_TO_CHANGE_IMG];

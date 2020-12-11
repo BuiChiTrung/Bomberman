@@ -35,7 +35,7 @@ public class Container {
     public static void removeDestroyedEntity() {
         for (int i = 0; i < enemies.size(); ++i) {
             Enemy enemy = enemies.get(i);
-            if (enemy.isDestroy()) {
+            if (enemy.isRemovableFromContainer()) {
                 enemies.remove(i);
                 --i;
             }
@@ -46,7 +46,7 @@ public class Container {
             for (int j = 0; j < MainScene.COLUMN; ++j) {
                 for (int l = 0; l < stillEntities[i][j].size(); ++l) {
                     StillEntity stillEntity = stillEntities[i][j].get(l);
-                    if (stillEntity.isDestroy()) {
+                    if (stillEntity.isRemovableFromContainer()) {
                         stillEntities[i][j].remove(l);
                         --l;
                     }
@@ -54,7 +54,7 @@ public class Container {
 
                 for (int l = 0; l < flames[i][j].size(); ++l) {
                     Flame flame = flames[i][j].get(l);
-                    if (flame.isDestroy()) {
+                    if (flame.isRemovableFromContainer()) {
                         flames[i][j].remove(l);
                         --l;
                     }

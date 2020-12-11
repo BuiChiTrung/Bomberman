@@ -2,7 +2,6 @@ package uet.oop.bomberman.entities.still;
 
 import javafx.scene.image.Image;
 import uet.oop.bomberman.entities.Point;
-import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.util.ImgFactory;
 
 public class Brick extends StillEntity {
@@ -21,7 +20,7 @@ public class Brick extends StillEntity {
         if (onFlame()) {
             imgId++;
             if (imgId == DESTROY_IMG_ID) {
-                destroy = true;
+                removableFromContainer = true;
             }
             else {
                 img = imgState[imgId / NUMBER_OF_FRAME_TO_CHANGE_IMG];

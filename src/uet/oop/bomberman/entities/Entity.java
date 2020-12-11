@@ -12,7 +12,7 @@ import static java.lang.Math.floor;
 public abstract class Entity {
     protected Point pos;
     protected Image img;
-    protected boolean destroy = false;
+    protected boolean removableFromContainer = false;
     protected int imgId = -1;
 
     public Entity(Point pos, Image img) {
@@ -24,12 +24,12 @@ public abstract class Entity {
         return pos;
     }
 
-    public boolean isDestroy() {
-        return destroy;
+    public boolean isRemovableFromContainer() {
+        return removableFromContainer;
     }
 
-    public void setDestroy(boolean destroy) {
-        this.destroy = destroy;
+    public void setRemovableFromContainer(boolean removableFromContainer) {
+        this.removableFromContainer = removableFromContainer;
     }
 
     protected Entity getEntityAtPosition(Point it) {

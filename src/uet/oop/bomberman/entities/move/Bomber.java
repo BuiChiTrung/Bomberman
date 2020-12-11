@@ -75,7 +75,7 @@ public class Bomber extends MovingEntity {
                 if(entity instanceof BombItem) addBomb();
                 if(entity instanceof FlameItem) upgradePower();
                 if(entity instanceof SpeedItem) increaseSpeed();
-                entity.setDestroy(true);
+                entity.setRemovableFromContainer(true);
             }
         }
     }
@@ -105,7 +105,7 @@ public class Bomber extends MovingEntity {
     public void changeToDeathImg() {
         imgId++;
         if (imgId == DESTROY_IMG_ID) {
-            destroy = true;
+            removableFromContainer = true;
         }
         else {
             img = imgState[4][imgId / NUMBER_OF_MOVE_TO_CHANGE_IMG];
