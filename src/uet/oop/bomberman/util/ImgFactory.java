@@ -23,6 +23,7 @@ public class ImgFactory {
     public static Image grassImg;
     public static Image portalImg;
     public static Image wallImg;
+    public static Image[][] minvoImg;
 
     public static void createClassicImg() {
         createConstantImg();
@@ -106,6 +107,25 @@ public class ImgFactory {
                 {Sprite.doll_dead.getFxImage()}
         };
 
+        minvoImg = new Image[][] {
+                {Sprite.minvo_left1.getFxImage(),
+                        Sprite.minvo_left2.getFxImage(),
+                        Sprite.minvo_left3.getFxImage()} ,
+
+                {Sprite.minvo_left1.getFxImage(),
+                        Sprite.minvo_left2.getFxImage(),
+                        Sprite.minvo_left3.getFxImage()} ,
+
+                {Sprite.minvo_right1.getFxImage(),
+                        Sprite.minvo_right2.getFxImage(),
+                        Sprite.minvo_right3.getFxImage()} ,
+
+                {Sprite.minvo_right1.getFxImage(),
+                        Sprite.minvo_right2.getFxImage(),
+                        Sprite.minvo_right3.getFxImage()} ,
+
+                {Sprite.minvo_dead.getFxImage()}
+        };
         bombItemImg = Sprite.powerup_bombs.getFxImage();
         speedItemImg = Sprite.powerup_speed.getFxImage();
         flameItemImg = Sprite.powerup_flames.getFxImage();
