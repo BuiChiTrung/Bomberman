@@ -5,9 +5,9 @@ import jaco.mp3.player.MP3Player;
 import java.io.File;
 
 public class SoundUtil {
-    public static void playThemeSound() {
+    public static void playThemeSound(String path) {
         MP3Player player = new MP3Player();
-        player.addToPlayList(new File("res/sound/themesound.mp3"));
+        player.addToPlayList(new File(path));
         player.setRepeat(true);
         player.play();
     }

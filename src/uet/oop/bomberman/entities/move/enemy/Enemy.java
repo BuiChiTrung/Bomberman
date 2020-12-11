@@ -14,7 +14,7 @@ import uet.oop.bomberman.util.Util;
 import java.util.Random;
 
 public abstract class Enemy extends MovingEntity {
-    protected static final int NUMBER_OF_MOVE_TO_CHANGE_IMG = 3;
+    protected static int NUMBER_OF_MOVE_TO_CHANGE_IMG = 3;
     protected static final int NUMBER_OF_IMG_PER_DIRECTION = 3;
     protected static int moveTimeToCrossOneCell;
     public static final int DESTROY_IMG_ID = 1 * NUMBER_OF_MOVE_TO_CHANGE_IMG; // 1 = enemy's death img number
@@ -91,6 +91,8 @@ public abstract class Enemy extends MovingEntity {
             pos = getMostAreaStandingCells();
             nextDestination = MoveUtil.getNextDestination(pos, DirectionUtil.getDirectionFromId(Container.directionToBomber[(int)pos.x][(int)pos.y]));
             updateDirectionAndStepInDirect(DirectionUtil.getDirectionFromId(Container.directionToBomber[(int)pos.x][(int)pos.y]));
+        } else {
+            updateDirectionAndStepInDirect(this.direction);
         }
         moveAlongDirection();
     }

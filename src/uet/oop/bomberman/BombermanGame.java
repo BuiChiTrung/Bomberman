@@ -27,7 +27,7 @@ public class BombermanGame extends Application {
 
     public static void startGame() {
         primaryStage.setScene(MainScene.getScene());
-        SoundUtil.playThemeSound();
+        SoundUtil.playThemeSound("res/sound/themesound.mp3");
 
         AnimationTimer timer = new AnimationTimer() {
             @Override
