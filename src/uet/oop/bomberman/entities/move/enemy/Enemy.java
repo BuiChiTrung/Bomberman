@@ -22,7 +22,7 @@ public abstract class Enemy extends MovingEntity {
     protected boolean alreadyGetNextDestination = false;
     protected double attackRadius;
     protected long lastMoveTime = 0;
-
+    protected boolean death = false;
     public Enemy(Point pos, Image img) {
         super(pos, img);
         velocity = 0.125 / 2;
@@ -41,6 +41,7 @@ public abstract class Enemy extends MovingEntity {
     @Override
     public void changeToDeathImg() {
         imgId++;
+        death = true;
         if (imgId == DESTROY_IMG_ID) {
             destroy = true;
         }

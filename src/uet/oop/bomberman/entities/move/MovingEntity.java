@@ -20,13 +20,13 @@ public abstract class MovingEntity extends Entity {
     public Direction direction = Direction.RIGHT;       // manage direction of object
     protected int stepInDirect;                         // số bước liên tiếp đi theo cùng một hướng
     protected double velocity;
-
+    protected boolean death = false;
     public MovingEntity(Point pos, Image img) {
         super(pos, img);
     }
 
     public void update() {
-        if (onFlame() || (this instanceof Bomber && ((Bomber) this).collideWithEnemy())) {
+        if (onFlame() || (this instanceof Bomber && ((Bomber) this).collideWithEnemy()) || death) {
             changeToDeathImg();
         }
         else {

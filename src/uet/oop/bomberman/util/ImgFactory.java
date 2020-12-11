@@ -10,6 +10,7 @@ public class ImgFactory {
     public static Image[][] ballomImg;
     public static Image[][] onealImg;
     public static Image[][] bomberImg;
+    public static Image[][] dollImg;
 
     public static Image[] bombImg;
     public static Image[] flameImg;
@@ -93,6 +94,16 @@ public class ImgFactory {
                 {Sprite.player_dead_0.getFxImage(),
                         Sprite.player_dead_1.getFxImage(),
                         Sprite.player_dead_2.getFxImage()}
+        };
+
+        dollImg = new Image[][] {
+                {Sprite.doll_left1.getFxImage(),
+                        Sprite.doll_left2.getFxImage(),
+                        Sprite.doll_left3.getFxImage(),
+                        Sprite.doll_right1.getFxImage(),
+                        Sprite.doll_right2.getFxImage(),
+                        Sprite.doll_right3.getFxImage()},
+                {Sprite.doll_dead.getFxImage()}
         };
 
         bombItemImg = Sprite.powerup_bombs.getFxImage();
