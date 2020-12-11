@@ -51,7 +51,6 @@ public class MainScene {
 
     public static void addEventHandler() {
         scene.setOnKeyPressed(event -> Container.bomber.handlePress(event.getCode()));
-
         scene.setOnKeyReleased(event -> Container.bomber.handleRelease(event.getCode()));
     }
 

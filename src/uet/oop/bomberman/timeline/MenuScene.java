@@ -20,12 +20,6 @@ public class MenuScene {
             Parent rootNode = FXMLLoader.load(Paths.get(path).toUri().toURL());
             scene = new Scene(rootNode, Sprite.SCALED_SIZE * 31, Sprite.SCALED_SIZE * 13);
 
-            scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-                @Override
-                public void handle(KeyEvent event) {
-                    BombermanGame.startGame();
-                }
-            });
         } catch(IOException e) {
             System.out.println("ERROR WHILE LOADING FXML");
         }
