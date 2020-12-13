@@ -16,6 +16,10 @@ public class MenuSceneController {
     private VBox navbar;
     @FXML
     private ImageView image;
+    @FXML
+    private Button soundOnButton;
+    @FXML
+    private Button soundOffButton;
 
     public void handleCustomButton() {
         ImgFactory.createCustomImg();
@@ -25,5 +29,12 @@ public class MenuSceneController {
     public void handleClassicButton() {
         ImgFactory.createClassicImg();
         BombermanGame.startGame();
+    }
+
+    public void handleSoundOnButton() {
+        Container.soundOn = true;
+    }
+    public void handleSoundOffButton() {
+        Container.soundOn = false;
     }
 }

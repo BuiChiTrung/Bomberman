@@ -1,6 +1,7 @@
 package uet.oop.bomberman.entities.still.bomb;
 
 import javafx.scene.image.Image;
+import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Direction;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Point;
@@ -37,7 +38,9 @@ public class Bomb extends StillEntity {
         if (pos.distance(Container.bomber.getPos()) >= 1) onBomberFoot = false;  // bomb becomes an obstacle for bomber
         if (System.currentTimeMillis() - placeMoment > timeToExplode || onFlame()) {
             explode();
-            SoundUtil.playExplodingSound();
+            if(Container.soundOn) {
+                SoundUtil.playExplodingSound();
+            }
         }
     }
 
