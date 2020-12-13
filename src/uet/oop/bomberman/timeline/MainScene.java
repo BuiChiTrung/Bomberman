@@ -43,6 +43,7 @@ public class MainScene {
         scene = new Scene(rootNode);
         addEventHandler();
         createMap();
+        createBomber();
 
         rootNode.getChildren().add(canvas);
 
@@ -56,8 +57,10 @@ public class MainScene {
 
     public static void createMap() {
         try {
-            File map = new File("./res/levels/Level1.txt");
+            String mapPath = "./res/levels/Level" + Container.currentLevel + ".txt";
+            File map = new File(mapPath);
             Scanner sc = new Scanner(map);
+
             for (int x = 0; x < ROW; ++x) {
                 String line = sc.nextLine();
                 for (int y = 0; y < COLUMN; ++y) {
@@ -74,7 +77,7 @@ public class MainScene {
                         // Add item roi lay brick de len
                         case 'x':
                             Container.stillEntities[x][y].add(new Portal(new Point(x, y), ImgFactory.portalImg));
-                            Container.stillEntities[x][y].add(new Brick(new Point(x, y), ImgFactory.brickImg[0]));
+                            //Container.stillEntities[x][y].add(new Brick(new Point(x, y), ImgFactory.brickImg[0]));
                             break;
                         case 'b':
                             Container.stillEntities[x][y].add(new BombItem(new Point(x, y), ImgFactory.bombItemImg));
@@ -88,14 +91,13 @@ public class MainScene {
                             Container.stillEntities[x][y].add(new SpeedItem(new Point(x, y), ImgFactory.speedItemImg));
                             //Container.stillEntities[x][y].add(new Brick(new Point(x, y), ImgFactory.brickImg[0]));
                             break;
-                        case 'p':
-                            Container.bomber = new Bomber(new Point(x, y), ImgFactory.bomberImg[2][0]);
-                            break;
                         case '1':
                             Container.enemies.add(new Ballom(new Point(x, y), ImgFactory.ballomImg[2][0]));
+                            Container.enemyLeft++;
                             break;
                         case '2':
                             Container.enemies.add(new Oneal(new Point(x, y), ImgFactory.onealImg[2][0]));
+                            Container.enemyLeft++;
                             break;
                     }
                 }
@@ -105,6 +107,10 @@ public class MainScene {
         }
     }
 
+    public static void createBomber() {
+        Container.bomber = new Bomber(new Point(1, 1), ImgFactory.bomberImg[2][0]);
+    }
+
     public static void loop() {
         Container.updateEntity();
         Container.removeDestroyedEntity();
@@ -112,6 +118,7 @@ public class MainScene {
         if (Container.bomber.isRemovableFromContainer()) {
             Container.reset();
             createMap();
+            createBomber();
         }
     }
 
@@ -132,5 +139,12 @@ public class MainScene {
         }
         Container.enemies.forEach(g -> g.render(gc));
         Container.bomber.render(gc);
+    }
+
+    public static void nextLevel() {
+        Container.currentLevel++;
+        Container.reset();
+        createMap();
+        Container.bomber.setPos(new Point(1, 1));
     }
 }

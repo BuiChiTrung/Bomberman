@@ -4,6 +4,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Point;
+import uet.oop.bomberman.entities.still.Portal;
 import uet.oop.bomberman.entities.still.bomb.Bomb;
 import uet.oop.bomberman.entities.move.enemy.Enemy;
 import uet.oop.bomberman.entities.still.item.BombItem;
@@ -12,6 +13,7 @@ import uet.oop.bomberman.entities.still.item.Item;
 import uet.oop.bomberman.entities.still.item.SpeedItem;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.timeline.Container;
+import uet.oop.bomberman.timeline.MainScene;
 import uet.oop.bomberman.util.DirectionUtil;
 import uet.oop.bomberman.util.ImgFactory;
 import uet.oop.bomberman.util.Util;
@@ -76,6 +78,14 @@ public class Bomber extends MovingEntity {
                 if(entity instanceof FlameItem) upgradePower();
                 if(entity instanceof SpeedItem) increaseSpeed();
                 entity.setRemovableFromContainer(true);
+            }
+            else if (entity instanceof Portal) {
+                 System.out.println(Container.enemyLeft);
+                 System.out.println(Container.enemies.size() + "ok");
+                 if( Container.enemyLeft == 0) {
+                     System.out.print("hah");
+                     MainScene.nextLevel();
+                 }
             }
         }
     }

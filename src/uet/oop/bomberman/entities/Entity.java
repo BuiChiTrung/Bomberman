@@ -24,6 +24,10 @@ public abstract class Entity {
         return pos;
     }
 
+    public void setPos(Point pos) {
+        this.pos = pos;
+    }
+
     public boolean isRemovableFromContainer() {
         return removableFromContainer;
     }

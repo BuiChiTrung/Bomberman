@@ -24,6 +24,9 @@ public class Container {
 
     public static ArrayList<Flame>[][] flames = new ArrayList[MainScene.ROW][MainScene.COLUMN];
 
+    public static int currentLevel = 1;
+    public static int enemyLeft = 0;
+
     static {
         for (int i = 0; i < MainScene.ROW; ++i)
             for (int j = 0; j < MainScene.COLUMN; ++j) {
@@ -37,6 +40,7 @@ public class Container {
             Enemy enemy = enemies.get(i);
             if (enemy.isRemovableFromContainer()) {
                 enemies.remove(i);
+                enemyLeft--;
                 --i;
             }
         }
@@ -82,5 +86,6 @@ public class Container {
                 flames[i][j].clear();
             }
         directionToBomber = new int[MainScene.ROW][MainScene.COLUMN];
+        enemyLeft = 0;
     }
 }
