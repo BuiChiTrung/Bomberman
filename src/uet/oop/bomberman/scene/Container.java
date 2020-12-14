@@ -1,5 +1,6 @@
-package uet.oop.bomberman.timeline;
+package uet.oop.bomberman.scene;
 
+import javafx.animation.AnimationTimer;
 import uet.oop.bomberman.entities.still.bomb.Bomb;
 import uet.oop.bomberman.entities.still.bomb.Flame;
 import uet.oop.bomberman.entities.still.StillEntity;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Container {
+    public static boolean soundOn = true;
     // 2D array contains arraylist
     public static ArrayList<StillEntity>[][] stillEntities = new ArrayList[MainScene.ROW][MainScene.COLUMN];
 
@@ -24,19 +26,23 @@ public class Container {
 
     public static ArrayList<Flame>[][] flames = new ArrayList[MainScene.ROW][MainScene.COLUMN];
 
+    public static int currentLevel = 1;
+    public static int enemyLeft = 0;
+
     static {
         for (int i = 0; i < MainScene.ROW; ++i)
             for (int j = 0; j < MainScene.COLUMN; ++j) {
-                stillEntities[i][j] = new ArrayList<StillEntity>();
-                flames[i][j] = new ArrayList<Flame>();
+                stillEntities[i][j] = new ArrayList<>();
+                flames[i][j] = new ArrayList<>();
             }
     }
 
     public static void removeDestroyedEntity() {
         for (int i = 0; i < enemies.size(); ++i) {
             Enemy enemy = enemies.get(i);
-            if (enemy.isDestroy()) {
+            if (enemy.isRemovableFromContainer()) {
                 enemies.remove(i);
+                enemyLeft--;
                 --i;
             }
         }
@@ -46,7 +52,7 @@ public class Container {
             for (int j = 0; j < MainScene.COLUMN; ++j) {
                 for (int l = 0; l < stillEntities[i][j].size(); ++l) {
                     StillEntity stillEntity = stillEntities[i][j].get(l);
-                    if (stillEntity.isDestroy()) {
+                    if (stillEntity.isRemovableFromContainer()) {
                         stillEntities[i][j].remove(l);
                         --l;
                     }
@@ -54,7 +60,7 @@ public class Container {
 
                 for (int l = 0; l < flames[i][j].size(); ++l) {
                     Flame flame = flames[i][j].get(l);
-                    if (flame.isDestroy()) {
+                    if (flame.isRemovableFromContainer()) {
                         flames[i][j].remove(l);
                         --l;
                     }
@@ -82,5 +88,7 @@ public class Container {
                 flames[i][j].clear();
             }
         directionToBomber = new int[MainScene.ROW][MainScene.COLUMN];
+        enemyLeft = 0;
+        bomber = null;
     }
 }

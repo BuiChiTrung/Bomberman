@@ -4,14 +4,14 @@ import javafx.scene.image.Image;
 import uet.oop.bomberman.entities.Point;
 import uet.oop.bomberman.util.ImgFactory;
 
-public class Ballom extends Enemy {
+public class Minvo extends Enemy {
 
-    public Ballom(Point pos, Image img) {
+    public Minvo(Point pos, Image img) {
         super(pos, img);
-        attackRadius = 3;
+        attackRadius = 8;
     }
 
-    private static final Image[][] imgState = ImgFactory.ballomImg;
+    private static final Image[][] imgState = ImgFactory.minvoImg;
 
     public Image[][] getImgState() {
         return imgState;

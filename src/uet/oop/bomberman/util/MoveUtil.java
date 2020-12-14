@@ -4,7 +4,7 @@ import uet.oop.bomberman.entities.Direction;
 import uet.oop.bomberman.entities.Point;
 import uet.oop.bomberman.entities.still.Brick;
 import uet.oop.bomberman.entities.still.Wall;
-import uet.oop.bomberman.timeline.Container;
+import uet.oop.bomberman.scene.Container;
 
 public class MoveUtil {
     public static Point getNextDestination(Point pos, Direction direction) {

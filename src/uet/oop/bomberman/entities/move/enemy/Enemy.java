@@ -5,16 +5,15 @@ import javafx.scene.image.Image;
 import uet.oop.bomberman.entities.Direction;
 import uet.oop.bomberman.entities.Point;
 import uet.oop.bomberman.entities.move.MovingEntity;
-import uet.oop.bomberman.timeline.MainScene;
-import uet.oop.bomberman.timeline.Container;
+import uet.oop.bomberman.scene.MainScene;
+import uet.oop.bomberman.scene.Container;
 import uet.oop.bomberman.util.DirectionUtil;
 import uet.oop.bomberman.util.MoveUtil;
-import uet.oop.bomberman.util.Util;
 
 import java.util.Random;
 
 public abstract class Enemy extends MovingEntity {
-    protected static final int NUMBER_OF_MOVE_TO_CHANGE_IMG = 3;
+    protected static int NUMBER_OF_MOVE_TO_CHANGE_IMG = 3;
     protected static final int NUMBER_OF_IMG_PER_DIRECTION = 3;
     protected static int moveTimeToCrossOneCell;
     public static final int DESTROY_IMG_ID = 1 * NUMBER_OF_MOVE_TO_CHANGE_IMG; // 1 = enemy's death img number
@@ -22,7 +21,7 @@ public abstract class Enemy extends MovingEntity {
     protected boolean alreadyGetNextDestination = false;
     protected double attackRadius;
     protected long lastMoveTime = 0;
-
+    protected boolean death = false;
     public Enemy(Point pos, Image img) {
         super(pos, img);
         velocity = 0.125 / 2;
@@ -41,8 +40,9 @@ public abstract class Enemy extends MovingEntity {
     @Override
     public void changeToDeathImg() {
         imgId++;
+        death = true;
         if (imgId == DESTROY_IMG_ID) {
-            destroy = true;
+            removableFromContainer = true;
         }
         else {
             img = getImgState()[4][imgId / NUMBER_OF_MOVE_TO_CHANGE_IMG];
@@ -91,6 +91,8 @@ public abstract class Enemy extends MovingEntity {
             pos = getMostAreaStandingCells();
             nextDestination = MoveUtil.getNextDestination(pos, DirectionUtil.getDirectionFromId(Container.directionToBomber[(int)pos.x][(int)pos.y]));
             updateDirectionAndStepInDirect(DirectionUtil.getDirectionFromId(Container.directionToBomber[(int)pos.x][(int)pos.y]));
+        } else {
+            updateDirectionAndStepInDirect(this.direction);
         }
         moveAlongDirection();
     }

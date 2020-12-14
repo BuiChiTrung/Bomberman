@@ -25,7 +25,7 @@ public class Flame extends StillEntity {
     private void updateImg() {
         imgId++;
         if (imgId == DESTROY_IMG_ID) {
-            destroy = true;
+            removableFromContainer = true;
         }
         else img = imgState[imgId / NUMBER_OF_FRAME_TO_CHANGE_IMG];
     }

@@ -7,7 +7,7 @@ import uet.oop.bomberman.entities.Point;
 import uet.oop.bomberman.entities.still.Brick;
 import uet.oop.bomberman.entities.still.StillEntity;
 import uet.oop.bomberman.entities.still.Wall;
-import uet.oop.bomberman.timeline.Container;
+import uet.oop.bomberman.scene.Container;
 import uet.oop.bomberman.util.DirectionUtil;
 import uet.oop.bomberman.util.ImgFactory;
 import uet.oop.bomberman.util.SoundUtil;
@@ -16,7 +16,7 @@ public class Bomb extends StillEntity {
     private static final double timeToExplode = 2500;         // milliseconds
     private boolean onBomberFoot;                             // check whether bomber still standing on bomb or not
     private long placeMoment;                                 // moment bomb is placed
-    private static final int NUMBER_OF_FRAME_TO_CHANGE_IMG = 10;
+    private static final int NUMBER_OF_FRAME_TO_CHANGE_IMG = 5;
     private static final int NUMBER_OF_IMG = 3;
     private int imgId = -1;
 
@@ -37,7 +37,9 @@ public class Bomb extends StillEntity {
         if (pos.distance(Container.bomber.getPos()) >= 1) onBomberFoot = false;  // bomb becomes an obstacle for bomber
         if (System.currentTimeMillis() - placeMoment > timeToExplode || onFlame()) {
             explode();
-            SoundUtil.playExplodingSound();
+            if(Container.soundOn) {
+                SoundUtil.playExplodingSound();
+            }
         }
     }
 
@@ -52,7 +54,7 @@ public class Bomb extends StillEntity {
     private void explode() {
         createFlame();
         Container.bomber.updateCurrentPlacedBomb();
-        destroy = true;
+        removableFromContainer = true;
     }
 
 

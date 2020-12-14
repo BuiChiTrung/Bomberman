@@ -3,7 +3,7 @@ package uet.oop.bomberman.entities;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.graphics.Sprite;
-import uet.oop.bomberman.timeline.Container;
+import uet.oop.bomberman.scene.Container;
 import uet.oop.bomberman.util.Util;
 
 import static java.lang.Math.ceil;
@@ -12,7 +12,7 @@ import static java.lang.Math.floor;
 public abstract class Entity {
     protected Point pos;
     protected Image img;
-    protected boolean destroy = false;
+    protected boolean removableFromContainer = false;
     protected int imgId = -1;
 
     public Entity(Point pos, Image img) {
@@ -24,12 +24,16 @@ public abstract class Entity {
         return pos;
     }
 
-    public boolean isDestroy() {
-        return destroy;
+    public void setPos(Point pos) {
+        this.pos = pos;
     }
 
-    public void setDestroy(boolean destroy) {
-        this.destroy = destroy;
+    public boolean isRemovableFromContainer() {
+        return removableFromContainer;
+    }
+
+    public void setRemovableFromContainer(boolean removableFromContainer) {
+        this.removableFromContainer = removableFromContainer;
     }
 
     protected Entity getEntityAtPosition(Point it) {
