@@ -33,47 +33,6 @@ public class ImgFactory {
                 Sprite.bomb2.getFxImage()
         };
 
-        ballomImg = new Image[][]{
-                //LEFT
-                {Sprite.ballom_left0.getFxImage(),
-                        Sprite.ballom_left1.getFxImage(),
-                        Sprite.ballom_left2.getFxImage()},
-                //UP
-                {Sprite.ballom_left0.getFxImage(),
-                        Sprite.ballom_left1.getFxImage(),
-                        Sprite.ballom_left2.getFxImage()},
-                //RIGHT
-                {Sprite.ballom_right0.getFxImage(),
-                        Sprite.ballom_right1.getFxImage(),
-                        Sprite.ballom_right2.getFxImage()},
-                //UP
-                {Sprite.ballom_right0.getFxImage(),
-                        Sprite.ballom_right1.getFxImage(),
-                        Sprite.ballom_right2.getFxImage()},
-                // DIE
-                {Sprite.ballom_dead.getFxImage()}
-        };
-
-        onealImg = new Image[][] {
-                {Sprite.oneal_left0.getFxImage(),
-                        Sprite.oneal_left1.getFxImage(),
-                        Sprite.oneal_left2.getFxImage()} ,
-
-                {Sprite.oneal_left0.getFxImage(),
-                        Sprite.oneal_left1.getFxImage(),
-                        Sprite.oneal_left2.getFxImage()} ,
-
-                {Sprite.oneal_right0.getFxImage(),
-                        Sprite.oneal_right1.getFxImage(),
-                        Sprite.oneal_right2.getFxImage()} ,
-
-                {Sprite.oneal_right0.getFxImage(),
-                        Sprite.oneal_right1.getFxImage(),
-                        Sprite.oneal_right2.getFxImage()} ,
-
-                {Sprite.oneal_dead.getFxImage()}
-        };
-
         bomberImg = new Image[][] {
                 //LEFT:0
                 {Sprite.player_left_0.getFxImage(),
@@ -119,47 +78,6 @@ public class ImgFactory {
                     new Image(new FileInputStream("res/sprites/custom_sprite/bomb01.png"), Sprite.SCALED_SIZE, Sprite.SCALED_SIZE, true, true),
                     new Image(new FileInputStream("res/sprites/custom_sprite/bomb02.png"), Sprite.SCALED_SIZE, Sprite.SCALED_SIZE, true, true),
                     new Image(new FileInputStream("res/sprites/custom_sprite/bomb03.png"), Sprite.SCALED_SIZE, Sprite.SCALED_SIZE, true, true),
-            };
-
-            ballomImg = new Image[][]{
-                    //LEFT
-                    {Sprite.ballom_left0.getFxImage(),
-                            Sprite.ballom_left1.getFxImage(),
-                            Sprite.ballom_left2.getFxImage()},
-                    //UP
-                    {Sprite.ballom_left0.getFxImage(),
-                            Sprite.ballom_left1.getFxImage(),
-                            Sprite.ballom_left2.getFxImage()},
-                    //RIGHT
-                    {Sprite.ballom_right0.getFxImage(),
-                            Sprite.ballom_right1.getFxImage(),
-                            Sprite.ballom_right2.getFxImage()},
-                    //UP
-                    {Sprite.ballom_right0.getFxImage(),
-                            Sprite.ballom_right1.getFxImage(),
-                            Sprite.ballom_right2.getFxImage()},
-                    // DIE
-                    {Sprite.ballom_dead.getFxImage()}
-            };
-
-            onealImg = new Image[][] {
-                    {Sprite.oneal_left0.getFxImage(),
-                            Sprite.oneal_left1.getFxImage(),
-                            Sprite.oneal_left2.getFxImage()} ,
-
-                    {Sprite.oneal_left0.getFxImage(),
-                            Sprite.oneal_left1.getFxImage(),
-                            Sprite.oneal_left2.getFxImage()} ,
-
-                    {Sprite.oneal_right0.getFxImage(),
-                            Sprite.oneal_right1.getFxImage(),
-                            Sprite.oneal_right2.getFxImage()} ,
-
-                    {Sprite.oneal_right0.getFxImage(),
-                            Sprite.oneal_right1.getFxImage(),
-                            Sprite.oneal_right2.getFxImage()} ,
-
-                    {Sprite.oneal_dead.getFxImage()}
             };
 
             bomberImg = new Image[][] {
@@ -235,6 +153,48 @@ public class ImgFactory {
                     new Image(new FileInputStream("res/sprites/custom_sprite/flame23.png"), Sprite.SCALED_SIZE, Sprite.SCALED_SIZE, true, true),
                     new Image(new FileInputStream("res/sprites/custom_sprite/flame24.png"), Sprite.SCALED_SIZE, Sprite.SCALED_SIZE, true, true),
             };
+
+            ballomImg = new Image[][]{
+                    //LEFT
+                    {Sprite.ballom_left0.getFxImage(),
+                            Sprite.ballom_left1.getFxImage(),
+                            Sprite.ballom_left2.getFxImage()},
+                    //UP
+                    {Sprite.ballom_left0.getFxImage(),
+                            Sprite.ballom_left1.getFxImage(),
+                            Sprite.ballom_left2.getFxImage()},
+                    //RIGHT
+                    {Sprite.ballom_right0.getFxImage(),
+                            Sprite.ballom_right1.getFxImage(),
+                            Sprite.ballom_right2.getFxImage()},
+                    //UP
+                    {Sprite.ballom_right0.getFxImage(),
+                            Sprite.ballom_right1.getFxImage(),
+                            Sprite.ballom_right2.getFxImage()},
+                    // DIE
+                    {Sprite.ballom_dead.getFxImage()}
+            };
+
+            onealImg = new Image[][] {
+                    {Sprite.oneal_left0.getFxImage(),
+                            Sprite.oneal_left1.getFxImage(),
+                            Sprite.oneal_left2.getFxImage()} ,
+
+                    {Sprite.oneal_left0.getFxImage(),
+                            Sprite.oneal_left1.getFxImage(),
+                            Sprite.oneal_left2.getFxImage()} ,
+
+                    {Sprite.oneal_right0.getFxImage(),
+                            Sprite.oneal_right1.getFxImage(),
+                            Sprite.oneal_right2.getFxImage()} ,
+
+                    {Sprite.oneal_right0.getFxImage(),
+                            Sprite.oneal_right1.getFxImage(),
+                            Sprite.oneal_right2.getFxImage()} ,
+
+                    {Sprite.oneal_dead.getFxImage()}
+            };
+
             dollImg = new Image[][] {
                     {Sprite.doll_left1.getFxImage(),
                             Sprite.doll_left2.getFxImage(),
