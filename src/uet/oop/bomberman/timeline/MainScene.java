@@ -21,6 +21,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+import static uet.oop.bomberman.timeline.Container.bomber;
+
 public class MainScene {
     // window size
     public static final int ROW = 13;
@@ -51,8 +53,8 @@ public class MainScene {
     }
 
     public static void addEventHandler() {
-        scene.setOnKeyPressed(event -> Container.bomber.handlePress(event.getCode()));
-        scene.setOnKeyReleased(event -> Container.bomber.handleRelease(event.getCode()));
+        scene.setOnKeyPressed(event -> bomber.handlePress(event.getCode()));
+        scene.setOnKeyReleased(event -> bomber.handleRelease(event.getCode()));
     }
 
     public static void createMap() {
@@ -108,14 +110,14 @@ public class MainScene {
     }
 
     public static void createBomber() {
-        Container.bomber = new Bomber(new Point(1, 1), ImgFactory.bomberImg[2][0]);
+        bomber = new Bomber(new Point(1, 1), ImgFactory.bomberImg[2][0]);
     }
 
     public static void loop() {
         Container.updateEntity();
         Container.removeDestroyedEntity();
         renderEntity();
-        if (Container.bomber.isRemovableFromContainer()) {
+        if (bomber.isRemovableFromContainer()) {
             Container.reset();
             createMap();
             createBomber();
@@ -138,13 +140,14 @@ public class MainScene {
             }
         }
         Container.enemies.forEach(g -> g.render(gc));
-        Container.bomber.render(gc);
+        bomber.render(gc);
     }
 
     public static void nextLevel() {
         Container.currentLevel++;
         Container.reset();
         createMap();
-        Container.bomber.setPos(new Point(1, 1));
+        bomber.getToNextLevel();
+
     }
 }

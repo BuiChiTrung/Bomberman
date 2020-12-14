@@ -52,7 +52,7 @@ public class Bomber extends MovingEntity {
     }
 
     public boolean collideWithEnemy() {
-        for (Enemy enemy: Container.enemies) {
+        for (Enemy enemy : Container.enemies) {
             if (pos.distance(enemy.getPos()) < 1)
                 return true;
         }
@@ -61,7 +61,7 @@ public class Bomber extends MovingEntity {
 
     @Override
     public void move() {
-        if(!arrowKeyIsRelease) {
+        if (!arrowKeyIsRelease) {
             updateDirectionAndStepInDirect(direction);
             moveAlongDirection();
         }
@@ -71,21 +71,15 @@ public class Bomber extends MovingEntity {
     private void eatItem() {
         ArrayList<Point> standingCells = getStandingCells(pos.x, pos.y);
 
-        for(Point pos: standingCells) {
-            Entity entity = Util.getLast(Container.stillEntities[(int)pos.x][(int)pos.y]);
+        for (Point pos : standingCells) {
+            Entity entity = Util.getLast(Container.stillEntities[(int) pos.x][(int) pos.y]);
             if (entity instanceof Item) {
-                if(entity instanceof BombItem) addBomb();
-                if(entity instanceof FlameItem) upgradePower();
-                if(entity instanceof SpeedItem) increaseSpeed();
+                if (entity instanceof BombItem) addBomb();
+                if (entity instanceof FlameItem) upgradePower();
+                if (entity instanceof SpeedItem) increaseSpeed();
                 entity.setRemovableFromContainer(true);
-            }
-            else if (entity instanceof Portal) {
-                 System.out.println(Container.enemyLeft);
-                 System.out.println(Container.enemies.size() + "ok");
-                 if( Container.enemyLeft == 0) {
-                     System.out.print("hah");
-                     MainScene.nextLevel();
-                 }
+            } else if (entity instanceof Portal && Container.enemyLeft == 0) {
+                MainScene.nextLevel();
             }
         }
     }
@@ -99,8 +93,8 @@ public class Bomber extends MovingEntity {
     }
 
     private void increaseSpeed() {
-        if(isIncreaseSpeed) {
-            return ;
+        if (isIncreaseSpeed) {
+            return;
         }
         velocity *= 2;
         isIncreaseSpeed = true;
@@ -116,26 +110,30 @@ public class Bomber extends MovingEntity {
         imgId++;
         if (imgId == DESTROY_IMG_ID) {
             removableFromContainer = true;
-        }
-        else {
+        } else {
             img = imgState[4][imgId / NUMBER_OF_MOVE_TO_CHANGE_IMG];
         }
     }
 
     public void handlePress(KeyCode key) {
-        if(key == KeyCode.RIGHT || key == KeyCode.LEFT || key == KeyCode.UP || key == KeyCode.DOWN) {
+        if (key == KeyCode.RIGHT || key == KeyCode.LEFT || key == KeyCode.UP || key == KeyCode.DOWN) {
             updateDirectionAndStepInDirect(DirectionUtil.getDirectionFromKeyCode(key));
             arrowKeyIsRelease = false;
         }
-        if(key == KeyCode.SPACE) {
+        if (key == KeyCode.SPACE) {
             if (currentPlacedBomb < bombNumber)
                 Container.bomber.placeBomb();
         }
     }
 
     public void handleRelease(KeyCode key) {
-        if(key == KeyCode.RIGHT || key == KeyCode.LEFT || key == KeyCode.UP || key == KeyCode.DOWN) {
+        if (key == KeyCode.RIGHT || key == KeyCode.LEFT || key == KeyCode.UP || key == KeyCode.DOWN) {
             arrowKeyIsRelease = true;
         }
+    }
+
+    public void getToNextLevel() {
+        pos = new Point(1, 1);
+        currentPlacedBomb = 0;
     }
 }

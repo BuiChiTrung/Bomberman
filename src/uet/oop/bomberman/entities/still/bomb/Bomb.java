@@ -16,7 +16,7 @@ public class Bomb extends StillEntity {
     private static final double timeToExplode = 2500;         // milliseconds
     private boolean onBomberFoot;                             // check whether bomber still standing on bomb or not
     private long placeMoment;                                 // moment bomb is placed
-    private static final int NUMBER_OF_FRAME_TO_CHANGE_IMG = 10;
+    private static final int NUMBER_OF_FRAME_TO_CHANGE_IMG = 5;
     private static final int NUMBER_OF_IMG = 3;
     private int imgId = -1;
 
