@@ -13,7 +13,7 @@ public class Brick extends StillEntity {
         super(pos, img);
     }
 
-    private static final Image[] imgState = ImgFactory.brickImg;
+    private final Image[] imgState = ImgFactory.brickImg;
 
     @Override
     public void update() {

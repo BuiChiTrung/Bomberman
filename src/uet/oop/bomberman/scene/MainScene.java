@@ -61,7 +61,7 @@ public class MainScene {
             public void handle(KeyEvent event) {
                 // user can get back to menu scene to restart
                 if (event.getCode() == KeyCode.R) {
-                    BombermanGame.getTimer().stop(); 
+                    BombermanGame.getTimer().stop();
                     Container.reset();
                     BombermanGame.getPrimaryStage().setScene(MenuScene.getScene());
                 }
