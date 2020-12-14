@@ -4,8 +4,8 @@ import uet.oop.bomberman.entities.Point;
 import uet.oop.bomberman.entities.still.Brick;
 import uet.oop.bomberman.entities.still.Wall;
 import uet.oop.bomberman.entities.still.bomb.Bomb;
-import uet.oop.bomberman.timeline.MainScene;
-import uet.oop.bomberman.timeline.Container;
+import uet.oop.bomberman.scene.MainScene;
+import uet.oop.bomberman.scene.Container;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

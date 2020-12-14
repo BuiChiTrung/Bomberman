@@ -12,8 +12,8 @@ import uet.oop.bomberman.entities.still.item.FlameItem;
 import uet.oop.bomberman.entities.still.item.Item;
 import uet.oop.bomberman.entities.still.item.SpeedItem;
 import uet.oop.bomberman.graphics.Sprite;
-import uet.oop.bomberman.timeline.Container;
-import uet.oop.bomberman.timeline.MainScene;
+import uet.oop.bomberman.scene.Container;
+import uet.oop.bomberman.scene.MainScene;
 import uet.oop.bomberman.util.DirectionUtil;
 import uet.oop.bomberman.util.ImgFactory;
 import uet.oop.bomberman.util.Util;
@@ -79,7 +79,7 @@ public class Bomber extends MovingEntity {
                 if (entity instanceof SpeedItem) increaseSpeed();
                 entity.setRemovableFromContainer(true);
             } else if (entity instanceof Portal && Container.enemyLeft == 0) {
-                MainScene.nextLevel();
+                MainScene.goToNextLevel();
             }
         }
     }
@@ -133,8 +133,10 @@ public class Bomber extends MovingEntity {
         }
     }
 
-    public void getToNextLevel() {
-        pos = new Point(1, 1);
-        currentPlacedBomb = 0;
+    public void getPreviousLevelState(Bomber prevState) {
+        bombPower = prevState.bombPower;
+        bombNumber = prevState.bombNumber;
+        isIncreaseSpeed = prevState.isIncreaseSpeed;
+        velocity = prevState.velocity;
     }
 }

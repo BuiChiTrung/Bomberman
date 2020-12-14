@@ -1,4 +1,4 @@
-package uet.oop.bomberman.timeline;
+package uet.oop.bomberman.scene;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -19,10 +19,6 @@ public class MenuSceneController {
     private ImageView image;
     @FXML
     private ToggleButton soundButton;
-    @FXML
-    private Button soundOnButton;
-    @FXML
-    private Button soundOffButton;
 
     public void handleCustomButton() {
         ImgFactory.createCustomImg();
@@ -32,13 +28,6 @@ public class MenuSceneController {
     public void handleClassicButton() {
         ImgFactory.createClassicImg();
         BombermanGame.startGame();
-    }
-
-    public void handleSoundOnButton() {
-        //Container.soundOn = true;
-    }
-    public void handleSoundOffButton() {
-        //Container.soundOn = false;
     }
 
     public void handleSoundButton() {

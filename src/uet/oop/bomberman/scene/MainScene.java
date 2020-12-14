@@ -1,9 +1,13 @@
-package uet.oop.bomberman.timeline;
+package uet.oop.bomberman.scene;
 
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Point;
 import uet.oop.bomberman.entities.move.Bomber;
@@ -23,7 +27,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-import static uet.oop.bomberman.timeline.Container.bomber;
+import static uet.oop.bomberman.scene.Container.bomber;
 
 public class MainScene {
     // window size
@@ -34,9 +38,7 @@ public class MainScene {
     private static GraphicsContext gc;
 
     public static Scene getScene() {
-        if (scene == null)
-            scene = setUpScene();
-        return scene;
+        return setUpScene();
     }
 
     private static Scene setUpScene() {
@@ -47,19 +49,29 @@ public class MainScene {
         scene = new Scene(rootNode);
         addEventHandler();
         createMap();
-        createBomber();
 
         rootNode.getChildren().add(canvas);
 
         return scene;
     }
 
-    public static void addEventHandler() {
-        scene.setOnKeyPressed(event -> bomber.handlePress(event.getCode()));
+    private static void addEventHandler() {
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                // user can get back to menu scene to restart
+                if (event.getCode() == KeyCode.R) {
+                    BombermanGame.getTimer().stop(); 
+                    Container.reset();
+                    BombermanGame.getPrimaryStage().setScene(MenuScene.getScene());
+                }
+                else bomber.handlePress(event.getCode());
+            }
+        });
         scene.setOnKeyReleased(event -> bomber.handleRelease(event.getCode()));
     }
 
-    public static void createMap() {
+    private static void createMap() {
         try {
             String mapPath = "./res/levels/Level" + Container.currentLevel + ".txt";
             File map = new File(mapPath);
@@ -95,6 +107,9 @@ public class MainScene {
                             Container.stillEntities[x][y].add(new SpeedItem(new Point(x, y), ImgFactory.speedItemImg));
                             //Container.stillEntities[x][y].add(new Brick(new Point(x, y), ImgFactory.brickImg[0]));
                             break;
+                        case 'p':
+                            Container.bomber = new Bomber(new Point(1, 1), ImgFactory.bomberImg[2][0]);
+                            break;
                         case '1':
                             Container.enemies.add(new Ballom(new Point(x, y), ImgFactory.ballomImg[2][0]));
                             Container.enemyLeft++;
@@ -119,7 +134,7 @@ public class MainScene {
         }
     }
 
-    public static void createBomber() {
+    private static void createBomber() {
         bomber = new Bomber(new Point(1, 1), ImgFactory.bomberImg[2][0]);
     }
 
@@ -130,7 +145,6 @@ public class MainScene {
         if (bomber.isRemovableFromContainer()) {
             Container.reset();
             createMap();
-            createBomber();
         }
     }
 
@@ -153,11 +167,11 @@ public class MainScene {
         bomber.render(gc);
     }
 
-    public static void nextLevel() {
+    public static void goToNextLevel() {
         Container.currentLevel++;
+        Bomber prevState = Container.bomber;
         Container.reset();
         createMap();
-        bomber.getToNextLevel();
-
+        bomber.getPreviousLevelState(prevState);
     }
 }

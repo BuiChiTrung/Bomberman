@@ -1,14 +1,13 @@
 package uet.oop.bomberman.entities.still.bomb;
 
 import javafx.scene.image.Image;
-import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Direction;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Point;
 import uet.oop.bomberman.entities.still.Brick;
 import uet.oop.bomberman.entities.still.StillEntity;
 import uet.oop.bomberman.entities.still.Wall;
-import uet.oop.bomberman.timeline.Container;
+import uet.oop.bomberman.scene.Container;
 import uet.oop.bomberman.util.DirectionUtil;
 import uet.oop.bomberman.util.ImgFactory;
 import uet.oop.bomberman.util.SoundUtil;

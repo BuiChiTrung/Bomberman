@@ -1,5 +1,6 @@
-package uet.oop.bomberman.timeline;
+package uet.oop.bomberman.scene;
 
+import javafx.animation.AnimationTimer;
 import uet.oop.bomberman.entities.still.bomb.Bomb;
 import uet.oop.bomberman.entities.still.bomb.Flame;
 import uet.oop.bomberman.entities.still.StillEntity;
@@ -31,8 +32,8 @@ public class Container {
     static {
         for (int i = 0; i < MainScene.ROW; ++i)
             for (int j = 0; j < MainScene.COLUMN; ++j) {
-                stillEntities[i][j] = new ArrayList<StillEntity>();
-                flames[i][j] = new ArrayList<Flame>();
+                stillEntities[i][j] = new ArrayList<>();
+                flames[i][j] = new ArrayList<>();
             }
     }
 
@@ -88,5 +89,6 @@ public class Container {
             }
         directionToBomber = new int[MainScene.ROW][MainScene.COLUMN];
         enemyLeft = 0;
+        bomber = null;
     }
 }

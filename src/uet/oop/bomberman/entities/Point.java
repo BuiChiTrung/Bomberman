@@ -1,6 +1,6 @@
 package uet.oop.bomberman.entities;
 
-import uet.oop.bomberman.timeline.MainScene;
+import uet.oop.bomberman.scene.MainScene;
 
 public class Point {
     public double x;

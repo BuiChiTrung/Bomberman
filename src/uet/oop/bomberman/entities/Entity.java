@@ -3,7 +3,7 @@ package uet.oop.bomberman.entities;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.graphics.Sprite;
-import uet.oop.bomberman.timeline.Container;
+import uet.oop.bomberman.scene.Container;
 import uet.oop.bomberman.util.Util;
 
 import static java.lang.Math.ceil;

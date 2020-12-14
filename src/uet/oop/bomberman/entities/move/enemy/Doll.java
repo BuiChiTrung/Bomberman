@@ -2,8 +2,7 @@ package uet.oop.bomberman.entities.move.enemy;
 
 import javafx.scene.image.Image;
 import uet.oop.bomberman.entities.Point;
-import uet.oop.bomberman.entities.move.Bomber;
-import uet.oop.bomberman.timeline.Container;
+import uet.oop.bomberman.scene.Container;
 import uet.oop.bomberman.util.ImgFactory;
 import uet.oop.bomberman.util.MoveUtil;
 

@@ -5,8 +5,8 @@ import javafx.scene.image.Image;
 import uet.oop.bomberman.entities.Direction;
 import uet.oop.bomberman.entities.Point;
 import uet.oop.bomberman.entities.move.MovingEntity;
-import uet.oop.bomberman.timeline.MainScene;
-import uet.oop.bomberman.timeline.Container;
+import uet.oop.bomberman.scene.MainScene;
+import uet.oop.bomberman.scene.Container;
 import uet.oop.bomberman.util.DirectionUtil;
 import uet.oop.bomberman.util.MoveUtil;
 

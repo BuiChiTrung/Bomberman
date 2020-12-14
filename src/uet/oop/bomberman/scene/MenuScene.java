@@ -1,11 +1,8 @@
-package uet.oop.bomberman.timeline;
+package uet.oop.bomberman.scene;
 
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyEvent;
-import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.io.IOException;
@@ -16,7 +13,7 @@ public class MenuScene {
 
     private static Scene setUpMenuScene() {
         try {
-            String path= "src/uet/oop/bomberman/timeline/MenuScene.fxml";
+            String path= "src/uet/oop/bomberman/scene/MenuScene.fxml";
             Parent rootNode = FXMLLoader.load(Paths.get(path).toUri().toURL());
             scene = new Scene(rootNode, Sprite.SCALED_SIZE * 31, Sprite.SCALED_SIZE * 13);
 
@@ -28,9 +25,10 @@ public class MenuScene {
     }
 
     public static Scene getScene() {
-        if (scene == null)
-            scene = setUpMenuScene();
-        return scene;
+//        if (scene == null)
+//            scene = setUpMenuScene();
+//        return scene;
+        return setUpMenuScene();
     }
 
     public static void main(String[] args) {
