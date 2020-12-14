@@ -31,18 +31,13 @@ public class BombermanGame extends Application {
     public void start(Stage stage) {
         primaryStage = stage;
         primaryStage.setTitle("Bomberman");
-
+        SoundUtil.playThemeSound();
         primaryStage.setScene(MenuScene.getScene());
         primaryStage.show();
     }
 
     public static void startGame() {
         primaryStage.setScene(MainScene.getScene());
-
-        if(Container.soundOn) {
-            SoundUtil.playThemeSound();
-        }
-
         timer = new AnimationTimer() {
             @Override
             public void handle(long l) {

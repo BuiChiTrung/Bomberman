@@ -32,9 +32,7 @@ public abstract class MovingEntity extends Entity {
         if (death || onFlame() || (this instanceof Bomber && ((Bomber) this).collideWithEnemy())) {
             death = true;
             changeToDeathImg();
-            if(Container.soundOn) {
-                SoundUtil.playDeadSound();
-            }
+            SoundUtil.playDeadSound();
         }
         else if (!death){
             move();

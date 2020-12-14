@@ -7,6 +7,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.util.ImgFactory;
+import uet.oop.bomberman.util.SoundUtil;
 
 public class MenuSceneController {
     @FXML
@@ -31,6 +32,15 @@ public class MenuSceneController {
     }
 
     public void handleSoundButton() {
+        if(soundButton.isSelected()) {
+            Container.soundOn = true;
+            SoundUtil.playThemeSound();
+
+        }
+        else {
+            Container.soundOn = false;
+            SoundUtil.pauseThemeSound();
+        }
         Container.soundOn = !soundButton.isSelected();
     }
 }
