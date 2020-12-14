@@ -102,8 +102,10 @@ public class MainScene {
                             break;
                         case '3':
                             Container.enemies.add(new Doll(new Point(x, y), ImgFactory.dollImg[0][0]));
+                            break;
                         case '4':
                             Container.enemies.add(new Minvo(new Point(x, y), ImgFactory.dollImg[0][0]));
+                            break;
                     }
                 }
             }
