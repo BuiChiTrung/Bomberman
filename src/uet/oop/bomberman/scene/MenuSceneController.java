@@ -20,6 +20,10 @@ public class MenuSceneController {
     private ImageView image;
     @FXML
     private ToggleButton soundButton;
+    @FXML
+    private ImageView soundOnImage;
+    @FXML
+    private ImageView soundOffImage;
 
     public void handleCustomButton() {
         ImgFactory.createCustomImg();
@@ -35,11 +39,14 @@ public class MenuSceneController {
         if(soundButton.isSelected()) {
             Container.soundOn = true;
             SoundUtil.playThemeSound();
-
+            soundOnImage.setVisible(true);
+            soundOffImage.setVisible(false);
         }
         else {
             Container.soundOn = false;
             SoundUtil.pauseThemeSound();
+            soundOnImage.setVisible(false);
+            soundOffImage.setVisible(true);
         }
         Container.soundOn = !soundButton.isSelected();
     }

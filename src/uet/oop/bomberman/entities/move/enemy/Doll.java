@@ -7,6 +7,7 @@ import uet.oop.bomberman.util.ImgFactory;
 import uet.oop.bomberman.util.MoveUtil;
 
 public class Doll extends Enemy {
+    private int numberOfMoveToChangeImage = 3;
     public Doll(Point pos, Image img) {
         super(pos, img);
         velocity = 0.125 / 8;
@@ -33,7 +34,7 @@ public class Doll extends Enemy {
     private int step = 0;
     @Override
     public void updateImg() {
-        img = imgState[0][step % numOfMoveImg];
+        img = imgState[0][(step / numberOfMoveToChangeImage) % numOfMoveImg];
     }
 
     @Override

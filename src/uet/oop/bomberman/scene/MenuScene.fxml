@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.image.*?>
@@ -8,7 +7,7 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="416.0" prefWidth="992" stylesheets="@MenuScene.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uet.oop.bomberman.scene.MenuSceneController">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="416.0" prefWidth="992" stylesheets="@MenuScene.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uet.oop.bomberman.scene.MenuSceneController">
    <children>
        <ImageView fx:id="image" fitHeight="416.0" fitWidth="834.0" pickOnBounds="true">
          <effect>
@@ -20,7 +19,15 @@
        </ImageView>
        <VBox fx:id="navbar" prefHeight="400.0" prefWidth="297.0">
          <children>
-            <ToggleButton fx:id="soundButton" mnemonicParsing="false" onAction="#handleSoundButton" prefHeight="63.0" prefWidth="158.0" text="sound" />
+            <ToggleButton fx:id="soundButton" mnemonicParsing="false" onAction="#handleSoundButton" prefHeight="63.0" prefWidth="158.0" text="sound">
+               <graphic>
+                  <StackPane prefHeight="150.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fx:id="soundOnImage" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="soundOffImage" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </StackPane>
+               </graphic></ToggleButton>
             <Region prefHeight="77.0" prefWidth="158.0" />
             <Label fx:id="title" prefHeight="34.0" prefWidth="158.0" text=" Choose Map" textAlignment="JUSTIFY">
                <font>
