@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Container {
+    public static boolean soundOn = true;
     // 2D array contains arraylist
     public static ArrayList<StillEntity>[][] stillEntities = new ArrayList[MainScene.ROW][MainScene.COLUMN];
 
