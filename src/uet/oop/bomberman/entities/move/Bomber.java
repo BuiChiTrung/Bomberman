@@ -108,6 +108,7 @@ public class Bomber extends MovingEntity {
     @Override
     public void changeToDeathImg() {
         imgId++;
+        death = true;
         if (imgId == DESTROY_IMG_ID) {
             removableFromContainer = true;
         } else {

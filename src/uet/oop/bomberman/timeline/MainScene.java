@@ -8,6 +8,8 @@ import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Point;
 import uet.oop.bomberman.entities.move.Bomber;
 import uet.oop.bomberman.entities.move.enemy.Ballom;
+import uet.oop.bomberman.entities.move.enemy.Doll;
+import uet.oop.bomberman.entities.move.enemy.Minvo;
 import uet.oop.bomberman.entities.move.enemy.Oneal;
 import uet.oop.bomberman.entities.still.*;
 import uet.oop.bomberman.entities.still.item.BombItem;
@@ -99,6 +101,14 @@ public class MainScene {
                             break;
                         case '2':
                             Container.enemies.add(new Oneal(new Point(x, y), ImgFactory.onealImg[2][0]));
+                            Container.enemyLeft++;
+                            break;
+                        case '3':
+                            Container.enemies.add(new Doll(new Point(x, y), ImgFactory.dollImg[0][0]));
+                            Container.enemyLeft++;
+                            break;
+                        case '4':
+                            Container.enemies.add(new Minvo(new Point(x, y), ImgFactory.dollImg[0][0]));
                             Container.enemyLeft++;
                             break;
                     }
