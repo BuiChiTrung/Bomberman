@@ -25,6 +25,14 @@ public class MenuSceneController {
     @FXML
     private ImageView soundOffImage;
 
+    private static boolean firstTime = true;
+    public void initialize() {
+        if(firstTime) {
+            soundOffImage.setVisible(false);
+            soundButton.setSelected(true);
+        }
+    }
+
     public void handleCustomButton() {
         ImgFactory.createCustomImg();
         BombermanGame.startGame();
@@ -48,6 +56,5 @@ public class MenuSceneController {
             soundOnImage.setVisible(false);
             soundOffImage.setVisible(true);
         }
-        Container.soundOn = !soundButton.isSelected();
     }
 }

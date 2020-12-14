@@ -23,8 +23,16 @@
                <graphic>
                   <StackPane prefHeight="150.0" prefWidth="200.0">
                      <children>
-                        <ImageView fx:id="soundOnImage" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fx:id="soundOffImage" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fx:id="soundOnImage" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" >
+                           <image>
+                              <Image url="@../../../../../res/sprites/custom_sprite/soundon.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="soundOffImage" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" >
+                           <image>
+                              <Image url="@../../../../../res/sprites/custom_sprite/soundoff.png" />
+                           </image>
+                        </ImageView>
                      </children>
                   </StackPane>
                </graphic></ToggleButton>
