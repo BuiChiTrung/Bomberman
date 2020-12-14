@@ -97,35 +97,6 @@ public class ImgFactory {
                         Sprite.player_dead_2.getFxImage()}
         };
 
-        dollImg = new Image[][] {
-                {Sprite.doll_left1.getFxImage(),
-                        Sprite.doll_left2.getFxImage(),
-                        Sprite.doll_left3.getFxImage(),
-                        Sprite.doll_right1.getFxImage(),
-                        Sprite.doll_right2.getFxImage(),
-                        Sprite.doll_right3.getFxImage()},
-                {Sprite.doll_dead.getFxImage()}
-        };
-
-        minvoImg = new Image[][] {
-                {Sprite.minvo_left1.getFxImage(),
-                        Sprite.minvo_left2.getFxImage(),
-                        Sprite.minvo_left3.getFxImage()} ,
-
-                {Sprite.minvo_left1.getFxImage(),
-                        Sprite.minvo_left2.getFxImage(),
-                        Sprite.minvo_left3.getFxImage()} ,
-
-                {Sprite.minvo_right1.getFxImage(),
-                        Sprite.minvo_right2.getFxImage(),
-                        Sprite.minvo_right3.getFxImage()} ,
-
-                {Sprite.minvo_right1.getFxImage(),
-                        Sprite.minvo_right2.getFxImage(),
-                        Sprite.minvo_right3.getFxImage()} ,
-
-                {Sprite.minvo_dead.getFxImage()}
-        };
         bombItemImg = Sprite.powerup_bombs.getFxImage();
         speedItemImg = Sprite.powerup_speed.getFxImage();
         flameItemImg = Sprite.powerup_flames.getFxImage();
@@ -263,6 +234,35 @@ public class ImgFactory {
                     new Image(new FileInputStream("res/sprites/custom_sprite/flame22.png"), Sprite.SCALED_SIZE, Sprite.SCALED_SIZE, true, true),
                     new Image(new FileInputStream("res/sprites/custom_sprite/flame23.png"), Sprite.SCALED_SIZE, Sprite.SCALED_SIZE, true, true),
                     new Image(new FileInputStream("res/sprites/custom_sprite/flame24.png"), Sprite.SCALED_SIZE, Sprite.SCALED_SIZE, true, true),
+            };
+            dollImg = new Image[][] {
+                    {Sprite.doll_left1.getFxImage(),
+                            Sprite.doll_left2.getFxImage(),
+                            Sprite.doll_left3.getFxImage(),
+                            Sprite.doll_right1.getFxImage(),
+                            Sprite.doll_right2.getFxImage(),
+                            Sprite.doll_right3.getFxImage()},
+                    {Sprite.doll_dead.getFxImage()}
+            };
+
+            minvoImg = new Image[][] {
+                    {Sprite.minvo_left1.getFxImage(),
+                            Sprite.minvo_left2.getFxImage(),
+                            Sprite.minvo_left3.getFxImage()} ,
+
+                    {Sprite.minvo_left1.getFxImage(),
+                            Sprite.minvo_left2.getFxImage(),
+                            Sprite.minvo_left3.getFxImage()} ,
+
+                    {Sprite.minvo_right1.getFxImage(),
+                            Sprite.minvo_right2.getFxImage(),
+                            Sprite.minvo_right3.getFxImage()} ,
+
+                    {Sprite.minvo_right1.getFxImage(),
+                            Sprite.minvo_right2.getFxImage(),
+                            Sprite.minvo_right3.getFxImage()} ,
+
+                    {Sprite.minvo_dead.getFxImage()}
             };
         } catch (FileNotFoundException e) {
             System.out.println("Error while init flame img");
