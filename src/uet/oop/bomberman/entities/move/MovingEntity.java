@@ -7,7 +7,9 @@ import uet.oop.bomberman.entities.Point;
 import uet.oop.bomberman.entities.still.bomb.Bomb;
 import uet.oop.bomberman.entities.still.Brick;
 import uet.oop.bomberman.entities.still.Wall;
+import uet.oop.bomberman.scene.Container;
 import uet.oop.bomberman.scene.MainScene;
+import uet.oop.bomberman.util.SoundUtil;
 
 import java.util.ArrayList;
 
@@ -30,6 +32,9 @@ public abstract class MovingEntity extends Entity {
         if (death || onFlame() || (this instanceof Bomber && ((Bomber) this).collideWithEnemy())) {
             death = true;
             changeToDeathImg();
+            if(Container.soundOn) {
+                SoundUtil.playDeadSound();
+            }
         }
         else if (!death){
             move();

@@ -40,7 +40,7 @@ public class BombermanGame extends Application {
         primaryStage.setScene(MainScene.getScene());
 
         if(Container.soundOn) {
-            SoundUtil.playThemeSound("res/sound/themesound.mp3");
+            SoundUtil.playThemeSound();
         }
 
         timer = new AnimationTimer() {
