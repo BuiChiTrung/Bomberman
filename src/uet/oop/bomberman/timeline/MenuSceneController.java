@@ -2,6 +2,7 @@ package uet.oop.bomberman.timeline;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import uet.oop.bomberman.BombermanGame;
@@ -16,6 +17,8 @@ public class MenuSceneController {
     private VBox navbar;
     @FXML
     private ImageView image;
+    @FXML
+    private ToggleButton soundButton;
     @FXML
     private Button soundOnButton;
     @FXML
@@ -36,5 +39,9 @@ public class MenuSceneController {
     }
     public void handleSoundOffButton() {
         Container.soundOn = false;
+    }
+
+    public void handleSoundButton() {
+        Container.soundOn = !soundButton.isSelected();
     }
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.image.*?>
@@ -7,7 +8,7 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="416.0" prefWidth="992" stylesheets="@MenuScene.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uet.oop.bomberman.timeline.MenuSceneController">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="416.0" prefWidth="992" stylesheets="@MenuScene.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uet.oop.bomberman.timeline.MenuSceneController">
    <children>
        <ImageView fx:id="image" fitHeight="416.0" fitWidth="834.0" pickOnBounds="true">
          <effect>
@@ -33,6 +34,7 @@
                   </Button>
                </children>
             </HBox>
+            <ToggleButton fx:id="soundButton" mnemonicParsing="false" onAction="#handleSoundButton" prefHeight="63.0" prefWidth="158.0" text="sound" />
             <Region prefHeight="94.0" prefWidth="158.0" />
             <Label fx:id="title" prefHeight="34.0" prefWidth="158.0" text=" Choose Map" textAlignment="JUSTIFY">
                <font>
