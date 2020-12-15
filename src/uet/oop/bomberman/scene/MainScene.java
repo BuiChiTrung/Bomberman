@@ -87,7 +87,7 @@ public class MainScene {
                         // Add item roi lay brick de len
                         case 'x':
                             Container.stillEntities[x][y].add(new Portal(new Point(x, y), ImgFactory.portalImg));
-                            //Container.stillEntities[x][y].add(new Brick(new Point(x, y), ImgFactory.brickImg[0]));
+                            Container.stillEntities[x][y].add(new Brick(new Point(x, y), ImgFactory.brickImg[0]));
                             break;
                         case 'b':
                             Container.stillEntities[x][y].add(new BombItem(new Point(x, y), ImgFactory.bombItemImg));
