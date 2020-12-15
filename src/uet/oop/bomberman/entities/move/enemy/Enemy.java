@@ -2,13 +2,14 @@ package uet.oop.bomberman.entities.move.enemy;
 
 import javafx.scene.image.Image;
 
-import uet.oop.bomberman.entities.Direction;
-import uet.oop.bomberman.entities.Point;
+import uet.oop.bomberman.util.Direction;
+import uet.oop.bomberman.util.Point;
 import uet.oop.bomberman.entities.move.MovingEntity;
 import uet.oop.bomberman.scene.MainScene;
 import uet.oop.bomberman.scene.Container;
-import uet.oop.bomberman.util.DirectionUtil;
+import uet.oop.bomberman.util.ImgFactory;
 import uet.oop.bomberman.util.MoveUtil;
+import uet.oop.bomberman.util.Util;
 
 import java.util.Random;
 
@@ -22,19 +23,21 @@ public abstract class Enemy extends MovingEntity {
     protected double attackRadius;
     protected long lastMoveTime = 0;
     protected boolean death = false;
+
     public Enemy(Point pos, Image img) {
         super(pos, img);
+        Container.enemyLeft++;
         velocity = 0.125 / 2;
         moveTimeToCrossOneCell = (int) (1 / velocity);
     }
 
     protected Direction chooseRandomDirection() {
         int directionAsNumber = (int)(Math.random() * ((3) + 1));
-        return DirectionUtil.getDirectionFromId(directionAsNumber);
+        return Direction.getDirectionFromId(directionAsNumber);
     }
 
     public void updateImg() {
-        img = getImgState()[DirectionUtil.getDirectionId(direction)][(stepInDirect / NUMBER_OF_MOVE_TO_CHANGE_IMG) % NUMBER_OF_IMG_PER_DIRECTION];
+        img = getImgState()[Direction.getDirectionId(direction)][(stepInDirect / NUMBER_OF_MOVE_TO_CHANGE_IMG) % NUMBER_OF_IMG_PER_DIRECTION];
     }
 
     @Override
@@ -43,10 +46,13 @@ public abstract class Enemy extends MovingEntity {
         death = true;
         if (imgId == DESTROY_IMG_ID) {
             removableFromContainer = true;
+            if (this instanceof Minvo) {
+                Container.enemies.add(new Ballom(Util.findRandomGrassCell(), ImgFactory.ballomImg[2][0]));
+                Container.enemies.add(new Ballom(Util.findRandomGrassCell(), ImgFactory.ballomImg[2][0]));
+            }
         }
-        else {
+        else
             img = getImgState()[4][imgId / NUMBER_OF_MOVE_TO_CHANGE_IMG];
-        }
     }
 
     public void randomWalk() {
@@ -89,8 +95,8 @@ public abstract class Enemy extends MovingEntity {
         if(nextDestination.isEquals(pos) || MoveUtil.blocked(nextDestination) || !alreadyGetNextDestination) {
             alreadyGetNextDestination = true;
             pos = getMostAreaStandingCells();
-            nextDestination = MoveUtil.getNextDestination(pos, DirectionUtil.getDirectionFromId(Container.directionToBomber[(int)pos.x][(int)pos.y]));
-            updateDirectionAndStepInDirect(DirectionUtil.getDirectionFromId(Container.directionToBomber[(int)pos.x][(int)pos.y]));
+            nextDestination = MoveUtil.getNextDestination(pos, Direction.getDirectionFromId(Container.directionToBomber[(int)pos.x][(int)pos.y]));
+            updateDirectionAndStepInDirect(Direction.getDirectionFromId(Container.directionToBomber[(int)pos.x][(int)pos.y]));
         } else {
             updateDirectionAndStepInDirect(this.direction);
         }

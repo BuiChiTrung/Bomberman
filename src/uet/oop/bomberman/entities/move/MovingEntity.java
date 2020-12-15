@@ -1,13 +1,14 @@
 package uet.oop.bomberman.entities.move;
 
 import javafx.scene.image.Image;
-import uet.oop.bomberman.entities.Direction;
+import uet.oop.bomberman.util.Direction;
 import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.Point;
+import uet.oop.bomberman.util.Point;
 import uet.oop.bomberman.entities.still.bomb.Bomb;
 import uet.oop.bomberman.entities.still.Brick;
 import uet.oop.bomberman.entities.still.Wall;
 import uet.oop.bomberman.scene.MainScene;
+import uet.oop.bomberman.util.SoundUtil;
 
 import java.util.ArrayList;
 
@@ -16,7 +17,6 @@ import static java.lang.Math.*;
 // moving object: bomber, enemy
 public abstract class MovingEntity extends Entity {
     protected static final double acceptedPass = 0.8;
-    protected static final double[] tryStep = {0, -acceptedPass * 2, acceptedPass * 2, -acceptedPass, acceptedPass};
     public Direction direction = Direction.RIGHT;       // manage direction of object
     protected int stepInDirect;                         // số bước liên tiếp đi theo cùng một hướng
     protected double velocity;
@@ -30,6 +30,7 @@ public abstract class MovingEntity extends Entity {
         if (death || onFlame() || (this instanceof Bomber && ((Bomber) this).collideWithEnemy())) {
             death = true;
             changeToDeathImg();
+            SoundUtil.playDeadSound();
         }
         else if (!death){
             move();
@@ -40,6 +41,14 @@ public abstract class MovingEntity extends Entity {
     public abstract void changeToDeathImg();
     public abstract void move();
     public abstract void updateImg();
+
+    public void updateDirectionAndStepInDirect(Direction newDirection) {
+        if (direction != newDirection)
+            stepInDirect = 0;
+        else
+            stepInDirect += 1;
+        direction = newDirection;
+    }
 
     public void moveAlongDirection() {
         if(!hasObstacle(pos.x + direction.getX() * velocity, pos.y + direction.getY() * velocity)) {
@@ -54,14 +63,6 @@ public abstract class MovingEntity extends Entity {
                 pos.y = newPos.y + direction.getY() * velocity;
             }
         }
-    }
-
-    public void updateDirectionAndStepInDirect(Direction newDirection) {
-        if (direction != newDirection)
-            stepInDirect = 0;
-        else
-            stepInDirect += 1;
-        direction = newDirection;
     }
 
     /**

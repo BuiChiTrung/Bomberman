@@ -3,7 +3,6 @@ package uet.oop.bomberman;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import uet.oop.bomberman.scene.Container;
 import uet.oop.bomberman.scene.MainScene;
 import uet.oop.bomberman.scene.MenuScene;
 import uet.oop.bomberman.util.SoundUtil;
@@ -31,18 +30,13 @@ public class BombermanGame extends Application {
     public void start(Stage stage) {
         primaryStage = stage;
         primaryStage.setTitle("Bomberman");
-
-        primaryStage.setScene(MenuScene.getScene());
+        SoundUtil.playThemeSound();
+        primaryStage.setScene(MenuScene.setUpScene());
         primaryStage.show();
     }
 
     public static void startGame() {
-        primaryStage.setScene(MainScene.getScene());
-
-        if(Container.soundOn) {
-            SoundUtil.playThemeSound("res/sound/themesound.mp3");
-        }
-
+        primaryStage.setScene(MainScene.setUpScene());
         timer = new AnimationTimer() {
             @Override
             public void handle(long l) {

@@ -1,14 +1,13 @@
 package uet.oop.bomberman.entities.still.bomb;
 
 import javafx.scene.image.Image;
-import uet.oop.bomberman.entities.Direction;
+import uet.oop.bomberman.util.Direction;
 import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.Point;
+import uet.oop.bomberman.util.Point;
 import uet.oop.bomberman.entities.still.Brick;
 import uet.oop.bomberman.entities.still.StillEntity;
 import uet.oop.bomberman.entities.still.Wall;
 import uet.oop.bomberman.scene.Container;
-import uet.oop.bomberman.util.DirectionUtil;
 import uet.oop.bomberman.util.ImgFactory;
 import uet.oop.bomberman.util.SoundUtil;
 
@@ -32,14 +31,13 @@ public class Bomb extends StillEntity {
         return onBomberFoot;
     }
 
+    @Override
     public void update() {
         updateImg();
         if (pos.distance(Container.bomber.getPos()) >= 1) onBomberFoot = false;  // bomb becomes an obstacle for bomber
         if (System.currentTimeMillis() - placeMoment > timeToExplode || onFlame()) {
             explode();
-            if(Container.soundOn) {
-                SoundUtil.playExplodingSound();
-            }
+            SoundUtil.playExplodingSound();
         }
     }
 
@@ -62,7 +60,7 @@ public class Bomb extends StillEntity {
         addFlameAtPosition(pos);
 
         for (int directId = 0; directId <= 3; ++directId) {
-            Direction dir = DirectionUtil.getDirectionFromId(directId);
+            Direction dir = Direction.getDirectionFromId(directId);
 
             for (int i = 1; i <= Container.bomber.getBombPower(); ++i) {
                 Point flamePos = new Point(pos.x + dir.getX() * i, pos.y + dir.getY() * i);

@@ -20,8 +20,24 @@
        </ImageView>
        <VBox fx:id="navbar" prefHeight="400.0" prefWidth="297.0">
          <children>
-            <ToggleButton fx:id="soundButton" mnemonicParsing="false" onAction="#handleSoundButton" prefHeight="63.0" prefWidth="158.0" text="sound" />
-            <Region prefHeight="77.0" prefWidth="158.0" />
+            <ToggleButton fx:id="soundButton" mnemonicParsing="false" onAction="#handleSoundButton" prefHeight="63.0" prefWidth="158.0" text="sound">
+               <graphic>
+                  <StackPane prefHeight="62.0" prefWidth="129.0">
+                     <children>
+                        <ImageView fx:id="soundOnImage" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../res/sprites/custom_sprite/soundon.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="soundOffImage" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../res/sprites/custom_sprite/soundoff.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </StackPane>
+               </graphic></ToggleButton>
+            <Region prefHeight="65.0" prefWidth="158.0" />
             <Label fx:id="title" prefHeight="34.0" prefWidth="158.0" text=" Choose Map" textAlignment="JUSTIFY">
                <font>
                   <Font name="Fondamento Regular" size="26.0" />

@@ -69,7 +69,9 @@ public class Container {
     }
 
     public static void updateEntity() {
-        enemies.forEach(enemy -> enemy.update());
+        for (int i = 0; i < enemies.size(); ++i) {
+            enemies.get(i).update();
+        }
         for (int i = 0; i < MainScene.ROW; ++i)
             for (int j = 0; j < MainScene.COLUMN; ++j) {
                 flames[i][j].forEach(flame -> flame.update());

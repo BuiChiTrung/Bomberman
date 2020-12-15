@@ -1,15 +1,13 @@
 package uet.oop.bomberman.scene;
 
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.Point;
+import uet.oop.bomberman.util.Point;
 import uet.oop.bomberman.entities.move.Bomber;
 import uet.oop.bomberman.entities.move.enemy.Ballom;
 import uet.oop.bomberman.entities.move.enemy.Doll;
@@ -37,11 +35,7 @@ public class MainScene {
 
     private static GraphicsContext gc;
 
-    public static Scene getScene() {
-        return setUpScene();
-    }
-
-    private static Scene setUpScene() {
+    public static Scene setUpScene() {
         Canvas canvas = new Canvas(Sprite.SCALED_SIZE * COLUMN, Sprite.SCALED_SIZE * ROW);
         gc = canvas.getGraphicsContext2D();
 
@@ -56,17 +50,17 @@ public class MainScene {
     }
 
     private static void addEventHandler() {
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                // user can get back to menu scene to restart
-                if (event.getCode() == KeyCode.R) {
-                    BombermanGame.getTimer().stop(); 
-                    Container.reset();
-                    BombermanGame.getPrimaryStage().setScene(MenuScene.getScene());
-                }
-                else bomber.handlePress(event.getCode());
+        scene.setOnKeyPressed(event -> {
+            // user can get back to menu scene to restart
+            if (event.getCode() == KeyCode.R) {
+                BombermanGame.getTimer().stop();
+                Container.reset();
+                BombermanGame.getPrimaryStage().setScene(MenuScene.setUpScene());
             }
+            else if (event.getCode() == KeyCode.U) {
+                goToNextLevel();
+            }
+            else bomber.handlePress(event.getCode());
         });
         scene.setOnKeyReleased(event -> bomber.handleRelease(event.getCode()));
     }
@@ -108,23 +102,19 @@ public class MainScene {
                             //Container.stillEntities[x][y].add(new Brick(new Point(x, y), ImgFactory.brickImg[0]));
                             break;
                         case 'p':
-                            Container.bomber = new Bomber(new Point(1, 1), ImgFactory.bomberImg[2][0]);
+                            Container.bomber = new Bomber(new Point(x, y), ImgFactory.bomberImg[2][0]);
                             break;
                         case '1':
                             Container.enemies.add(new Ballom(new Point(x, y), ImgFactory.ballomImg[2][0]));
-                            Container.enemyLeft++;
                             break;
                         case '2':
                             Container.enemies.add(new Oneal(new Point(x, y), ImgFactory.onealImg[2][0]));
-                            Container.enemyLeft++;
                             break;
                         case '3':
-                            Container.enemies.add(new Doll(new Point(x, y), ImgFactory.dollImg[0][0]));
-                            Container.enemyLeft++;
+                            Container.enemies.add(new Minvo(new Point(x, y), ImgFactory.dollImg[0][0]));
                             break;
                         case '4':
-                            Container.enemies.add(new Minvo(new Point(x, y), ImgFactory.dollImg[0][0]));
-                            Container.enemyLeft++;
+                            Container.enemies.add(new Doll(new Point(x, y), ImgFactory.dollImg[0][0]));
                             break;
                     }
                 }
@@ -132,10 +122,6 @@ public class MainScene {
         } catch (FileNotFoundException e) {
             System.out.println("ERROR while reading map file");
         }
-    }
-
-    private static void createBomber() {
-        bomber = new Bomber(new Point(1, 1), ImgFactory.bomberImg[2][0]);
     }
 
     public static void loop() {
