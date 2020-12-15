@@ -16,6 +16,10 @@ public class Point {
         this.y = other.y;
     }
 
+    public Point() {
+
+    }
+
     /**
      * check inside board
      */

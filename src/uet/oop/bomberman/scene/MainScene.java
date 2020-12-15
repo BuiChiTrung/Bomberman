@@ -65,6 +65,9 @@ public class MainScene {
                     Container.reset();
                     BombermanGame.getPrimaryStage().setScene(MenuScene.getScene());
                 }
+                else if (event.getCode() == KeyCode.U) {
+                    goToNextLevel();
+                }
                 else bomber.handlePress(event.getCode());
             }
         });
@@ -108,23 +111,19 @@ public class MainScene {
                             //Container.stillEntities[x][y].add(new Brick(new Point(x, y), ImgFactory.brickImg[0]));
                             break;
                         case 'p':
-                            Container.bomber = new Bomber(new Point(1, 1), ImgFactory.bomberImg[2][0]);
+                            Container.bomber = new Bomber(new Point(x, y), ImgFactory.bomberImg[2][0]);
                             break;
                         case '1':
                             Container.enemies.add(new Ballom(new Point(x, y), ImgFactory.ballomImg[2][0]));
-                            Container.enemyLeft++;
                             break;
                         case '2':
                             Container.enemies.add(new Oneal(new Point(x, y), ImgFactory.onealImg[2][0]));
-                            Container.enemyLeft++;
                             break;
                         case '3':
-                            Container.enemies.add(new Doll(new Point(x, y), ImgFactory.dollImg[0][0]));
-                            Container.enemyLeft++;
+                            Container.enemies.add(new Minvo(new Point(x, y), ImgFactory.dollImg[0][0]));
                             break;
                         case '4':
-                            Container.enemies.add(new Minvo(new Point(x, y), ImgFactory.dollImg[0][0]));
-                            Container.enemyLeft++;
+                            Container.enemies.add(new Doll(new Point(x, y), ImgFactory.dollImg[0][0]));
                             break;
                     }
                 }

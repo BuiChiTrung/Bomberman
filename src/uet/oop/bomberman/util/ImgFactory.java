@@ -33,29 +33,6 @@ public class ImgFactory {
                 Sprite.bomb2.getFxImage()
         };
 
-        bomberImg = new Image[][] {
-                //LEFT:0
-                {Sprite.player_left_0.getFxImage(),
-                        Sprite.player_left_1.getFxImage(),
-                        Sprite.player_left_2.getFxImage()},
-                //UP:1
-                {Sprite.player_up_0.getFxImage(),
-                        Sprite.player_up_1.getFxImage(),
-                        Sprite.player_up_2.getFxImage()},
-                //RIGHT:2
-                {Sprite.player_right_0.getFxImage(),
-                        Sprite.player_right_1.getFxImage(),
-                        Sprite.player_right_2.getFxImage()},
-                //DOWN:3
-                {Sprite.player_down_0.getFxImage(),
-                        Sprite.player_down_1.getFxImage(),
-                        Sprite.player_down_2.getFxImage()},
-                //DEATH:4
-                {Sprite.player_dead_0.getFxImage(),
-                        Sprite.player_dead_1.getFxImage(),
-                        Sprite.player_dead_2.getFxImage()}
-        };
-
         bombItemImg = Sprite.powerup_bombs.getFxImage();
         speedItemImg = Sprite.powerup_speed.getFxImage();
         flameItemImg = Sprite.powerup_flames.getFxImage();
@@ -80,31 +57,6 @@ public class ImgFactory {
                     new Image(new FileInputStream("res/sprites/custom_sprite/bomb03.png"), Sprite.SCALED_SIZE, Sprite.SCALED_SIZE, true, true),
             };
 
-            bomberImg = new Image[][] {
-                    //LEFT:0
-                    {Sprite.player_left_0.getFxImage(),
-                            Sprite.player_left_1.getFxImage(),
-                            Sprite.player_left_2.getFxImage()},
-                    //UP:1
-                    {Sprite.player_up_0.getFxImage(),
-                            Sprite.player_up_1.getFxImage(),
-                            Sprite.player_up_2.getFxImage()},
-                    //RIGHT:2
-                    {
-                            Sprite.player_right_0.getFxImage(),
-                            //new Image(new FileInputStream("res/sprites/custom_sprite/player09.png"), Sprite.SCALED_SIZE, Sprite.SCALED_SIZE, true, true),
-                            Sprite.player_right_1.getFxImage(),
-                            Sprite.player_right_2.getFxImage()},
-                    //DOWN:3
-                    {Sprite.player_down_0.getFxImage(),
-                            Sprite.player_down_1.getFxImage(),
-                            Sprite.player_down_2.getFxImage()},
-                    //DEATH:4
-                    {Sprite.player_dead_0.getFxImage(),
-                            Sprite.player_dead_1.getFxImage(),
-                            Sprite.player_dead_2.getFxImage()}
-            };
-
             bombItemImg = new Image(new FileInputStream("res/sprites/custom_sprite/itembomb.png"), Sprite.SCALED_SIZE, Sprite.SCALED_SIZE, true, true);
             speedItemImg = new Image(new FileInputStream("res/sprites/custom_sprite/itemspeed.png"), Sprite.SCALED_SIZE, Sprite.SCALED_SIZE, true, true);
             flameItemImg = new Image(new FileInputStream("res/sprites/custom_sprite/itemflame.png"), Sprite.SCALED_SIZE, Sprite.SCALED_SIZE, true, true);
@@ -113,7 +65,6 @@ public class ImgFactory {
                     new Image(new FileInputStream("res/sprites/custom_sprite/brick02.png"), Sprite.SCALED_SIZE, Sprite.SCALED_SIZE, true, true),
                     new Image(new FileInputStream("res/sprites/custom_sprite/brick03.png"), Sprite.SCALED_SIZE, Sprite.SCALED_SIZE, true, true),
                     new Image(new FileInputStream("res/sprites/custom_sprite/brick04.png"), Sprite.SCALED_SIZE, Sprite.SCALED_SIZE, true, true),
-                    //Sprite.brick_exploded2.getFxImage(),
             };
             wallImg = new Image(new FileInputStream("res/sprites/custom_sprite/grass02.png"), Sprite.SCALED_SIZE, Sprite.SCALED_SIZE, true, true);
             grassImg = new Image(new FileInputStream("res/sprites/custom_sprite/grass08.jpg"), Sprite.SCALED_SIZE, Sprite.SCALED_SIZE, true, true);
@@ -152,6 +103,31 @@ public class ImgFactory {
                     new Image(new FileInputStream("res/sprites/custom_sprite/flame22.png"), Sprite.SCALED_SIZE, Sprite.SCALED_SIZE, true, true),
                     new Image(new FileInputStream("res/sprites/custom_sprite/flame23.png"), Sprite.SCALED_SIZE, Sprite.SCALED_SIZE, true, true),
                     new Image(new FileInputStream("res/sprites/custom_sprite/flame24.png"), Sprite.SCALED_SIZE, Sprite.SCALED_SIZE, true, true),
+            };
+
+            bomberImg = new Image[][] {
+                    //LEFT:0
+                    {Sprite.player_left_0.getFxImage(),
+                            Sprite.player_left_1.getFxImage(),
+                            Sprite.player_left_2.getFxImage()},
+                    //UP:1
+                    {Sprite.player_up_0.getFxImage(),
+                            Sprite.player_up_1.getFxImage(),
+                            Sprite.player_up_2.getFxImage()},
+                    //RIGHT:2
+                    {
+                            Sprite.player_right_0.getFxImage(),
+                            //new Image(new FileInputStream("res/sprites/custom_sprite/player09.png"), Sprite.SCALED_SIZE, Sprite.SCALED_SIZE, true, true),
+                            Sprite.player_right_1.getFxImage(),
+                            Sprite.player_right_2.getFxImage()},
+                    //DOWN:3
+                    {Sprite.player_down_0.getFxImage(),
+                            Sprite.player_down_1.getFxImage(),
+                            Sprite.player_down_2.getFxImage()},
+                    //DEATH:4
+                    {Sprite.player_dead_0.getFxImage(),
+                            Sprite.player_dead_1.getFxImage(),
+                            Sprite.player_dead_2.getFxImage()}
             };
 
             ballomImg = new Image[][]{
@@ -203,6 +179,23 @@ public class ImgFactory {
                             Sprite.doll_right2.getFxImage(),
                             Sprite.doll_right3.getFxImage()},
                     {Sprite.doll_dead.getFxImage()}
+//                    {Sprite.doll_left1.getFxImage(),
+//                            Sprite.doll_left2.getFxImage(),
+//                            Sprite.doll_left3.getFxImage()} ,
+//
+//                    {Sprite.doll_left1.getFxImage(),
+//                            Sprite.doll_left2.getFxImage(),
+//                            Sprite.doll_left3.getFxImage()} ,
+//
+//                    {Sprite.doll_right1.getFxImage(),
+//                            Sprite.doll_right2.getFxImage(),
+//                            Sprite.doll_right3.getFxImage()} ,
+//
+//                    {Sprite.doll_right1.getFxImage(),
+//                            Sprite.doll_right2.getFxImage(),
+//                            Sprite.doll_right3.getFxImage()} ,
+//
+//                    {Sprite.doll_dead.getFxImage()}
             };
 
             minvoImg = new Image[][] {

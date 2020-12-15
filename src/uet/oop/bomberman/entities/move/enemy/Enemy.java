@@ -8,7 +8,9 @@ import uet.oop.bomberman.entities.move.MovingEntity;
 import uet.oop.bomberman.scene.MainScene;
 import uet.oop.bomberman.scene.Container;
 import uet.oop.bomberman.util.DirectionUtil;
+import uet.oop.bomberman.util.ImgFactory;
 import uet.oop.bomberman.util.MoveUtil;
+import uet.oop.bomberman.util.Util;
 
 import java.util.Random;
 
@@ -22,8 +24,10 @@ public abstract class Enemy extends MovingEntity {
     protected double attackRadius;
     protected long lastMoveTime = 0;
     protected boolean death = false;
+
     public Enemy(Point pos, Image img) {
         super(pos, img);
+        Container.enemyLeft++;
         velocity = 0.125 / 2;
         moveTimeToCrossOneCell = (int) (1 / velocity);
     }
@@ -43,10 +47,13 @@ public abstract class Enemy extends MovingEntity {
         death = true;
         if (imgId == DESTROY_IMG_ID) {
             removableFromContainer = true;
+            if (this instanceof Minvo) {
+                Container.enemies.add(new Ballom(Util.findRandomGrassCell(), ImgFactory.ballomImg[2][0]));
+                Container.enemies.add(new Ballom(Util.findRandomGrassCell(), ImgFactory.ballomImg[2][0]));
+            }
         }
-        else {
+        else
             img = getImgState()[4][imgId / NUMBER_OF_MOVE_TO_CHANGE_IMG];
-        }
     }
 
     public void randomWalk() {

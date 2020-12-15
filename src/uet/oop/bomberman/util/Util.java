@@ -2,6 +2,7 @@ package uet.oop.bomberman.util;
 
 import uet.oop.bomberman.entities.Point;
 import uet.oop.bomberman.entities.still.Brick;
+import uet.oop.bomberman.entities.still.Grass;
 import uet.oop.bomberman.entities.still.Wall;
 import uet.oop.bomberman.entities.still.bomb.Bomb;
 import uet.oop.bomberman.scene.MainScene;
@@ -60,5 +61,14 @@ public class Util {
 
     public static boolean checkContainBomb(Point pos) {
         return getLast(Container.stillEntities[(int) pos.x][(int) pos.y]) instanceof Bomb;
+    }
+
+    public static Point findRandomGrassCell() {
+        Point pos = new Point();
+        do {
+            pos.x = (int) (Math.random() * 12) + 1;
+            pos.y = (int) (Math.random() * 30) + 1;
+        } while(!(getLast(Container.stillEntities[(int)pos.x][(int)pos.y]) instanceof Grass));
+        return pos;
     }
 }
