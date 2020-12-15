@@ -16,6 +16,7 @@ import uet.oop.bomberman.scene.Container;
 import uet.oop.bomberman.scene.MainScene;
 import uet.oop.bomberman.util.DirectionUtil;
 import uet.oop.bomberman.util.ImgFactory;
+import uet.oop.bomberman.util.SoundUtil;
 import uet.oop.bomberman.util.Util;
 
 import java.util.ArrayList;
@@ -63,7 +64,11 @@ public class Bomber extends MovingEntity {
     public void move() {
         if (!arrowKeyIsRelease) {
             updateDirectionAndStepInDirect(direction);
+            SoundUtil.playFootStepSound();
             moveAlongDirection();
+        }
+        else {
+            SoundUtil.pauseFootStepSound();
         }
         eatItem();
     }
@@ -130,6 +135,7 @@ public class Bomber extends MovingEntity {
     public void handleRelease(KeyCode key) {
         if (key == KeyCode.RIGHT || key == KeyCode.LEFT || key == KeyCode.UP || key == KeyCode.DOWN) {
             arrowKeyIsRelease = true;
+            return;
         }
     }
 

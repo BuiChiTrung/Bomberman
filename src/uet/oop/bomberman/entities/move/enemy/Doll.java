@@ -7,14 +7,14 @@ import uet.oop.bomberman.util.ImgFactory;
 import uet.oop.bomberman.util.MoveUtil;
 
 public class Doll extends Enemy {
-    private static final Image[][] imgState = ImgFactory.dollImg;
     private int step = 0;
 
     public Doll(Point pos, Image img) {
         super(pos, img);
-        velocity = 0.125 / 2;
+        velocity = 0.125 / 8;
     }
 
+    private static final Image[][] imgState = ImgFactory.dollImg;
 
     public Image[][] getImgState() {
         return imgState;
@@ -26,7 +26,8 @@ public class Doll extends Enemy {
         death = true;
         if (imgId == DESTROY_IMG_ID) {
             removableFromContainer = true;
-        } else {
+        }
+        else {
             img = getImgState()[1][imgId / NUMBER_OF_MOVE_TO_CHANGE_IMG];
         }
     }
@@ -34,7 +35,8 @@ public class Doll extends Enemy {
     @Override
     public void updateImg() {
         int numOfMoveImg = 6;
-        img = imgState[0][step % numOfMoveImg];
+        int numberOfMoveToChangeImage = 3;
+        img = imgState[0][(step / numberOfMoveToChangeImage) % numOfMoveImg];
     }
 
     @Override
@@ -54,7 +56,8 @@ public class Doll extends Enemy {
     public void update() {
         if (onFlame() || death) {
             changeToDeathImg();
-        } else {
+        }
+        else {
             step++;
             move();
             updateImg();

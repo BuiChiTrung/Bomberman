@@ -37,9 +37,7 @@ public class Bomb extends StillEntity {
         if (pos.distance(Container.bomber.getPos()) >= 1) onBomberFoot = false;  // bomb becomes an obstacle for bomber
         if (System.currentTimeMillis() - placeMoment > timeToExplode || onFlame()) {
             explode();
-            if(Container.soundOn) {
-                SoundUtil.playExplodingSound();
-            }
+            SoundUtil.playExplodingSound();
         }
     }
 
