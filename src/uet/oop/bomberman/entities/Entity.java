@@ -7,6 +7,8 @@ import uet.oop.bomberman.scene.Container;
 import uet.oop.bomberman.util.Point;
 import uet.oop.bomberman.util.Util;
 
+import java.util.ArrayList;
+
 import static java.lang.Math.ceil;
 import static java.lang.Math.floor;
 
@@ -41,9 +43,41 @@ public abstract class Entity {
         return Util.getLast(Container.stillEntities[(int)it.x][(int)it.y]);
     }
 
+    /**
+     * return danh sách các ô mà nhân vật đứng trên ô đó. VD: tọa độ nhân vật là (1.5, 1.0) => nhân vạt đứng trên ô (1.0, 1.0) và (2.0, 1.0)
+     */
+    public ArrayList<Point> getStandingCells(double x, double y) {
+        ArrayList<Point> standingCells = new ArrayList<>();
+        if (x != floor(x) && y != floor(y)) {
+            standingCells.add(new Point(floor(x), floor(y)));
+            standingCells.add(new Point(floor(x) + 1, floor(y)));
+            standingCells.add(new Point(floor(x), floor(y) + 1));
+            standingCells.add(new Point(floor(x) + 1, floor(y) + 1));
+        }
+        else if (x != floor(x)) {
+            standingCells.add(new Point(floor(x), y));
+            standingCells.add(new Point(floor(x) + 1, y));
+        }
+        else if (y != floor(y)) {
+            standingCells.add(new Point(x, floor(y)));
+            standingCells.add(new Point(x, floor(y) + 1));
+        }
+        else {
+            standingCells.add(new Point(x, y));
+        }
+
+        return standingCells;
+    }
+
     protected boolean onFlame() {
-        Point pos = getMostAreaStandingCells();
-        return !Container.flames[(int)pos.x][(int)pos.y].isEmpty();
+        ArrayList<Point> cells = getStandingCells(pos.x, pos.y);
+        for (Point cell: cells) {
+            if(Container.flames[(int)cell.x][(int)cell.y].isEmpty()) {
+                continue;
+            }
+            return true;
+        }
+        return false;
     }
 
     /**

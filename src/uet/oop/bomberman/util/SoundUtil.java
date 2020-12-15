@@ -9,7 +9,6 @@ public class SoundUtil {
 
     public static MP3Player themeSongPlayer = new MP3Player();
     public static MP3Player footStepPlayer = new MP3Player();
-
     static {
         themeSongPlayer.addToPlayList(new File("res/sound/themeSound.mp3"));
         themeSongPlayer.setRepeat(true);
@@ -34,9 +33,7 @@ public class SoundUtil {
         if(!Container.soundOn) {
             return ;
         }
-        MP3Player player = new MP3Player();
-        player.addToPlayList(new File("res/sound/explode.mp3"));
-        player.play();
+        new MP3Player(new File("res/sound/explode.mp3")).play();
     }
 
     public static void playFootStepSound() {

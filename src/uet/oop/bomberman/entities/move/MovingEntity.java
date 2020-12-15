@@ -30,7 +30,6 @@ public abstract class MovingEntity extends Entity {
         if (death || onFlame() || (this instanceof Bomber && ((Bomber) this).collideWithEnemy())) {
             death = true;
             changeToDeathImg();
-            SoundUtil.playDeadSound();
         }
         else if (!death){
             move();
@@ -86,29 +85,4 @@ public abstract class MovingEntity extends Entity {
         return false;
     }
 
-    /**
-     * return danh sách các ô mà nhân vật đứng trên ô đó. VD: tọa độ nhân vật là (1.5, 1.0) => nhân vạt đứng trên ô (1.0, 1.0) và (2.0, 1.0)
-     */
-    public ArrayList<Point> getStandingCells(double x, double y) {
-        ArrayList<Point> standingCells = new ArrayList<>();
-        if (x != floor(x) && y != floor(y)) {
-            standingCells.add(new Point(floor(x), floor(y)));
-            standingCells.add(new Point(floor(x) + 1, floor(y)));
-            standingCells.add(new Point(floor(x), floor(y) + 1));
-            standingCells.add(new Point(floor(x) + 1, floor(y) + 1));
-        }
-        else if (x != floor(x)) {
-            standingCells.add(new Point(floor(x), y));
-            standingCells.add(new Point(floor(x) + 1, y));
-        }
-        else if (y != floor(y)) {
-            standingCells.add(new Point(x, floor(y)));
-            standingCells.add(new Point(x, floor(y) + 1));
-        }
-        else {
-            standingCells.add(new Point(x, y));
-        }
-
-        return standingCells;
-    }
 }

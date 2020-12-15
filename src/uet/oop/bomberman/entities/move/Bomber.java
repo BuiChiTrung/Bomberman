@@ -102,6 +102,7 @@ public class Bomber extends MovingEntity {
         imgId++;
         death = true;
         if (imgId == DESTROY_IMG_ID) {
+            SoundUtil.playDeadSound();
             removableFromContainer = true;
         } else {
             img = imgState[4][imgId / NUMBER_OF_MOVE_TO_CHANGE_IMG];
