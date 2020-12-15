@@ -2,12 +2,11 @@ package uet.oop.bomberman.entities.move.enemy;
 
 import javafx.scene.image.Image;
 
-import uet.oop.bomberman.entities.Direction;
-import uet.oop.bomberman.entities.Point;
+import uet.oop.bomberman.util.Direction;
+import uet.oop.bomberman.util.Point;
 import uet.oop.bomberman.entities.move.MovingEntity;
 import uet.oop.bomberman.scene.MainScene;
 import uet.oop.bomberman.scene.Container;
-import uet.oop.bomberman.util.DirectionUtil;
 import uet.oop.bomberman.util.ImgFactory;
 import uet.oop.bomberman.util.MoveUtil;
 import uet.oop.bomberman.util.Util;
@@ -34,11 +33,11 @@ public abstract class Enemy extends MovingEntity {
 
     protected Direction chooseRandomDirection() {
         int directionAsNumber = (int)(Math.random() * ((3) + 1));
-        return DirectionUtil.getDirectionFromId(directionAsNumber);
+        return Direction.getDirectionFromId(directionAsNumber);
     }
 
     public void updateImg() {
-        img = getImgState()[DirectionUtil.getDirectionId(direction)][(stepInDirect / NUMBER_OF_MOVE_TO_CHANGE_IMG) % NUMBER_OF_IMG_PER_DIRECTION];
+        img = getImgState()[Direction.getDirectionId(direction)][(stepInDirect / NUMBER_OF_MOVE_TO_CHANGE_IMG) % NUMBER_OF_IMG_PER_DIRECTION];
     }
 
     @Override
@@ -96,8 +95,8 @@ public abstract class Enemy extends MovingEntity {
         if(nextDestination.isEquals(pos) || MoveUtil.blocked(nextDestination) || !alreadyGetNextDestination) {
             alreadyGetNextDestination = true;
             pos = getMostAreaStandingCells();
-            nextDestination = MoveUtil.getNextDestination(pos, DirectionUtil.getDirectionFromId(Container.directionToBomber[(int)pos.x][(int)pos.y]));
-            updateDirectionAndStepInDirect(DirectionUtil.getDirectionFromId(Container.directionToBomber[(int)pos.x][(int)pos.y]));
+            nextDestination = MoveUtil.getNextDestination(pos, Direction.getDirectionFromId(Container.directionToBomber[(int)pos.x][(int)pos.y]));
+            updateDirectionAndStepInDirect(Direction.getDirectionFromId(Container.directionToBomber[(int)pos.x][(int)pos.y]));
         } else {
             updateDirectionAndStepInDirect(this.direction);
         }

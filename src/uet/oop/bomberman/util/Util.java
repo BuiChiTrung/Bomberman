@@ -1,6 +1,5 @@
 package uet.oop.bomberman.util;
 
-import uet.oop.bomberman.entities.Point;
 import uet.oop.bomberman.entities.still.Brick;
 import uet.oop.bomberman.entities.still.Grass;
 import uet.oop.bomberman.entities.still.Wall;
@@ -23,7 +22,6 @@ public class Util {
             }
         }
         Queue<Point> queue = new LinkedList<Point>();
-        //System.out.println(Container.bomber.isDestroy());
         Point BomberPos = Container.bomber.getMostAreaStandingCells();
         queue.offer(Container.bomber.getMostAreaStandingCells());
         Container.directionToBomber[(int)BomberPos.x][(int)BomberPos.y] = 0;
@@ -54,9 +52,6 @@ public class Util {
     }
     public static <T> T getLast(ArrayList<T> arr) {
         return arr.get(arr.size() - 1);
-    }
-    public static <T> void removeLastEntity(ArrayList<T> arr) {
-        arr.remove(arr.size() - 1);
     }
 
     public static boolean checkContainBomb(Point pos) {

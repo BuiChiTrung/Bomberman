@@ -11,7 +11,7 @@ import java.nio.file.Paths;
 public class MenuScene {
     private static Scene scene = null;
 
-    private static Scene setUpMenuScene() {
+    public static Scene setUpScene() {
         try {
             String path= "src/uet/oop/bomberman/scene/MenuScene.fxml";
             Parent rootNode = FXMLLoader.load(Paths.get(path).toUri().toURL());
@@ -22,13 +22,6 @@ public class MenuScene {
         }
 
         return scene;
-    }
-
-    public static Scene getScene() {
-//        if (scene == null)
-//            scene = setUpMenuScene();
-//        return scene;
-        return setUpMenuScene();
     }
 
     public static void main(String[] args) {

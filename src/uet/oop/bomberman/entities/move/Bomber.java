@@ -3,7 +3,7 @@ package uet.oop.bomberman.entities.move;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.Point;
+import uet.oop.bomberman.util.Point;
 import uet.oop.bomberman.entities.still.Portal;
 import uet.oop.bomberman.entities.still.bomb.Bomb;
 import uet.oop.bomberman.entities.move.enemy.Enemy;
@@ -11,10 +11,7 @@ import uet.oop.bomberman.entities.still.item.Item;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.scene.Container;
 import uet.oop.bomberman.scene.MainScene;
-import uet.oop.bomberman.util.DirectionUtil;
-import uet.oop.bomberman.util.ImgFactory;
-import uet.oop.bomberman.util.SoundUtil;
-import uet.oop.bomberman.util.Util;
+import uet.oop.bomberman.util.*;
 
 import java.util.ArrayList;
 
@@ -97,7 +94,7 @@ public class Bomber extends MovingEntity {
 
     @Override
     public void updateImg() {
-        img = imgState[DirectionUtil.getDirectionId(direction)][(stepInDirect / NUMBER_OF_MOVE_TO_CHANGE_IMG) % NUMBER_OF_IMG_PER_DIRECTION];
+        img = imgState[Direction.getDirectionId(direction)][(stepInDirect / NUMBER_OF_MOVE_TO_CHANGE_IMG) % NUMBER_OF_IMG_PER_DIRECTION];
     }
 
     @Override
@@ -113,7 +110,7 @@ public class Bomber extends MovingEntity {
 
     public void handlePress(KeyCode key) {
         if (key == KeyCode.RIGHT || key == KeyCode.LEFT || key == KeyCode.UP || key == KeyCode.DOWN) {
-            updateDirectionAndStepInDirect(DirectionUtil.getDirectionFromKeyCode(key));
+            updateDirectionAndStepInDirect(Direction.getDirectionFromKeyCode(key));
             arrowKeyIsRelease = false;
         }
         if (key == KeyCode.SPACE) {

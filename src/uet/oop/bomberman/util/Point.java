@@ -1,4 +1,4 @@
-package uet.oop.bomberman.entities;
+package uet.oop.bomberman.util;
 
 import uet.oop.bomberman.scene.MainScene;
 

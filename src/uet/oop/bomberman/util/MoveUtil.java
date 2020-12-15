@@ -1,7 +1,5 @@
 package uet.oop.bomberman.util;
 
-import uet.oop.bomberman.entities.Direction;
-import uet.oop.bomberman.entities.Point;
 import uet.oop.bomberman.entities.still.Brick;
 import uet.oop.bomberman.entities.still.Wall;
 import uet.oop.bomberman.scene.Container;
