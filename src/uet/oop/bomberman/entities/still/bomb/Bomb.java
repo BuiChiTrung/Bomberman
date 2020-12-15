@@ -32,6 +32,7 @@ public class Bomb extends StillEntity {
         return onBomberFoot;
     }
 
+    @Override
     public void update() {
         updateImg();
         if (pos.distance(Container.bomber.getPos()) >= 1) onBomberFoot = false;  // bomb becomes an obstacle for bomber

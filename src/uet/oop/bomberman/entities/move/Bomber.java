@@ -7,10 +7,7 @@ import uet.oop.bomberman.entities.Point;
 import uet.oop.bomberman.entities.still.Portal;
 import uet.oop.bomberman.entities.still.bomb.Bomb;
 import uet.oop.bomberman.entities.move.enemy.Enemy;
-import uet.oop.bomberman.entities.still.item.BombItem;
-import uet.oop.bomberman.entities.still.item.FlameItem;
 import uet.oop.bomberman.entities.still.item.Item;
-import uet.oop.bomberman.entities.still.item.SpeedItem;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.scene.Container;
 import uet.oop.bomberman.scene.MainScene;
@@ -26,10 +23,11 @@ public class Bomber extends MovingEntity {
     private static final int NUMBER_OF_MOVE_TO_CHANGE_IMG = 5;
     private static final int NUMBER_OF_IMG_PER_DIRECTION = 3;
     private static final int DESTROY_IMG_ID = 3 * NUMBER_OF_MOVE_TO_CHANGE_IMG;
+    private static final double MAX_VELOCITY = 0.125;
+
     private int bombPower = 1;
     private int bombNumber = 1;
     private int currentPlacedBomb = 0;
-    private boolean isIncreaseSpeed = false;
     private boolean arrowKeyIsRelease = true;
     private static final Image[][] imgState = ImgFactory.bomberImg;
 
@@ -66,43 +64,35 @@ public class Bomber extends MovingEntity {
             updateDirectionAndStepInDirect(direction);
             SoundUtil.playFootStepSound();
             moveAlongDirection();
+            handleIfMeetPortalOrItem();
         }
         else {
             SoundUtil.pauseFootStepSound();
         }
-        eatItem();
     }
 
-    private void eatItem() {
+    private void handleIfMeetPortalOrItem() {
         ArrayList<Point> standingCells = getStandingCells(pos.x, pos.y);
-
         for (Point pos : standingCells) {
             Entity entity = Util.getLast(Container.stillEntities[(int) pos.x][(int) pos.y]);
-            if (entity instanceof Item) {
-                if (entity instanceof BombItem) addBomb();
-                if (entity instanceof FlameItem) upgradePower();
-                if (entity instanceof SpeedItem) increaseSpeed();
-                entity.setRemovableFromContainer(true);
-            } else if (entity instanceof Portal && Container.enemyLeft == 0) {
+
+            if (entity instanceof Item)
+                ((Item) entity).affectBomber();
+            else if (entity instanceof Portal && Container.enemyLeft == 0)
                 MainScene.goToNextLevel();
-            }
         }
     }
 
-    private void addBomb() {
+    public void increaseBombNumber() {
         bombNumber++;
     }
 
-    private void upgradePower() {
+    public void increaseBombPower() {
         bombPower++;
     }
 
-    private void increaseSpeed() {
-        if (isIncreaseSpeed) {
-            return;
-        }
-        velocity *= 2;
-        isIncreaseSpeed = true;
+    public void increaseSpeed() {
+        velocity = Math.min(velocity * 2, MAX_VELOCITY);
     }
 
     @Override
@@ -133,16 +123,13 @@ public class Bomber extends MovingEntity {
     }
 
     public void handleRelease(KeyCode key) {
-        if (key == KeyCode.RIGHT || key == KeyCode.LEFT || key == KeyCode.UP || key == KeyCode.DOWN) {
+        if (key == KeyCode.RIGHT || key == KeyCode.LEFT || key == KeyCode.UP || key == KeyCode.DOWN)
             arrowKeyIsRelease = true;
-            return;
-        }
     }
 
     public void getPreviousLevelState(Bomber prevState) {
         bombPower = prevState.bombPower;
         bombNumber = prevState.bombNumber;
-        isIncreaseSpeed = prevState.isIncreaseSpeed;
         velocity = prevState.velocity;
     }
 }

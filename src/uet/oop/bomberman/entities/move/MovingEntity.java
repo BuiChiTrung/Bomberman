@@ -44,6 +44,14 @@ public abstract class MovingEntity extends Entity {
     public abstract void move();
     public abstract void updateImg();
 
+    public void updateDirectionAndStepInDirect(Direction newDirection) {
+        if (direction != newDirection)
+            stepInDirect = 0;
+        else
+            stepInDirect += 1;
+        direction = newDirection;
+    }
+
     public void moveAlongDirection() {
         if(!hasObstacle(pos.x + direction.getX() * velocity, pos.y + direction.getY() * velocity)) {
             pos.x += direction.getX() * velocity;
@@ -57,14 +65,6 @@ public abstract class MovingEntity extends Entity {
                 pos.y = newPos.y + direction.getY() * velocity;
             }
         }
-    }
-
-    public void updateDirectionAndStepInDirect(Direction newDirection) {
-        if (direction != newDirection)
-            stepInDirect = 0;
-        else
-            stepInDirect += 1;
-        direction = newDirection;
     }
 
     /**
